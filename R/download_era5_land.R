@@ -24,7 +24,7 @@ download_era5 <- function(folder_path = ".", domain = "raw", time_res = "monthly
   options(timeout = 6000)
   on.exit(options(old_options))
   if (domain == "raw"){domain <- "global"}
-  zenodo_base <- "https://zenodo.org/deposit/7945634/files/"
+  zenodo_base <- "https://zenodo.org/deposit/7946163/files/"
   zenodo_end <- "?download=1"
   file_name <- paste0("era5-land_e_mm_", domain, "_196001_202212_025_", time_res, ".nc")
   file_url <- paste0(zenodo_base, file_name, zenodo_end)
