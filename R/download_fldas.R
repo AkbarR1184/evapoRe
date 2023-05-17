@@ -28,7 +28,7 @@ download_fldas <- function(folder_path = ".", domain = "raw", time_res = "monthl
   } else {
     warning(paste0('The ', domain, ' domain is not available'))
   }
-  zenodo_base <- "https://zenodo.org/deposit/7945634/files/"
+  zenodo_base <- "https://zenodo.org/record/7946163/files/"
   zenodo_end <- "?download=1"
   file_name <- paste0("fldas_e_mm_", domain, "_198201_202212_025_", time_res, ".nc")
   file_url <- paste0(zenodo_base, file_name, zenodo_end)
