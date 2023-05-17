@@ -28,7 +28,7 @@ download_gldas_vic <- function(folder_path = ".", domain = "raw", time_res = "mo
   } else {
     warning(paste0('The ', domain, ' domain is not available'))
   }
-  zenodo_base <- "https://zenodo.org/deposit/7946163/files/"
+  zenodo_base <- "https://zenodo.org/record/7946163/files/"
   zenodo_end <- "?download=1"
   file_name <- paste0("gldas-vic_e_mm_", domain, "_200001_202211_025_", time_res, ".nc")
   file_url <- paste0(zenodo_base, file_name, zenodo_end)
