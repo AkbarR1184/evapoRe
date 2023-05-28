@@ -18,7 +18,7 @@
 #' }
 #' @return No return value, called to download the data set.
 #' @keywords internal
-
+#' @export
 download_era5 <- function(folder_path = ".", domain = "raw", time_res = "monthly"){
   old_options <- options()
   options(timeout = 6000)
