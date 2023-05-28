@@ -18,8 +18,8 @@
 #' }
 #' @return No return value, called to download the data set.
 #' @keywords internal
-
-download_terraclimate <- function(folder_path = ".", domain = "raw", time_res = "monthly"){
+#' @export
+download_gleam <- function(folder_path = ".", domain = "raw", time_res = "monthly"){
   old_options <- options()
   options(timeout = 6000)
   on.exit(options(old_options))
