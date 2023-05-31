@@ -4,7 +4,12 @@
 \alias{download_terraclimate}
 \title{TerraClimate data downloader}
 \usage{
-download_terraclimate(folder_path = ".", domain = "raw", time_res = "monthly")
+download_terraclimate(
+  folder_path = ".",
+  domain = "raw",
+  time_res = "monthly",
+  variable = "e"
+)
 }
 \arguments{
 \item{folder_path}{a character string with the path where the data will be downloaded.}
@@ -22,11 +27,19 @@ download_terraclimate(folder_path = ".", domain = "raw", time_res = "monthly")
 \item{"monthly",}
 \item{"yearly".}
 }}
+
+\item{variable}{a character string indicating the variable to download. Suitable options are:
+\itemize{
+\item{"e" for evapotranspiration,}
+\item{"tmin" for minimum temperature,}
+\item{"tmax" for maximum temperature,}
+\item{"tavg" for average temperature.}
+}}
 }
 \value{
 No return value, called to download the data set.
 }
 \description{
-Function for downloading TerraClimate evapotranspiration data.
+Function for downloading TerraClimate data.
 }
 \keyword{internal}
