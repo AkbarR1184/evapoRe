@@ -35,7 +35,7 @@ pet_calc <- function(method_name,tavg,tmax,tmin){
   old_options <- options()
   options(timeout = 6000)
   on.exit(options(old_options))
-  lapply(method_name, function(dataset) switch(dataset,
+  pet_mon <- lapply(method_name, function(dataset) switch(dataset,
                                                "jh" = pet_jh(tavg),
                                                "mb" = pet_mb(tavg),
                                                "od" = pet_od(tavg),
@@ -43,5 +43,5 @@ pet_calc <- function(method_name,tavg,tmax,tmin){
                                                "br" = pet_br(tmax,tmin),
                                                
   ))
-  return(invisible())
+  return(pet_mon[[1]])
 }
