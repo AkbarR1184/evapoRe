@@ -23,7 +23,7 @@ download_era5_land <- function(folder_path = ".", domain = "raw", time_res = "mo
   old_options <- options()
   options(timeout = 6000)
   on.exit(options(old_options))
-  if (domain == "raw"){domain <- "global"}
+  if (domain == "raw"){domain <- "land"}
   zenodo_base <- "https://zenodo.org/record/7990413/files/"
   zenodo_end <- "?download=1"
   file_name <- paste0("era5-land_e_mm_", domain, "_196001_202212_025_", time_res, ".nc")
