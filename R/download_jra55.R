@@ -23,7 +23,7 @@ download_jra55 <- function(folder_path = ".", domain = "raw", time_res = "monthl
   old_options <- options()
   options(timeout = 6000)
   on.exit(options(old_options))
-  if (domain == "raw"){domain <- "global"}
+  if (domain == "raw"){domain <- "land"}
   zenodo_base <- "https://zenodo.org/record/7990413/files/"
   zenodo_end <- "?download=1"
   file_name <- paste0("jra55_e_mm_", domain, "_195801_202112_025_", time_res, ".nc")
