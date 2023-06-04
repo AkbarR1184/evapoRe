@@ -12,7 +12,7 @@
 plot_density <- function(x){
   x <- as.data.table(x)
   p00 <- ggplot(x, aes(x = value, after_stat(density))) +
-    geom_histogram(color = "gray", fill = "#377eb8") +
+    geom_histogram(color = "gray", fill = "#ff7f00") +
     geom_density(color = "black", size = 1, linetype = "dashed") +
     theme_bw() +
     labs(y = "Density", x = "Evapotranspiration [mm]") + 

@@ -8,7 +8,9 @@
 #' @export
 
 plot_line <- function(x){
-  p00 <- ggplot(x, aes(x = date, y = value, color = name)) + 
+  x$date <- as.Date(x$date) # Convert time to date
+  
+  p00 <- ggplot(x, aes(x = date, y = value, color = "#ff7f00")) + 
     geom_line() +
     theme_bw() +
     labs(x = NULL, y = "[mm]", title = "Evapotranspiration") +
@@ -16,6 +18,7 @@ plot_line <- function(x){
                               by = "10 year"), date_labels = "%Y") +
     theme(plot.title = element_text(size=24),
           axis.text = element_text(size = 20),
-          axis.title = element_text(size = 24))
+          axis.title = element_text(size = 24), 
+          legend.position = "none")
   return(p00)
 }

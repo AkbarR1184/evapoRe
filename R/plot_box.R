@@ -11,7 +11,7 @@
 plot_box <- function(x){
   x <- as.data.table(x)
   p00 <- ggplot(x, aes(x = as.factor(month(date)), y = value)) +
-    geom_boxplot(fill = "#377eb8") +
+    geom_boxplot(fill = "#ff7f00") +
     theme_bw() +
     labs(x = NULL, y = "evapotranspiration [mm]", title = NULL) +
     scale_x_discrete(breaks = seq(1, 12), 

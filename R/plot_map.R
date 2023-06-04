@@ -37,12 +37,12 @@ plot_map <- function(x){
                     ylim = c(min(x$y), max(x$y)),
                     expand = map_expand) +
     labs(x = NULL, y = NULL, fill = "[mm]", title = format(as.Date(x$Z[1]), "%B %Y")) +
-    scale_fill_distiller(palette = "YlGnBu",
+    scale_fill_distiller(palette = "YlOrRd",
                          direction = 1,
                          na.value = "#081D58",
                          limits = c(map_min, map_max),
                          guide = guide_colorbar(frame.colour = "black",
-                                                ticks.colour = "black")) +
+                                                ticks.colour = "black"))+
     theme(panel.border = element_rect(colour = "black", size = 2),
           panel.grid = element_blank(), plot.tag = element_text(size = 24), 
           plot.title = element_text(size = 28),
