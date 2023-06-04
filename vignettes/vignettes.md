@@ -1,10 +1,13 @@
 ---
+title: "evpoRe package"
+author: "Akbar Rahmati Ziveh et al"
 output:
-  html_document:
-    df_print: paged
+  rmarkdown::html_vignette:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
 ---
-
-
 
 # evapoRe Package
 
@@ -160,7 +163,7 @@ global GLDAS CLSM dataset:
 plot_map(gldas_clsm_global[[6]])
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
 
 Similarly, you can plot the first layer of the subsetted and cropped
 datasets using `plot_map(gldas_clsm_subset[[6]])` and
@@ -178,7 +181,7 @@ the time series for the global GLDAS CLSM dataset:
 plot_line(gldas_clsm_global_ts)
 ```
 
-![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png)
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
 
 Similarly, you can plot the time series for the subsetted and cropped
 datasets using `plot_line(gldas_clsm_subset_ts)` and
@@ -195,7 +198,9 @@ dataset:
 plot_heatmap(gldas_clsm_global_ts)
 ```
 
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
+```
+## Error in scale_fill_viridis(direction = 1, option = "C"): could not find function "scale_fill_viridis"
+```
 
 You can also create heatmaps for the subsetted and cropped datasets
 using `plot_heatmap(gldas_clsm_subset_ts)` and
@@ -212,7 +217,7 @@ the global GLDAS CLSM dataset:
 plot_box(gldas_clsm_global_ts)
 ```
 
-![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-1.png)
+![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
 
 Similarly, you can plot boxplots for the subsetted and cropped datasets
 using `plot_box(gldas_clsm_subset_ts)` and `plot_box(gldas_clsm_cz_ts)`,
@@ -229,7 +234,7 @@ CLSM dataset:
 plot_density(gldas_clsm_global_ts)
 ```
 
-![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png)
+![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-1.png)
 
 You can also create density plots for the subsetted and cropped datasets
 using `plot_density(gldas_clsm_subset_ts)` and
@@ -248,10 +253,8 @@ plot_summary(gldas_clsm_global_ts) # NOTE: For good aesthetics, we recommend sav
 ```
 
 ```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## Error in scale_fill_viridis(direction = 1, option = "C"): could not find function "scale_fill_viridis"
 ```
-
-![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-1.png)
 
 This covers the visualization capabilities of the `evapoRe` package. You
 can further explore these functions and their parameters in the package
