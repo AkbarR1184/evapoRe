@@ -1,19 +1,29 @@
 ---
-title: "evpoRe package"
+title: "evapoRe package"
 author: "Akbar Rahmati Ziveh et al"
-output:
+date: "2023-06-05"
+output: 
   rmarkdown::html_vignette:
     toc: true
-    toc_float:
-      collapsed: false
-      smooth_scroll: false
+    toc_depth: 4
+vignette: >
+  %\VignetteIndexEntry{evapoRe package}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
+
+<style>
+body {
+text-align: justify}
+</style>
+
+
 
 # evapoRe Package
 
-This vignette provides an overview of the functions available in the
-`evapoRe` package, along with examples of their usage and data
-visualization.
+This vignette provides an overview of the functions available in the `evapoRe` package, along with examples of their usage and data visualization.
 
 ## Installation
 
@@ -22,77 +32,6 @@ To install the `evapoRe` package, you can use the `devtools` package:
 
 ```r
 devtools::install_github("AkbarR1184/evapoRe")
-```
-
-```
-## These packages have more recent versions available.
-## It is recommended to update all of them.
-## Which would you like to update?
-## 
-##  1: All                                
-##  2: CRAN packages only                 
-##  3: None                               
-##  4: tidyselect (1.1.2 -> 1.2.0 ) [CRAN]
-##  5: pillar     (1.8.1 -> 1.9.0 ) [CRAN]
-##  6: magrittr   (2.0.1 -> 2.0.3 ) [CRAN]
-##  7: vctrs      (0.4.1 -> 0.6.2 ) [CRAN]
-##  8: vroom      (1.5.7 -> 1.6.3 ) [CRAN]
-##  9: tibble     (3.1.6 -> 3.2.1 ) [CRAN]
-## 10: rlang      (1.0.2 -> 1.1.1 ) [CRAN]
-## 11: lifecycle  (1.0.1 -> 1.0.3 ) [CRAN]
-## 12: cli        (3.2.0 -> 3.6.1 ) [CRAN]
-## 13: fs         (1.5.2 -> 1.6.2 ) [CRAN]
-## 14: ps         (1.6.0 -> 1.7.5 ) [CRAN]
-## 15: processx   (3.5.3 -> 3.8.1 ) [CRAN]
-## 16: pkgload    (1.2.4 -> 1.3.2 ) [CRAN]
-## 17: callr      (3.7.0 -> 3.7.3 ) [CRAN]
-## 18: testthat   (3.1.3 -> 3.1.8 ) [CRAN]
-## 19: stringr    (1.4.1 -> 1.5.0 ) [CRAN]
-## 20: dplyr      (1.0.8 -> 1.1.2 ) [CRAN]
-## 21: purrr      (0.3.4 -> 1.0.1 ) [CRAN]
-## 22: tidyr      (1.2.0 -> 1.3.0 ) [CRAN]
-## 23: gtable     (0.3.1 -> 0.3.3 ) [CRAN]
-## 24: ggplot2    (3.3.6 -> 3.4.2 ) [CRAN]
-## 25: openair    (2.9-1 -> 2.17-0) [CRAN]
-## 26: ggpubr     (0.4.0 -> 0.6.0 ) [CRAN]
-## 
-##   
-  
-  
-   checking for file 'C:\Users\Admin\AppData\Local\Temp\Rtmp0Q8PGQ\remotes1f086474723b\AkbarR1184-evapoRe-2d753df/DESCRIPTION' ...
-  
-   checking for file 'C:\Users\Admin\AppData\Local\Temp\Rtmp0Q8PGQ\remotes1f086474723b\AkbarR1184-evapoRe-2d753df/DESCRIPTION' ... 
-  
-v  checking for file 'C:\Users\Admin\AppData\Local\Temp\Rtmp0Q8PGQ\remotes1f086474723b\AkbarR1184-evapoRe-2d753df/DESCRIPTION' (372ms)
-## 
-  
-  
-  
--  preparing 'evapoRe':
-##    checking DESCRIPTION meta-information ...
-  
-   checking DESCRIPTION meta-information ... 
-  
-v  checking DESCRIPTION meta-information
-## 
-  
-  
-  
--  checking for LF line-endings in source and make files and shell scripts
-## 
-  
-  
-  
--  checking for empty or unneeded directories
-## 
-  
-  
-  
--  building 'evapoRe_1.0.0.tar.gz'
-## 
-  
-   
-## 
 ```
 
 ## Load the Package
@@ -106,9 +45,7 @@ library(evapoRe)
 
 ## Download Data
 
-To begin working with the `evapoRe` package, you can download the
-required data using the `download_data()` function. For example, to
-download the GLDAS CLSM dataset, you can use the following command:
+To begin working with the `evapoRe` package, you can download the required data using the `download_data()` function. For example, to download the GLDAS CLSM dataset, you can use the following command:
 
 
 ```r
@@ -117,9 +54,7 @@ download_data(name = 'gldas-clsm')
 
 ## Data Exploration
 
-After downloading the data, you can explore its information using the
-`show_info()` function. The following code demonstrates how to display
-information about the global GLDAS CLSM dataset:
+After downloading the data, you can explore its information using the `show_info()` function. The following code demonstrates how to display information about the global GLDAS CLSM dataset:
 
 
 ```r
@@ -141,10 +76,7 @@ show_info(gldas_clsm_global)
 
 ## Data Subsetting
 
-To subset the downloaded data based on specific criteria, you can use
-the `subset_spacetime()` function. The example below shows how to subset
-the GLDAS CLSM dataset for the years 2001-2010 and within a bounding
-box:
+To subset the downloaded data based on specific criteria, you can use the `subset_spacetime()` function. The example below shows how to subset the GLDAS CLSM dataset for the years 2001-2010 and within a bounding box:
 
 
 ```r
@@ -167,9 +99,7 @@ show_info(gldas_clsm_subset)
 
 ## Data Cropping
 
-To crop the data to a specific spatial extent, you can utilize the
-`crop_data()` function. The code snippet below demonstrates how to crop
-the subsetted GLDAS CLSM data to a specific shapefile:
+To crop the data to a specific spatial extent, you can utilize the `crop_data()` function. The code snippet below demonstrates how to crop the subsetted GLDAS CLSM data to a specific shapefile:
 
 
 ```r
@@ -192,9 +122,7 @@ show_info(gldas_clsm_cz)
 
 ## Time Series Creation
 
-To convert the data into time series format, you can use the `make_ts()`
-function. Here's an example of creating time series for the global GLDAS
-CLSM dataset:
+To convert the data into time series format, you can use the `make_ts()` function. Here's an example of creating time series for the global GLDAS CLSM dataset:
 
 
 ```r
@@ -220,119 +148,88 @@ head(gldas_clsm_global_ts, 12)
 
 ## Data Visualization
 
-The `evapoRe` package provides several functions for visualizing the
-data. Here are some examples:
+
+
+The `evapoRe` package provides several functions for visualizing the data. Here are some examples:
 
 ### Map Visualization
 
-You can use the `plot_map()` function to visualize spatial data on a
-map. The following code demonstrates how to plot the first layer of the
-global GLDAS CLSM dataset:
+You can use the `plot_map()` function to visualize spatial data on a map. The following code demonstrates how to plot the first layer of the global GLDAS CLSM dataset:
 
 
 ```r
 plot_map(gldas_clsm_global[[6]])
 ```
 
-![plot of chunk unnamed-chunk-31](figure/unnamed-chunk-31-1.png)
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
 
-Similarly, you can plot the first layer of the subsetted and cropped
-datasets using `plot_map(gldas_clsm_subset[[6]])` and
-`plot_map(gldas_clsm_cz[[6]])`, respectively.
+Similarly, you can plot the first layer of the subsetted and cropped datasets using `plot_map(gldas_clsm_subset[[6]])` and `plot_map(gldas_clsm_cz[[6]])`, respectively.
 
 ### Time Series Visualization
 
-To visualize the data as time series, you can utilize the `plot_line()`
-function. Here's an example of plotting
-
-the time series for the global GLDAS CLSM dataset:
+To visualize the data as time series, you can utilize the `plot_line()` function. Here's an example of plotting the time series for the global GLDAS CLSM dataset:
 
 
 ```r
 plot_line(gldas_clsm_global_ts)
 ```
 
-![plot of chunk unnamed-chunk-32](figure/unnamed-chunk-32-1.png)
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png)
 
-Similarly, you can plot the time series for the subsetted and cropped
-datasets using `plot_line(gldas_clsm_subset_ts)` and
-`plot_line(gldas_clsm_cz_ts)`, respectively.
+Similarly, you can plot the time series for the subsetted and cropped datasets using `plot_line(gldas_clsm_subset_ts)` and `plot_line(gldas_clsm_cz_ts)`, respectively.
 
 ### Heatmap Visualization
 
-The `plot_heatmap()` function allows you to create heatmaps of the data.
-Here's an example of plotting a heatmap for the global GLDAS CLSM
-dataset:
+The `plot_heatmap()` function allows you to create heatmaps of the data. Here's an example of plotting a heatmap for the global GLDAS CLSM dataset:
 
 
 ```r
 plot_heatmap(gldas_clsm_global_ts)
 ```
 
-![plot of chunk unnamed-chunk-33](figure/unnamed-chunk-33-1.png)
+![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
 
-You can also create heatmaps for the subsetted and cropped datasets
-using `plot_heatmap(gldas_clsm_subset_ts)` and
-`plot_heatmap(gldas_clsm_cz_ts)`, respectively.
+You can also create heatmaps for the subsetted and cropped datasets using `plot_heatmap(gldas_clsm_subset_ts)` and `plot_heatmap(gldas_clsm_cz_ts)`, respectively.
 
 ### Boxplot Visualization
 
-To visualize the distribution of the data using boxplots, you can use
-the `plot_box()` function. Here's an example of plotting boxplots for
-the global GLDAS CLSM dataset:
+To visualize the distribution of the data using boxplots, you can use the `plot_box()` function. Here's an example of plotting boxplots for the global GLDAS CLSM dataset:
 
 
 ```r
 plot_box(gldas_clsm_global_ts)
 ```
 
-![plot of chunk unnamed-chunk-34](figure/unnamed-chunk-34-1.png)
+![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-1.png)
 
-Similarly, you can plot boxplots for the subsetted and cropped datasets
-using `plot_box(gldas_clsm_subset_ts)` and `plot_box(gldas_clsm_cz_ts)`,
-respectively.
+Similarly, you can plot boxplots for the subsetted and cropped datasets using `plot_box(gldas_clsm_subset_ts)` and `plot_box(gldas_clsm_cz_ts)`, respectively.
 
 ### Density Plot Visualization
 
-The `plot_density()` function allows you to create density plots of the
-data. Here's an example of plotting a density plot for the global GLDAS
-CLSM dataset:
+The `plot_density()` function allows you to create density plots of the data. Here's an example of plotting a density plot for the global GLDAS CLSM dataset:
 
 
 ```r
 plot_density(gldas_clsm_global_ts)
 ```
 
-![plot of chunk unnamed-chunk-35](figure/unnamed-chunk-35-1.png)
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png)
 
-You can also create density plots for the subsetted and cropped datasets
-using `plot_density(gldas_clsm_subset_ts)` and
-`plot_density(gldas_clsm_cz_ts)`, respectively.
+You can also create density plots for the subsetted and cropped datasets using `plot_density(gldas_clsm_subset_ts)` and `plot_density(gldas_clsm_cz_ts)`, respectively.
 
 ### Summary Plot Visualization
 
-The `plot_summary()` function provides a summary plot of the data.
-Please note that for good aesthetics, it is recommended to save the
-`plot_summary()` output using `ggsave()` with specified width and
-height. Here's an example:
+The `plot_summary()` function provides a summary plot of the data. Please note that for good aesthetics, it is recommended to save the `plot_summary()` output using `ggsave()` with specified width and height. Here's an example:
 
 
 ```r
 plot_summary(gldas_clsm_global_ts) # NOTE: For good aesthetics, we recommend saving plot_summary with ggsave(<filename>, <plot>, width = 16.3, height = 15.03).
 ```
 
-```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-```
+![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-1.png)
 
-![plot of chunk unnamed-chunk-36](figure/unnamed-chunk-36-1.png)
+This covers the visualization capabilities of the `evapoRe` package. You can further explore these functions and their parameters in the package documentation for more customization options.
 
-This covers the visualization capabilities of the `evapoRe` package. You
-can further explore these functions and their parameters in the package
-documentation for more customization options.
+---
 
-------------------------------------------------------------------------
-
-This concludes the vignette on the `evapoRe` package. For more detailed
-usage instructions and additional functions, please refer to the package
-documentation.
+This concludes the vignette on the `evapoRe` package. For more detailed usage instructions and additional functions, please refer to the package documentation.
