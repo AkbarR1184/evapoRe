@@ -8,7 +8,7 @@
 #' @keywords internal
 
 aux_ts <- function(dummie_name){
-  if (dummie_name == "era5_land"){
+  if (dummie_name == "era5-land"){
     dummie <- c("ERA5-Land", "Reanalysis")
   } else if (dummie_name == "era5"){
     dummie <- c("ERA5", "Reanalysis")
