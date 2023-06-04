@@ -1,4 +1,7 @@
-*.R
-*gadm
+.Ruserdata
+.Rproj.user
+.Rhistory
 .RData
 .Ruserdata
+data/database
+data/processed
