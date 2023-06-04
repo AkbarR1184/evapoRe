@@ -1,12 +1,13 @@
 ---
+title: "evpoRe package"
+author: "Akbar Rahmati Ziveh et al"
 output:
-  html_document:
-    df_print: paged
+  rmarkdown::html_vignette:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
 ---
-
-```{r, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 # evapoRe Package
 
