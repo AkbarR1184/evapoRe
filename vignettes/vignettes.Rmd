@@ -37,7 +37,7 @@ required data using the `download_data()` function. For example, to
 download the GLDAS CLSM dataset, you can use the following command:
 
 ```{r}
-download_data(name = 'gldas_clsm')
+download_data(name = 'gldas-clsm')
 ```
 
 ## Data Exploration
@@ -47,7 +47,7 @@ After downloading the data, you can explore its information using the
 information about the global GLDAS CLSM dataset:
 
 ```{r}
-gldas_clsm_global <- raster::brick('gldas-clsm_e_mm_land_200001_202211_025_monthly.nc')
+gldas_clsm_global <- raster::brick('C:/article/evapoRe_p/evapoRe/vignettes/data/database/gldas-clsm_e_mm_land_200001_202211_025_monthly.nc')
 show_info(gldas_clsm_global)
 ```
 
@@ -70,7 +70,7 @@ To crop the data to a specific spatial extent, you can utilize the
 the subsetted GLDAS CLSM data to a specific shapefile:
 
 ```{r}
-gldas_clsm_cz <- crop_data(x = gldas_clsm_subset, shp_path = "gadm41_CZE_0.shp")
+gldas_clsm_cz <- crop_data(x = gldas_clsm_subset, shp_path = "C:/article/evapoRe_p/evapoRe/vignettes/data/database/gadm41_CZE_0.shp")
 show_info(gldas_clsm_cz)
 ```
 
