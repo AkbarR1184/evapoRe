@@ -27,3 +27,7 @@ Imports: grDevices, methods, parallel, stats, utils, data.table, ggplot2,
 License: GPL-3
 Encoding: UTF-8
 RoxygenNote: 7.1.2
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
