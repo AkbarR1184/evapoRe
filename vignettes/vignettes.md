@@ -24,6 +24,77 @@ To install the `evapoRe` package, you can use the `devtools` package:
 devtools::install_github("AkbarR1184/evapoRe")
 ```
 
+```
+## These packages have more recent versions available.
+## It is recommended to update all of them.
+## Which would you like to update?
+## 
+##  1: All                                
+##  2: CRAN packages only                 
+##  3: None                               
+##  4: tidyselect (1.1.2 -> 1.2.0 ) [CRAN]
+##  5: pillar     (1.8.1 -> 1.9.0 ) [CRAN]
+##  6: magrittr   (2.0.1 -> 2.0.3 ) [CRAN]
+##  7: vctrs      (0.4.1 -> 0.6.2 ) [CRAN]
+##  8: vroom      (1.5.7 -> 1.6.3 ) [CRAN]
+##  9: tibble     (3.1.6 -> 3.2.1 ) [CRAN]
+## 10: rlang      (1.0.2 -> 1.1.1 ) [CRAN]
+## 11: lifecycle  (1.0.1 -> 1.0.3 ) [CRAN]
+## 12: cli        (3.2.0 -> 3.6.1 ) [CRAN]
+## 13: fs         (1.5.2 -> 1.6.2 ) [CRAN]
+## 14: ps         (1.6.0 -> 1.7.5 ) [CRAN]
+## 15: processx   (3.5.3 -> 3.8.1 ) [CRAN]
+## 16: pkgload    (1.2.4 -> 1.3.2 ) [CRAN]
+## 17: callr      (3.7.0 -> 3.7.3 ) [CRAN]
+## 18: testthat   (3.1.3 -> 3.1.8 ) [CRAN]
+## 19: stringr    (1.4.1 -> 1.5.0 ) [CRAN]
+## 20: dplyr      (1.0.8 -> 1.1.2 ) [CRAN]
+## 21: purrr      (0.3.4 -> 1.0.1 ) [CRAN]
+## 22: tidyr      (1.2.0 -> 1.3.0 ) [CRAN]
+## 23: gtable     (0.3.1 -> 0.3.3 ) [CRAN]
+## 24: ggplot2    (3.3.6 -> 3.4.2 ) [CRAN]
+## 25: openair    (2.9-1 -> 2.17-0) [CRAN]
+## 26: ggpubr     (0.4.0 -> 0.6.0 ) [CRAN]
+## 
+##   
+  
+  
+   checking for file 'C:\Users\Admin\AppData\Local\Temp\Rtmp0Q8PGQ\remotes1f086474723b\AkbarR1184-evapoRe-2d753df/DESCRIPTION' ...
+  
+   checking for file 'C:\Users\Admin\AppData\Local\Temp\Rtmp0Q8PGQ\remotes1f086474723b\AkbarR1184-evapoRe-2d753df/DESCRIPTION' ... 
+  
+v  checking for file 'C:\Users\Admin\AppData\Local\Temp\Rtmp0Q8PGQ\remotes1f086474723b\AkbarR1184-evapoRe-2d753df/DESCRIPTION' (372ms)
+## 
+  
+  
+  
+-  preparing 'evapoRe':
+##    checking DESCRIPTION meta-information ...
+  
+   checking DESCRIPTION meta-information ... 
+  
+v  checking DESCRIPTION meta-information
+## 
+  
+  
+  
+-  checking for LF line-endings in source and make files and shell scripts
+## 
+  
+  
+  
+-  checking for empty or unneeded directories
+## 
+  
+  
+  
+-  building 'evapoRe_1.0.0.tar.gz'
+## 
+  
+   
+## 
+```
+
 ## Load the Package
 
 Once installed, you can load the `evapoRe` package into your R session:
@@ -163,7 +234,7 @@ global GLDAS CLSM dataset:
 plot_map(gldas_clsm_global[[6]])
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
+![plot of chunk unnamed-chunk-31](figure/unnamed-chunk-31-1.png)
 
 Similarly, you can plot the first layer of the subsetted and cropped
 datasets using `plot_map(gldas_clsm_subset[[6]])` and
@@ -181,7 +252,7 @@ the time series for the global GLDAS CLSM dataset:
 plot_line(gldas_clsm_global_ts)
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
+![plot of chunk unnamed-chunk-32](figure/unnamed-chunk-32-1.png)
 
 Similarly, you can plot the time series for the subsetted and cropped
 datasets using `plot_line(gldas_clsm_subset_ts)` and
@@ -198,9 +269,7 @@ dataset:
 plot_heatmap(gldas_clsm_global_ts)
 ```
 
-```
-## Error in scale_fill_viridis(direction = 1, option = "C"): could not find function "scale_fill_viridis"
-```
+![plot of chunk unnamed-chunk-33](figure/unnamed-chunk-33-1.png)
 
 You can also create heatmaps for the subsetted and cropped datasets
 using `plot_heatmap(gldas_clsm_subset_ts)` and
@@ -217,7 +286,7 @@ the global GLDAS CLSM dataset:
 plot_box(gldas_clsm_global_ts)
 ```
 
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
+![plot of chunk unnamed-chunk-34](figure/unnamed-chunk-34-1.png)
 
 Similarly, you can plot boxplots for the subsetted and cropped datasets
 using `plot_box(gldas_clsm_subset_ts)` and `plot_box(gldas_clsm_cz_ts)`,
@@ -234,7 +303,7 @@ CLSM dataset:
 plot_density(gldas_clsm_global_ts)
 ```
 
-![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-1.png)
+![plot of chunk unnamed-chunk-35](figure/unnamed-chunk-35-1.png)
 
 You can also create density plots for the subsetted and cropped datasets
 using `plot_density(gldas_clsm_subset_ts)` and
@@ -253,8 +322,10 @@ plot_summary(gldas_clsm_global_ts) # NOTE: For good aesthetics, we recommend sav
 ```
 
 ```
-## Error in scale_fill_viridis(direction = 1, option = "C"): could not find function "scale_fill_viridis"
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
+
+![plot of chunk unnamed-chunk-36](figure/unnamed-chunk-36-1.png)
 
 This covers the visualization capabilities of the `evapoRe` package. You
 can further explore these functions and their parameters in the package
