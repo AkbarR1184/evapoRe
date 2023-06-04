@@ -21,11 +21,6 @@ To install the `evapoRe` package, you can use the `devtools` package:
 devtools::install_github("AkbarR1184/evapoRe")
 ```
 
-```
-## Skipping install of 'evapoRe' from a github remote, the SHA1 (1f3399fe) has not changed since last install.
-##   Use `force = TRUE` to force installation
-```
-
 ## Load the Package
 
 Once installed, you can load the `evapoRe` package into your R session:
@@ -46,10 +41,6 @@ download the GLDAS CLSM dataset, you can use the following command:
 download_data(name = 'gldas-clsm')
 ```
 
-```
-## Warning in dir.create(paste0(destination, "/data")): '.\data' already exists
-```
-
 ## Data Exploration
 
 After downloading the data, you can explore its information using the
@@ -58,7 +49,7 @@ information about the global GLDAS CLSM dataset:
 
 
 ```r
-gldas_clsm_global <- raster::brick('C:/article/evapoRe_p/evapoRe/vignettes/data/database/gldas-clsm_e_mm_land_200001_202211_025_monthly.nc')
+gldas_clsm_global <- raster::brick('gldas-clsm_e_mm_land_200001_202211_025_monthly.nc')
 show_info(gldas_clsm_global)
 ```
 
@@ -84,14 +75,6 @@ box:
 
 ```r
 gldas_clsm_subset <- subset_spacetime(gldas_clsm_global, years = c(2001, 2010), bbox = c(2,28,42,58))
-```
-
-```
-## Warning in subset_spacetime(gldas_clsm_global, years = c(2001, 2010), bbox = c(2, : This is
-## not pRecipe data
-```
-
-```r
 show_info(gldas_clsm_subset)
 ```
 
@@ -116,16 +99,7 @@ the subsetted GLDAS CLSM data to a specific shapefile:
 
 
 ```r
-gldas_clsm_cz <- crop_data(x = gldas_clsm_subset, shp_path = "C:/article/evapoRe_p/evapoRe/vignettes/data/database/gadm41_CZE_0.shp")
-```
-
-```
-## Warning in crop_data(x = gldas_clsm_subset, shp_path =
-## "C:/article/evapoRe_p/evapoRe/vignettes/data/database/gadm41_CZE_0.shp"): This is not pRecipe
-## data
-```
-
-```r
+gldas_clsm_cz <- crop_data(x = gldas_clsm_subset, shp_path = "gadm41_CZE_0.shp")
 show_info(gldas_clsm_cz)
 ```
 
@@ -151,13 +125,6 @@ CLSM dataset:
 
 ```r
 gldas_clsm_global_ts <- make_ts(gldas_clsm_global)
-```
-
-```
-## Warning in make_ts(gldas_clsm_global): This is not pRecipe data
-```
-
-```r
 head(gldas_clsm_global_ts, 12)
 ```
 
@@ -191,11 +158,6 @@ global GLDAS CLSM dataset:
 
 ```r
 plot_map(gldas_clsm_global[[6]])
-```
-
-```
-## Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider
-## using geom_tile() instead.
 ```
 
 ![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
@@ -267,10 +229,6 @@ CLSM dataset:
 plot_density(gldas_clsm_global_ts)
 ```
 
-```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-```
-
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png)
 
 You can also create density plots for the subsetted and cropped datasets
@@ -303,4 +261,4 @@ documentation for more customization options.
 
 This concludes the vignette on the `evapoRe` package. For more detailed
 usage instructions and additional functions, please refer to the package
-documentation. \`\`\`
+documentation.
