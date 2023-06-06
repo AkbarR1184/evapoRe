@@ -17,7 +17,7 @@
 #' }
 #' @return No return value, called to download the data set.
 #' @keywords internal
-#' @export
+
 download_all <- function(folder_path = ".", domain = "raw", time_res = "monthly"){
   download_era5_land(folder_path, domain, time_res)
   download_era5(folder_path, domain, time_res)
