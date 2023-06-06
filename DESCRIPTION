@@ -22,7 +22,7 @@ Description: This package provides convenient access to a comprehensive collecti
   By facilitating access and utilization of evapotranspiration data, this package supports hydrological modeling, 
   climate studies, agricultural research, and other data-driven fields.
 Depends: R (>= 4.0.0), pRecipe
-Imports: grDevices, methods, parallel, stats, utils, data.table, ggplot2, 
+Imports: grDevices, methods, parallel, stats, utils,lubridate, data.table, ggplot2, 
   ggpubr, ncdf4, openair, raster, R.utils, scales, sf, viridis
 License: GPL-3
 Encoding: UTF-8
