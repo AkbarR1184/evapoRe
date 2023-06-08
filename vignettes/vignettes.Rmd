@@ -312,7 +312,7 @@ show_info(pet_Oudin)
 ### Generate Time series
 
 To make a time series out of our data, we use the `make_ts` function,
-which has two arguments *data*, , and *autosave*.
+which has two arguments *data*, and *autosave*.
 
 -   *data* is the path to a ".nc" data set file or a RasterBrick object.
 -   *autosave* is set to FALSE by default. If TRUE data will be
