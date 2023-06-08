@@ -17,25 +17,15 @@ pet_hs(tavg, tmax, tmin)
 a RasterBrick object
 }
 \description{
-Function to calculate pet
+Function to calculate PET
 }
 \examples{
-#Downloading temperature data
 download_terraclimate(folder_path = ".","land", variable = "tavg")   
 download_terraclimate(folder_path = ".","land", variable = "tmin") 
 download_terraclimate(folder_path = ".","land", variable = "tmax")
- 
-#Loading the nc files     
-tavg_nc <- "terraclimate_tavg_land_19580101_20221231_025_monthly.nc"
-tmax_nc <- "terraclimate_tmax_land_19580101_20221231_025_monthly.nc"
-tmin_nc <- "terraclimate_tmin_land_19580101_20221231_025_monthly.nc"
-
-# Converting nc files to RasterBrick 
-tavg_brick <- raster::brick(tavg_nc)
-tmax_brick <- raster::brick(tmax_nc)
-tmin_brick <- raster::brick(tmin_nc)
-
-#Calculating PET 
-pet_hs <- pet_calc(method_name = "hs",tavg_brick, tmax_brick, tmin_brick)
+tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
+tmax_brick <- raster::brick("terraclimate_tmax_land_19580101_20221231_025_monthly.nc")
+tmin_brick <- raster::brick("terraclimate_tmin_land_19580101_20221231_025_monthly.nc")
+pet_hs <- pet_calc(method = "hs",tavg_brick, tmax_brick, tmin_brick)
 }
 \keyword{internal}
