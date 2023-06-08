@@ -127,7 +127,7 @@ In this introductory recipe we will first download the FLDAS data set. We will t
 ## Installation
 
 ```{r install, eval = FALSE}
-install.packages('evapoRe')
+devtools::install_github("AkbarR1184/evapoRe")
 library(evapoRe)
 ```
 
@@ -230,6 +230,22 @@ show_info(fldas_cz)
 ```
 ### PET calculation
 
+First we need to download temperature data to to this we will use terraclimate tempereature data from the [Zenodo repository](https://doi.org/10.5281/zenodo.7990413):
+
+```{r download_terraclimate, eval=FALSE}
+download_terraclimate(variable = t, folder_path = ".")
+```
+This will returns terraclimate temperature (Tavg, Tmin, and Tmax) data in follwing name convention e.g., `terraclimate_tavg_land_19580101_20221231_025_monthly.nc`
+
+`pet_calc` function is calculating PET from "hs" for Hargreaves Samani method [@hargreaves1982estimating], "od" for Oudin method [@oudin2005potential], "mb" for McGuinness and Bordne method [@mcguinness1972comparison], "jh" for Jensen Haise method [@jensen1963estimating], and "br" for Baier and Robertson [@baier1965estimation]. 
+
+#### Calculate PET by Oudin method
+
+```{r pet_calc, eval=FALSE}
+tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
+pet_Oudin<- pet_calc(method = "od", tavg = tavg_brick)
+show_info(pet_Oudin)
+```
 ### Generate Time series
 
 To make a time series out of our data, we use the `make_ts` function, which has three arguments *data*, *name*, and *autosave*.
@@ -379,6 +395,6 @@ plot_summary(fldas_global_ts)
 
 # Coming Soon
 
-More functions for data processing and analysis and expanding the database.
+we will introduce significant enhancements to evapotranspiration (ET) database and potential evapotranspiration (PET) calculation methods. This expansion builds upon our existing temperature-based approach and incorporates a radiation-based PET calculation methods, along with an expanded range of temperature-based methods. Our aim is to provide users with a more comprehensive and accurate estimation of ET and PET, catering to a broader range of applications and requirements.
 
 # References
