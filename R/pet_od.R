@@ -8,14 +8,9 @@
 #' @return a RasterBrick object
 #' @keywords internal
 #' @examples 
-#' #Downloading temperature data
 #' download_terraclimate(folder_path = ".","land", variable = "tavg") 
-#' #Loading the nc files     
-#' tavg_nc <- "terraclimate_tavg_land_19580101_20221231_025_monthly.nc"
-#' # Converting nc files to RasterBrick 
-#' tavg_brick <- raster::brick(tavg_nc)
-#' #Calculating PET
-#' pet_od <- pet_calc(method_name = "od", tavg = tavg_brick)
+#' tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
+#' pet_od <- pet_calc(method = "od", tavg = tavg_brick)
 
 pet_od <- function(tavg){
   OUDIN_1 <- 5
