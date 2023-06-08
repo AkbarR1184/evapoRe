@@ -8,14 +8,10 @@
 #' @return a RasterBrick object
 #' @keywords internal
 #' @examples 
-#' #Downloading temperature data
-#' download_terraclimate(folder_path = ".","land", variable = "tavg") 
-#' #Loading the nc files     
-#' tavg_nc <- "terraclimate_tavg_land_19580101_20221231_025_monthly.nc"
-#' # Converting nc files to RasterBrick 
-#' tavg_brick <- raster::brick(tavg_nc)
-#' #Calculating PET
-#' pet_jh <- pet_calc(method_name = "jh", tavg = tavg_brick)
+#' \donttest{ 
+#' download_terraclimate(folder_path = ".","land", variable = "t")}  
+#' tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
+#' pet_jh <- pet_calc(method = "jh", tavg = tavg_brick)
 
 pet_jh <- function(tavg){
   LATENT_HEAT_CONSTANT_1 <- 2.501

@@ -18,10 +18,10 @@ a RasterBrick object
 Function to calculate pet
 }
 \examples{
-\dontrun{
-x <- tavg.nc  or character string with path to data file 
-x_brick <- raster::brick(x) 
-pet <- pet_br(tavg = x_brick)
-}
+\donttest{ 
+download_terraclimate(folder_path = ".","land", variable = "t")} 
+tmax_brick <- raster::brick("terraclimate_tmax_land_19580101_20221231_025_monthly.nc")
+tmin_brick <- raster::brick("terraclimate_tmin_land_19580101_20221231_025_monthly.nc")
+pet_br <- pet_calc(method = "br", tmax = tmax_brick, tmin = tmin_brick)
 }
 \keyword{internal}

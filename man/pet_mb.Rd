@@ -16,10 +16,9 @@ a RasterBrick object
 Function to calculate pet
 }
 \examples{
-\dontrun{
-x <- tavg.nc  or charater string with path to data file 
-x_brick <- raster::brick(x) 
-pet <- pet_mb(tavg = x_brick)
-}
+\donttest{ 
+download_terraclimate(folder_path = ".","land", variable = "t")} 
+tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
+pet_mb <- pet_calc(method = "mb", tavg = tavg_brick)
 }
 \keyword{internal}
