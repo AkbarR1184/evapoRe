@@ -20,8 +20,7 @@ Description: The evapoRe package provides convenient access to diverse global ev
   evapoRe supports hydrological modeling, climate studies, agricultural research, and other data-driven fields by facilitating access to ET data and offering powerful analysis capabilities.
   Users can seamlessly integrate the package into their research applications and explore diverse ET data at different resolutions.
 Depends: R (>= 4.0.0), pRecipe
-Imports: grDevices, methods, parallel, stats, utils, lubridate, data.table, ggplot2, 
-  ggpubr, ncdf4, openair, raster, R.utils, scales, sf, viridis
+Imports: grDevices, methods, parallel, stats, utils, lubridate, data.table, ncdf4, raster, R.utils
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
