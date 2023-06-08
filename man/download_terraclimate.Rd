@@ -33,7 +33,8 @@ download_terraclimate(
 \item{"e" for evapotranspiration,}
 \item{"tmin" for minimum temperature,}
 \item{"tmax" for maximum temperature,}
-\item{"tavg" for average temperature.}
+\item{"tavg" for average temperature,}
+\item{"t" for all temperature variables (tmin, tmax, tavg).}
 }}
 }
 \value{
