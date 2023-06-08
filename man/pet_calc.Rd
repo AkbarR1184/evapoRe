@@ -30,9 +30,7 @@ The function \code{pet_calc} calculate selected PET method
 }
 \examples{
 #Calculate PET by Hargreaves-Samani method 
-download_terraclimate(folder_path = ".","land", variable = "tavg")   
-download_terraclimate(folder_path = ".","land", variable = "tmin") 
-download_terraclimate(folder_path = ".","land", variable = "tmax")
+download_terraclimate(folder_path = ".","land", variable = "t")   
 tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
 tmax_brick <- raster::brick("terraclimate_tmax_land_19580101_20221231_025_monthly.nc")
 tmin_brick <- raster::brick("terraclimate_tmin_land_19580101_20221231_025_monthly.nc")
