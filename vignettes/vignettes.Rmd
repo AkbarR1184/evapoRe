@@ -7,7 +7,7 @@ output:
     toc: true
     toc_depth: 4
 vignette: >
-  %\VignetteIndexEntry{pRecipe| Precipitation R Recipes}
+  %\VignetteIndexEntry{evapoRe| evapotranspiration R Recipes}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
