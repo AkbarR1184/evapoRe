@@ -8,7 +8,8 @@
 #' @return a RasterBrick object
 #' @keywords internal
 #' @examples 
-#' download_terraclimate(folder_path = ".","land", variable = "tavg") 
+#' \donttest{ 
+#' download_terraclimate(folder_path = ".","land", variable = "t")}  
 #' tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
 #' pet_jh <- pet_calc(method = "jh", tavg = tavg_brick)
 
