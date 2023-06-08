@@ -312,10 +312,9 @@ show_info(pet_Oudin)
 ### Generate Time series
 
 To make a time series out of our data, we use the `make_ts` function,
-which has three arguments *data*, *name*, and *autosave*.
+which has two arguments *data*, , and *autosave*.
 
 -   *data* is the path to a ".nc" data set file or a RasterBrick object.
--   *name* is the short name of a data set. E.g., 'fldas'.
 -   *autosave* is set to FALSE by default. If TRUE data will be
     automatically stored in the same location of the input file.
 
@@ -467,7 +466,7 @@ plot_summary(fldas_global_ts)
 
 # Coming Soon
 
-we will introduce significant enhancements to ET database and PET
+We will introduce significant enhancements to ET database and PET
 calculation methods. This expansion builds upon our existing
 temperature-based approach and incorporates a radiation-based PET
 calculation methods, along with an expanded range of temperature-based
