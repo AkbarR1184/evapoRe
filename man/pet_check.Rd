@@ -4,10 +4,10 @@
 \alias{pet_check}
 \title{PET method name checker}
 \usage{
-pet_check(method_name)
+pet_check(method)
 }
 \arguments{
-\item{method_name}{a character string.}
+\item{method}{a character string.}
 }
 \value{
 No return value, called to download the data set.
