@@ -230,14 +230,15 @@ show_info(fldas_cz)
 ```
 ### PET calculation
 
-First we need to download temperature data to to this we will use terraclimate tempereature data from the [Zenodo repository](https://doi.org/10.5281/zenodo.7990413):
+First we need to download temperature data to to this we will use terraclimate temperature data from the [Zenodo repository](https://doi.org/10.5281/zenodo.7990413):
+* *variable* is the variable name in which `t` stands for tavg, tmin, and tmax.
 
 ```{r download_terraclimate, eval=FALSE}
 download_terraclimate(variable = t, folder_path = ".")
 ```
-This will returns terraclimate temperature (Tavg, Tmin, and Tmax) data in follwing name convention e.g., `terraclimate_tavg_land_19580101_20221231_025_monthly.nc`
+This will returns terraclimate temperature data in following name convention e.g., `terraclimate_tavg_land_19580101_20221231_025_monthly.nc`
 
-`pet_calc` function is calculating PET from "hs" for Hargreaves Samani method [@hargreaves1982estimating], "od" for Oudin method [@oudin2005potential], "mb" for McGuinness and Bordne method [@mcguinness1972comparison], "jh" for Jensen Haise method [@jensen1963estimating], and "br" for Baier and Robertson [@baier1965estimation]. 
+`pet_calc` function is calculating PET from various PET *method*."hs" for Hargreaves Samani method [@hargreaves1982estimating], "od" for Oudin method [@oudin2005potential], "mb" for McGuinness and Bordne method [@mcguinness1972comparison], "jh" for Jensen Haise method [@jensen1963estimating], and "br" for Baier and Robertson [@baier1965estimation]. 
 
 #### Calculate PET by Oudin method
 
