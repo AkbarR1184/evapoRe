@@ -9,11 +9,17 @@
 #' @return a RasterBrick object
 #' @keywords internal
 #' @examples 
-#' \dontrun{
-#' x <- tavg.nc  or character string with path to data file 
-#' x_brick <- raster::brick(x) 
-#' pet <- pet_br(tavg = x_brick)
-#' }
+#' #Downloading temperature data
+#' download_terraclimate(folder_path = ".","land", variable = "tmin") 
+#' download_terraclimate(folder_path = ".","land", variable = "tmax")
+#' #Loading the nc files     
+#' tmax_nc <- "terraclimate_tmax_land_19580101_20221231_025_monthly.nc"
+#' tmin_nc <- "terraclimate_tmin_land_19580101_20221231_025_monthly.nc"
+#' # Converting nc files to RasterBrick 
+#' tmax_brick <- raster::brick(tmax_nc)
+#' tmin_brick <- raster::brick(tmin_nc)
+#' #Calculating PET 
+#' pet_br <- pet_calc(method_name = "br", tmax = tmax_brick, tmin = tmin_brick)
 
 pet_br <- function(tmax,tmin){
   BR_1 <- 0.109
