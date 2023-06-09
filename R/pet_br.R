@@ -9,8 +9,12 @@
 #' @return a RasterBrick object
 #' @keywords internal
 #' @examples
+<<<<<<< HEAD
 #' \donttest{ 
 #' download_terraclimate(folder_path = ".","land", variable = "t")}
+=======
+#' function \code{download_terraclimate} is used to download TerraClimate temperature data (tmax,tmin)
+>>>>>>> 8922f7f25bd293f59fced6d375f76cb6aff969d7
 #' tmax_brick <- raster::brick("terraclimate_tmax_land_19580101_20221231_025_monthly.nc")
 #' tmin_brick <- raster::brick("terraclimate_tmin_land_19580101_20221231_025_monthly.nc")
 #' pet_br <- pet_calc(method = "br", tmax = tmax_brick, tmin = tmin_brick)
