@@ -41,13 +41,12 @@ data('fldas_subset_ts')
 data('fldas_cz_ts')
 ```
 
-The `evapoRe` package is a complementary tool to the `pRecipe` package,
-developed as part of the ITHACA project at the Faculty of Environmental
-Sciences, Czech University of Life Sciences Prague, Czechia. Its primary
-purpose is to facilitate the download, exploration, visualization, and
-analysis of evapotranspiration (ET) data. Additionally, evapoRe offers
-the functionality to calculate various potential evapotranspiration
-(PET) methods.
+The `evapoRe` package developed as part of the ITHACA project at the
+Faculty of Environmental Sciences, Czech University of Life Sciences
+Prague, Czechia. Its primary purpose is to facilitate the download,
+exploration, visualization, and analysis of evapotranspiration (ET)
+data. Additionally, evapoRe offers the functionality to calculate
+various potential evapotranspiration (PET) methods.
 
 ------------------------------------------------------------------------
 
@@ -251,7 +250,7 @@ file](https://geodata.ucdavis.edu/gadm/gadm4.1/shp/gadm41_CZE_shp.zip),
 and inspect its content with `show_info`:
 
 ```{r crop, eval = FALSE}
-fldas_cz <- crop_data(x = fldas_cz, shp_path = "gadm41_CZE_0.shp")
+fldas_cz <- crop_data(fldas_subset, shp_path = "gadm41_CZE_0.shp")
 show_info(fldas_cz)
 ```
 
@@ -286,19 +285,19 @@ convention e.g.,
 
 `terraclimate_tavg_land_19580101_20221231_025_monthly.nc`
 
-`pet_calc` function is calculating PET from various PET *method*. "hs"
-for Hargreaves Samani method [@hargreaves1982estimating], "od" for Oudin
+`pet_calc` function is calculating PET from various *method*. "hs" for
+Hargreaves Samani method [@hargreaves1982estimating], "od" for Oudin
 method [@oudin2005potential], "mb" for McGuinness and Bordne method
 [@mcguinness1972comparison], "jh" for Jensen Haise method
 [@jensen1963estimating], and "br" for Baier and Robertson
 [@baier1965estimation].
 
-#### Calculate PET by Oudin method
+#### Calculate PET by oudin method
 
 ```{r pet_calc, eval=FALSE}
 tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
-pet_Oudin<- pet_calc(method = "od", tavg = tavg_brick)
-show_info(pet_Oudin)
+pet_oudin <- pet_calc(method = "od", tavg = tavg_brick)
+show_info(pet_oudin)
 ```
 
 ### Generate Time series
@@ -307,6 +306,7 @@ To make a time series out of our data, we use the `make_ts` function,
 which has two arguments *data*, and *autosave*.
 
 -   *data* is the path to a ".nc" data set file or a RasterBrick object.
+-   *name* is the dataset name.
 -   *autosave* is set to FALSE by default. If TRUE data will be
     automatically stored in the same location of the input file.
 
@@ -314,66 +314,66 @@ Let's generate the time series for our three different fldas data sets
 (Global, Central Europe, and Czechia), and inspect its first 12 rows:
 
 ```{r global_ts, eval=FALSE}
-fldas_global_ts <- make_ts(fldas_global)
+fldas_global_ts <- make_ts(fldas_global, name="fldas")
 head(fldas_global_ts, 12)
 ```
 
 ```         
-          date    value name type
- 1: 1982-01-01 40.01818   NA   NA
- 2: 1982-02-01 39.05691   NA   NA
- 3: 1982-03-01 45.63258   NA   NA
- 4: 1982-04-01 48.38817   NA   NA
- 5: 1982-05-01 56.04541   NA   NA
- 6: 1982-06-01 59.48527   NA   NA
- 7: 1982-07-01 63.42378   NA   NA
- 8: 1982-08-01 58.08678   NA   NA
- 9: 1982-09-01 47.53051   NA   NA
-10: 1982-10-01 43.30959   NA   NA
-11: 1982-11-01 39.14826   NA   NA
-12: 1982-12-01 39.41859   NA   NA
+ date    value  name          type
+ 1: 1982-01-01 40.01818 FLDAS Model forcing
+ 2: 1982-02-01 39.05691 FLDAS Model forcing
+ 3: 1982-03-01 45.63258 FLDAS Model forcing
+ 4: 1982-04-01 48.38817 FLDAS Model forcing
+ 5: 1982-05-01 56.04541 FLDAS Model forcing
+ 6: 1982-06-01 59.48527 FLDAS Model forcing
+ 7: 1982-07-01 63.42378 FLDAS Model forcing
+ 8: 1982-08-01 58.08678 FLDAS Model forcing
+ 9: 1982-09-01 47.53051 FLDAS Model forcing
+10: 1982-10-01 43.30959 FLDAS Model forcing
+11: 1982-11-01 39.14826 FLDAS Model forcing
+12: 1982-12-01 39.41859 FLDAS Model forcing
 ```
 
 ```{r subset_ts, eval=FALSE}
-fldas_subset_ts <- make_ts(fldas_subset)
+fldas_subset_ts <- make_ts(fldas_subset, name="fldas")
 head(fldas_subset_ts, 12)
 ```
 
 ```         
-          date     value name type
- 1: 2001-01-01  14.47523   NA   NA
- 2: 2001-02-01  24.55700   NA   NA
- 3: 2001-03-01  43.77176   NA   NA
- 4: 2001-04-01  61.23033   NA   NA
- 5: 2001-05-01 112.55881   NA   NA
- 6: 2001-06-01 114.57058   NA   NA
- 7: 2001-07-01 116.47619   NA   NA
- 8: 2001-08-01  79.83941   NA   NA
- 9: 2001-09-01  50.78079   NA   NA
-10: 2001-10-01  32.62168   NA   NA
-11: 2001-11-01  20.41700   NA   NA
-12: 2001-12-01  13.59456   NA   NA
+          date     value  name          type
+ 1: 2001-01-01  14.47523 FLDAS Model forcing
+ 2: 2001-02-01  24.55700 FLDAS Model forcing
+ 3: 2001-03-01  43.77176 FLDAS Model forcing
+ 4: 2001-04-01  61.23033 FLDAS Model forcing
+ 5: 2001-05-01 112.55881 FLDAS Model forcing
+ 6: 2001-06-01 114.57058 FLDAS Model forcing
+ 7: 2001-07-01 116.47619 FLDAS Model forcing
+ 8: 2001-08-01  79.83941 FLDAS Model forcing
+ 9: 2001-09-01  50.78079 FLDAS Model forcing
+10: 2001-10-01  32.62168 FLDAS Model forcing
+11: 2001-11-01  20.41700 FLDAS Model forcing
+12: 2001-12-01  13.59456 FLDAS Model forcing
 ```
 
 ```{r cz_ts, eval=FALSE}
-fldas_cz_ts <- make_ts(fldas_cz)
+fldas_cz_ts <- make_ts(fldas_cz, name = "fldas")
 head(fldas_cz_ts, 12)
 ```
 
 ```         
-          date     value name type
- 1: 2001-01-01  12.23963   NA   NA
- 2: 2001-02-01  23.80942   NA   NA
- 3: 2001-03-01  36.08155   NA   NA
- 4: 2001-04-01  50.36031   NA   NA
- 5: 2001-05-01 105.76477   NA   NA
- 6: 2001-06-01  95.73339   NA   NA
- 7: 2001-07-01  99.95880   NA   NA
- 8: 2001-08-01  80.05314   NA   NA
- 9: 2001-09-01  42.28572   NA   NA
-10: 2001-10-01  24.04546   NA   NA
-11: 2001-11-01  15.01222   NA   NA
-12: 2001-12-01  12.39291   NA   NA
+          date     value  name          type
+ 1: 2001-01-01  12.23963 FLDAS Model forcing
+ 2: 2001-02-01  23.80942 FLDAS Model forcing
+ 3: 2001-03-01  36.08155 FLDAS Model forcing
+ 4: 2001-04-01  50.36031 FLDAS Model forcing
+ 5: 2001-05-01 105.76477 FLDAS Model forcing
+ 6: 2001-06-01  95.73339 FLDAS Model forcing
+ 7: 2001-07-01  99.95880 FLDAS Model forcing
+ 8: 2001-08-01  80.05314 FLDAS Model forcing
+ 9: 2001-09-01  42.28572 FLDAS Model forcing
+10: 2001-10-01  24.04546 FLDAS Model forcing
+11: 2001-11-01  15.01222 FLDAS Model forcing
+12: 2001-12-01  12.39291 FLDAS Model forcing
 ```
 
 ## Visualize
@@ -430,17 +430,17 @@ plot_heatmap(fldas_cz_ts)
 #### Boxplot
 
 ```{r}
-plot_box(fldas_global_ts)
-plot_box(fldas_subset_ts)
-plot_box(fldas_cz_ts)
+plot_box(fldas_global_ts, var = "Evapotranspiration")
+plot_box(fldas_subset_ts, var = "Evapotranspiration")
+plot_box(fldas_cz_ts, var = "Evapotranspiration" )
 ```
 
 #### Density plots
 
 ```{r}
-plot_density(fldas_global_ts)
-plot_density(fldas_subset_ts)
-plot_density(fldas_cz_ts)
+plot_density(fldas_global_ts, var = "Evapotranspiration")
+plot_density(fldas_subset_ts, var = "Evapotranspiration")
+plot_density(fldas_cz_ts, var = "Evapotranspiration")
 ```
 
 #### Summary
