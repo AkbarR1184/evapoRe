@@ -21,3 +21,5 @@ pet_od <- function(tavg){
   pet_od <- calc(pet_od, fun = function(y){ifelse(y < 0, 0, y)})
   return(pet_od)
 }
+
+

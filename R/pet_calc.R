@@ -1,4 +1,4 @@
-#' Calculate PET by various  methods 
+#' Calculate PET by various offline methods 
 #'
 #' The function \code{pet_calc} calculate selected PET method  
 #' 
@@ -26,27 +26,12 @@
 #' @return a RasterBrick object
 #' @export
 #' @examples 
-<<<<<<< HEAD
-#' \donttest{
-#' download_terraclimate(folder_path = ".","land", variable = "t")
-
-=======
 #' #Calculate PET by Hargreaves-Samani method 
 #' function \code{download_terraclimate} is used to download TerraClimate temperature data (tmax,tmin and tavg)
->>>>>>> 8922f7f25bd293f59fced6d375f76cb6aff969d7
 #' tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
-#'
 #' tmax_brick <- raster::brick("terraclimate_tmax_land_19580101_20221231_025_monthly.nc")
-#'
 #' tmin_brick <- raster::brick("terraclimate_tmin_land_19580101_20221231_025_monthly.nc")
-<<<<<<< HEAD
-#'
-#' Calculate PET by Hargreaves and Samani method
-#'
-#' pet_hs <- pet_calc(method = "hs", tavg = tavg_brick, tmax = tmax_brick, tmin = tmin_brick)}
-=======
 #' pet_hs <- pet_calc(method = "hs",tavg = tavg_brick, tmax = tmax_brick, tmin = tmin_brick)
->>>>>>> 8922f7f25bd293f59fced6d375f76cb6aff969d7
 
 pet_calc <- function(method = "od", tavg = NULL, tmax = NULL, tmin = NULL){
   pet_mon <- switch(method,
