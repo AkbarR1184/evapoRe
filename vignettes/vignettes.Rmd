@@ -1,5 +1,5 @@
 ---
-title: "evapoRe| Demo"
+title: "evapoRe |Demo"
 author: "Akbar Rahmati Ziveh, Mijael Rodrigo Vargas Godoy, Vishal Thakur,  Yannis Markonis"
 date: "`r Sys.Date()`"
 output: 
@@ -7,7 +7,7 @@ output:
     toc: true
     toc_depth: 4
 vignette: >
-  %\VignetteIndexEntry{evapoRe| evapoRe Demo}
+  %\VignetteIndexEntry{evapoRe |Demo}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
