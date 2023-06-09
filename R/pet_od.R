@@ -8,8 +8,7 @@
 #' @return a RasterBrick object
 #' @keywords internal
 #' @examples 
-#' \donttest{ 
-#' download_terraclimate(folder_path = ".","land", variable = "t")} 
+#' function \code{download_terraclimate} is used to download TerraClimate temperature data (tavg) 
 #' tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
 #' pet_od <- pet_calc(method = "od", tavg = tavg_brick)
 
