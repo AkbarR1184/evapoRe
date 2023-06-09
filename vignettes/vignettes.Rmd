@@ -1,13 +1,13 @@
 ---
-title: "evapoRe| evapotranspiration R Recipes"
-author: "Akbar Rahmati Ziveh, Mijael Rodrigo Vargas Godoy, Vishal Thakur,  Yannis markonis"
+title: "evapoRe| Demo"
+author: "Akbar Rahmati Ziveh, Mijael Rodrigo Vargas Godoy, Vishal Thakur,  Yannis Markonis"
 date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 4
 vignette: >
-  %\VignetteIndexEntry{evapoRe| evapotranspiration R Recipes}
+  %\VignetteIndexEntry{evapoRe| evapoRe Demo}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -48,14 +48,6 @@ purpose is to facilitate the download, exploration, visualization, and
 analysis of evapotranspiration (ET) data. Additionally, evapoRe offers
 the functionality to calculate various potential evapotranspiration
 (PET) methods.
-
-<br> \~*The Global Water Cycle Budget* \| @vargas_godoy_global_2021
-
-*"Like civilization and technology, our understanding of the global
-water cycle has been continuously evolving, and we have adapted our
-quantification methods to better exploit new technological resources.
-The accurate quantification of global water fluxes and storage is
-crucial in studying the global water cycle."*
 
 ------------------------------------------------------------------------
 
@@ -118,7 +110,7 @@ tibble::tribble(
   unclass() |> cat()
 ```
 
-### Hydrological Model Forcing
+### Hydrological Model Outputs
 
 ```{r models, echo=FALSE, results = 'asis'}
 tibble::tribble(
