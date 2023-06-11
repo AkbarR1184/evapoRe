@@ -2,7 +2,7 @@
 #'
 #' Function to calculate PET
 #'
-#' @importFrom raster calc 
+#' @importFrom raster calc setZ getZ 
 #' 
 #' @param tavg a RasterBrick object having average temperature 
 #' @param tmax a RasterBrick object having maximum temperature
@@ -10,7 +10,7 @@
 #' @return a RasterBrick object
 #' @keywords internal
 #' @examples
-#' function \code{download_terraclimate} is used to download TerraClimate temperature data (tmax,tmin and tavg)
+#' #Function \code{\link{download_terraclimate}} is used to download TerraClimate temperature data (tmax,tmin and tavg)
 #' tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
 #' tmax_brick <- raster::brick("terraclimate_tmax_land_19580101_20221231_025_monthly.nc")
 #' tmin_brick <- raster::brick("terraclimate_tmin_land_19580101_20221231_025_monthly.nc")
@@ -23,5 +23,7 @@ pet_hs <- function(tavg,tmax,tmin){
   LATENT_HEAT_CONSTANT_2 <- 0.002361 
   pet_hs <- HARGREAVES_2 * pet_aux(tavg) * sqrt(abs(tmax - tmin))*(tavg+HARGREAVES_1)/(LATENT_HEAT_CONSTANT_1 - LATENT_HEAT_CONSTANT_2 *tavg)
   pet_hs <- raster::calc(pet_hs, fun = function(y){ifelse(y < 0, 0, y)})
+  names(pet_hs) <- paste0("X", raster::getZ(tavg))
+  pet_hs <- raster::setZ(pet_hs, z = raster::getZ(tavg), name = "Date/time")
   return(pet_hs)
 }
