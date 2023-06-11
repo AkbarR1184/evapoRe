@@ -18,9 +18,11 @@ a RasterBrick object
 Function to calculate pet
 }
 \examples{
+\donttest{
 #Function \code{\link{download_terraclimate}} is used to download TerraClimate temperature data (tmax,tmin)
 tmax_brick <- raster::brick("terraclimate_tmax_land_19580101_20221231_025_monthly.nc")
 tmin_brick <- raster::brick("terraclimate_tmin_land_19580101_20221231_025_monthly.nc")
 pet_br <- pet_calc(method = "br", tmax = tmax_brick, tmin = tmin_brick)
+}
 }
 \keyword{internal}
