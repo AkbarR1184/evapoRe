@@ -20,10 +20,11 @@ a RasterBrick object
 Function to calculate PET
 }
 \examples{
-#Function \code{\link{download_terraclimate}} is used to download TerraClimate temperature data (tmax,tmin and tavg)
+\dontrun{
+#Function \code{\link{download_terraclimate}} is used to download temperature data
 tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
 tmax_brick <- raster::brick("terraclimate_tmax_land_19580101_20221231_025_monthly.nc")
 tmin_brick <- raster::brick("terraclimate_tmin_land_19580101_20221231_025_monthly.nc")
-pet_hs <- pet_calc(method = "hs",tavg_brick, tmax_brick, tmin_brick)
+pet_hs <- pet_calc(method = "hs",tavg_brick, tmax_brick, tmin_brick)}
 }
 \keyword{internal}

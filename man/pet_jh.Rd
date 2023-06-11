@@ -16,8 +16,9 @@ a RasterBrick object
 Function to calculate pet
 }
 \examples{
-#Function \code{\link{download_terraclimate}} is used to download TerraClimate temperature data (tavg)
+\dontrun{ 
+#Function \code{\link{download_terraclimate}} is used to download temperature data
 tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
-pet_jh <- pet_calc(method = "jh", tavg = tavg_brick)
+pet_jh <- pet_calc(method = "jh", tavg = tavg_brick)}
 }
 \keyword{internal}

@@ -8,9 +8,10 @@
 #' @return a RasterBrick object
 #' @keywords internal
 #' @examples
-#' #Function \code{\link{download_terraclimate}} is used to download TerraClimate temperature data (tavg) 
+#' \dontrun{
+#' #Function \code{\link{download_terraclimate}} is used to download temperature data
 #' tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
-#' pet_mb <- pet_calc(method = "mb", tavg = tavg_brick)
+#' pet_mb <- pet_calc(method = "mb", tavg = tavg_brick)}
 
 pet_mb <- function(tavg){
   LATENT_HEAT_CONSTANT_1 <- 2.501

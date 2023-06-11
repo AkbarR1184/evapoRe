@@ -16,14 +16,12 @@ bibliography: evapoRe.bib
 link-citations: true
 ---
 
-```{=html}
 <style>
 body {
 text-align: justify}
 </style>
-```
 
-------------------------------------------------------------------------
+***
 
 ```{r start, include = FALSE}
 knitr::opts_chunk$set(
@@ -33,9 +31,11 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE
 )
+# Load packages
 library(evapoRe)
 library(kableExtra)
 
+# Load data 
 data('fldas_global_ts')
 data('fldas_subset_ts')
 data('fldas_cz_ts')
@@ -48,7 +48,7 @@ exploration, visualization, and analysis of evapotranspiration (ET)
 data. Additionally, evapoRe offers the functionality to calculate
 various potential evapotranspiration (PET) methods.
 
-------------------------------------------------------------------------
+***
 
 ## Before We Start
 
