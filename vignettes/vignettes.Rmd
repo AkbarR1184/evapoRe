@@ -39,6 +39,9 @@ library(kableExtra)
 data('fldas_global_ts')
 data('fldas_subset_ts')
 data('fldas_cz_ts')
+data('pet_oudin_global_ts')
+data('pet_oudin_subset_ts')
+data('pet_oudin_cz_ts')
 ```
 
 The `evapoRe` package developed as part of the ITHACA project at the
@@ -296,11 +299,25 @@ method [@oudin2005potential], "mb" for McGuinness and Bordne method
 
 ```{r pet_calc, eval=FALSE}
 tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
-pet_oudin <- pet_calc(method = "od", tavg = tavg_brick)
-show_info(pet_oudin)
+pet_oudin_global <- pet_calc(method = "od", tavg = tavg_brick)
+show_info(pet_oudin_global)
 ```
 
+```
+[1] "class      : RasterBrick "
+[2] "dimensions : 720, 1440, 1036800, 780  (nrow, ncol, ncell, nlayers)" 
+[3] "resolution : 0.25, 0.25  (x, y)"
+[4] "extent     : 2, 28, 42, 58  (xmin, xmax, ymin, ymax)"
+[5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
+[6] "source     : memory"
+[7] "names      : X1958.01.01, X1958.02.01, X1958.03.01, X1958.04.01, X1958.05.01, X1958.06.01, X1958.07.01, X1958.08.01, X1958.09.01, X1958.10.01, X1958.11.01, X1958.12.01, X1959.01.01, X1959.02.01, X1959.03.01, ... "
+[8] "min values :           0,           0,           0,           0,           0,           0,           0,           0,           0,           0,           0,           0,           0,           0,           0, ... "
+[9] "max values :    211.0769,    183.8832,    180.3431,    181.3188,    208.0041,    219.7289,    233.0501,    226.3481,    191.6451,    182.9314,    191.2556,    208.2998,    216.5920,    182.6839,    189.2202, ... "
+[10] "Date/time  : 1958-01-01, 2022-12-01 (min, max)"
+```
 ### Generate Time series
+
+#### Time series for global ET products
 
 To make a time series out of our data, we use the `make_ts` function,
 which has two arguments *data*, and *autosave*.
@@ -313,7 +330,7 @@ which has two arguments *data*, and *autosave*.
 Let's generate the time series for our three different fldas data sets
 (Global, Central Europe, and Czechia), and inspect its first 12 rows:
 
-```{r global_ts, eval=FALSE}
+```{r fldas_global_ts, eval=FALSE}
 fldas_global_ts <- make_ts(fldas_global, name="fldas")
 head(fldas_global_ts, 12)
 ```
@@ -334,7 +351,7 @@ head(fldas_global_ts, 12)
 12: 1982-12-01 39.41859 FLDAS Model forcing
 ```
 
-```{r subset_ts, eval=FALSE}
+```{r fldas_subset_ts, eval=FALSE}
 fldas_subset_ts <- make_ts(fldas_subset, name="fldas")
 head(fldas_subset_ts, 12)
 ```
@@ -355,7 +372,7 @@ head(fldas_subset_ts, 12)
 12: 2001-12-01  13.59456 FLDAS Model forcing
 ```
 
-```{r cz_ts, eval=FALSE}
+```{r fldas_cz_ts, eval=FALSE}
 fldas_cz_ts <- make_ts(fldas_cz, name = "fldas")
 head(fldas_cz_ts, 12)
 ```
@@ -375,7 +392,71 @@ head(fldas_cz_ts, 12)
 11: 2001-11-01  15.01222 FLDAS Model forcing
 12: 2001-12-01  12.39291 FLDAS Model forcing
 ```
+#### Time series for calculated  PET
 
+Let's generate the time series for our three different PET calculated by oudin method (Global, Central Europe, and Czechia), and inspect its first 12 rows:
+
+```{r oudin_global_ts, eval=FALSE}
+pet_oudin_global_ts <- make_ts(pet_oudin)
+head(pet_oudin_global_ts, 12)
+```
+
+```
+         date     value
+ 1: 1958-01-01  61.30534
+ 2: 1958-02-01  57.55157
+ 3: 1958-03-01  69.26975
+ 4: 1958-04-01  75.33172
+ 5: 1958-05-01  88.64012
+ 6: 1958-06-01  97.28295
+ 7: 1958-07-01 107.45549
+ 8: 1958-08-01 102.36428
+ 9: 1958-09-01  86.36096
+10: 1958-10-01  76.35980
+11: 1958-11-01  64.49735
+12: 1958-12-01  61.64263
+```
+
+```{r oudin_subset_ts, eval=FALSE}
+pet_oudin_subset_ts <- make_ts(fldas_subset)
+head(pet_oudin_subset_ts, 12)
+```
+
+```
+       date      value
+ 1: 2001-01-01   6.537995
+ 2: 2001-02-01   9.020948
+ 3: 2001-03-01  23.816143
+ 4: 2001-04-01  43.600781
+ 5: 2001-05-01  86.532623
+ 6: 2001-06-01 101.766002
+ 7: 2001-07-01 130.146518
+ 8: 2001-08-01 117.460246
+ 9: 2001-09-01  66.214705
+10: 2001-10-01  46.758231
+11: 2001-11-01  13.947147
+12: 2001-12-01   3.455045
+```
+
+```{r odin_cz_ts, eval=FALSE}
+pet_oudin_cz_ts<-make_ts(pet_oudin_cz)
+head(pet_oudin_cz_ts, 12)
+```
+```
+         date      value
+ 1: 2001-01-01   3.473700
+ 2: 2001-02-01   6.930045
+ 3: 2001-03-01  19.420555
+ 4: 2001-04-01  38.746838
+ 5: 2001-05-01  85.328999
+ 6: 2001-06-01  94.114641
+ 7: 2001-07-01 120.078897
+ 8: 2001-08-01 111.231710
+ 9: 2001-09-01  58.833599
+10: 2001-10-01  43.545129
+11: 2001-11-01  10.677348
+12: 2001-12-01   1.429517
+```
 ## Visualize
 
 Either after we have processed our data as required or right after
@@ -390,21 +471,27 @@ takes only one layer of the RasterBrick as input.
 
 ```{r map_global, eval = FALSE}
 plot_map(fldas_global[[1]])
+plot_map(pet_oudin_global[[1]])
 ```
 
 ![](plots/map.png){width="90%"}
+![](plots/map_oudin_global.png){width="90%"}
 
 ```{r map_subset, eval = FALSE}
 plot_map(fldas_subset[[1]])
+plot_map(pet_oudin_subset[[1]])
 ```
 
 ![](plots/map_ceu.png){width="90%"}
+![](plots/map_oudin_ceu.png){width="90%"}
 
 ```{r map_cz, eval = FALSE}
 plot_map(fldas_cz[[1]])
+plot_map(pet_oudin_cz[[1]])
 ```
 
 ![](plots/map_cze.png){width="90%"}
+![](plots/map_oudin_cze.png){width="90%"}
 
 ### Time Series Visuals
 
@@ -414,9 +501,12 @@ below, which takes only a `make_ts` ".csv" generated file.
 #### Lineplots
 
 ```{r, eval = FALSE}
-plot_line(fldas_global_ts)
-plot_line(fldas_subset_ts)
-plot_line(fldas_cz_ts)
+plot_line(fldas_global_ts, var = "Evapotranspiration")
+plot_line(fldas_subset_ts, var = "Evapotranspiration")
+plot_line(fldas_cz_ts, var = "Evapotranspiration")
+plot_line(pet_oudin_global_ts, var = "Evapotranspiration")
+plot_line(pet_oudin_subset_ts, var = "Evapotranspiration")
+plot_line(pet_oudin_cz_ts, var = "Evapotranspiration")
 ```
 
 #### Heatmap
@@ -425,6 +515,9 @@ plot_line(fldas_cz_ts)
 plot_heatmap(fldas_global_ts)
 plot_heatmap(fldas_subset_ts)
 plot_heatmap(fldas_cz_ts)
+plot_heatmap(pet_oudin_global_ts)
+plot_heatmap(pet_oudin_subset_ts)
+plot_heatmap(pet_oudin_cz_ts)
 ```
 
 #### Boxplot
@@ -433,6 +526,9 @@ plot_heatmap(fldas_cz_ts)
 plot_box(fldas_global_ts, var = "Evapotranspiration")
 plot_box(fldas_subset_ts, var = "Evapotranspiration")
 plot_box(fldas_cz_ts, var = "Evapotranspiration" )
+plot_box(pet_oudin_global_ts, var = "Evapotranspiration")
+plot_box(pet_oudin_subset_ts, var = "Evapotranspiration")
+plot_box(pet_oudin_cz_ts, var = "Evapotranspiration" )
 ```
 
 #### Density plots
@@ -441,6 +537,9 @@ plot_box(fldas_cz_ts, var = "Evapotranspiration" )
 plot_density(fldas_global_ts, var = "Evapotranspiration")
 plot_density(fldas_subset_ts, var = "Evapotranspiration")
 plot_density(fldas_cz_ts, var = "Evapotranspiration")
+plot_density(pet_oudin_global_ts, var = "Evapotranspiration")
+plot_density(pet_oudin_subset_ts, var = "Evapotranspiration")
+plot_density(pet_oudin_cz_ts, var = "Evapotranspiration")
 ```
 
 #### Summary
@@ -452,6 +551,9 @@ plot_density(fldas_cz_ts, var = "Evapotranspiration")
 plot_summary(fldas_global_ts)
 #plot_summary(fldas_subset_ts)
 #plot_summary(fldas_cz_ts)
+plot_summary(pet_oudin_global_ts)
+#plot_summary(pet_oudin_subset_ts)
+#plot_summary(pet_oudin_cz_ts)
 ```
 
 ![](plots/summary.png){width="95%"}
