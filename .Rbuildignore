@@ -1,2 +1,13 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^CODEOWNERS$
+^CONTRIBUTING\.md$
+^README\.md$
+^CRAN-RELEASE$
+^cran-comments\.md$
+^\.github$
+^CRAN-SUBMISSION$
+^doc$
+^Meta$
+^data/database$
+^data/processed$

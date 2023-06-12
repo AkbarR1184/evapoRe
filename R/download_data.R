@@ -38,7 +38,7 @@
 #' }
 
 download_data <- function(data_name = "all", path = ".", domain = "raw", time_res = "monthly"){
-  if (!Reduce("&", is.element(name, c("all", "era5", "era5_land", "fldas", "gldas-clsm", "gldas-noah", "gldas-vic", "gleam", "jra_55", "merra2","terraclimate")))){
+  if (!Reduce("&", is.element(data_name, c("all", "era5", "era5_land", "fldas", "gldas-clsm", "gldas-noah", "gldas-vic", "gleam", "jra_55", "merra2","terraclimate")))){
     stop("Error: Data set not available. Select from era5, era5_land, fldas, gldas-clsm, gldas-noah, gldas-vic, gleam, jra_55, merra2, terraclimate")
   }
   old_options <- options()
