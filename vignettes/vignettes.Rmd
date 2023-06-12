@@ -1,5 +1,5 @@
 ---
-title: "evapoRe |Demo"
+title: "evapoRe"
 author: "Akbar Rahmati Ziveh, Mijael Rodrigo Vargas Godoy, Vishal Thakur,  Yannis Markonis"
 date: "`r Sys.Date()`"
 output: 
@@ -7,7 +7,7 @@ output:
     toc: true
     toc_depth: 4
 vignette: >
-  %\VignetteIndexEntry{evapoRe |Demo}
+  %\VignetteIndexEntry{evapoRe}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -131,7 +131,7 @@ tibble::tribble(
   unclass() |> cat()
 ```
 
-# Recipe
+# Demo
 
 In this introductory recipe we will first download the FLDAS data set.
 We will then subset the downloaded data over Central Europe for the
@@ -518,7 +518,7 @@ below, which takes only a `make_ts` ".csv" generated file.
 
 #### Lineplots
 
-```{r, eval = FALSE}
+```{r}
 plot_line(fldas_global_ts, var = "Evapotranspiration")
 plot_line(fldas_subset_ts, var = "Evapotranspiration")
 plot_line(fldas_cz_ts, var = "Evapotranspiration")
@@ -566,15 +566,19 @@ plot_density(pet_oudin_cz_ts, var = "Evapotranspiration")
 `ggsave(<filename>, <plot>, width = 16.3, height = 15.03)`.
 
 ```{r, eval=FALSE}
-plot_summary(fldas_global_ts)
+plot_summary(fldas_global_ts, var = "Evapotranspiration")
 #plot_summary(fldas_subset_ts)
 #plot_summary(fldas_cz_ts)
-plot_summary(pet_oudin_global_ts)
+
+```
+![](plots/summary_fldas.png){width="95%"}
+```{r, eval=FALSE}
+plot_summary(pet_oudin_global_ts, var = "Evapotranspiration")
 #plot_summary(pet_oudin_subset_ts)
 #plot_summary(pet_oudin_cz_ts)
 ```
+![](plots/summary_oudin.png){width="95%"}
 
-![](plots/summary.png){width="95%"}
 
 # Coming Soon
 
