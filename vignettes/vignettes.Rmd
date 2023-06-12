@@ -403,24 +403,24 @@ oudin method (Global, Central Europe, and Czechia), and inspect its
 first 12 rows:
 
 ```{r oudin_global_ts, eval=FALSE}
-pet_oudin_global_ts <- make_ts(pet_oudin)
+pet_oudin_global_ts <- make_ts(pet_oudin, name = "terraclimate")
 head(pet_oudin_global_ts, 12)
 ```
 
 ```         
-         date     value
- 1: 1958-01-01  61.30534
- 2: 1958-02-01  57.55157
- 3: 1958-03-01  69.26975
- 4: 1958-04-01  75.33172
- 5: 1958-05-01  88.64012
- 6: 1958-06-01  97.28295
- 7: 1958-07-01 107.45549
- 8: 1958-08-01 102.36428
- 9: 1958-09-01  86.36096
-10: 1958-10-01  76.35980
-11: 1958-11-01  64.49735
-12: 1958-12-01  61.64263
+        date     value         name          type
+1  1958-01-01  61.30534 TerraClimate Model forcing
+2  1958-02-01  57.55157 TerraClimate Model forcing
+3  1958-03-01  69.26975 TerraClimate Model forcing
+4  1958-04-01  75.33172 TerraClimate Model forcing
+5  1958-05-01  88.64012 TerraClimate Model forcing
+6  1958-06-01  97.28295 TerraClimate Model forcing
+7  1958-07-01 107.45549 TerraClimate Model forcing
+8  1958-08-01 102.36428 TerraClimate Model forcing
+9  1958-09-01  86.36096 TerraClimate Model forcing
+10 1958-10-01  76.35980 TerraClimate Model forcing
+11 1958-11-01  64.49735 TerraClimate Model forcing
+12 1958-12-01  61.64263 TerraClimate Model forcing
 ```
 
 ```{r oudin_subset_ts, eval=FALSE}
@@ -429,19 +429,19 @@ head(pet_oudin_subset_ts, 12)
 ```
 
 ```         
-       date      value
- 1: 2001-01-01   6.537995
- 2: 2001-02-01   9.020948
- 3: 2001-03-01  23.816143
- 4: 2001-04-01  43.600781
- 5: 2001-05-01  86.532623
- 6: 2001-06-01 101.766002
- 7: 2001-07-01 130.146518
- 8: 2001-08-01 117.460246
- 9: 2001-09-01  66.214705
-10: 2001-10-01  46.758231
-11: 2001-11-01  13.947147
-12: 2001-12-01   3.455045
+               date      value         name          type
+ 1: 2000-01-01   2.665469 TerraClimate Model forcing
+ 2: 2000-02-01   9.319429 TerraClimate Model forcing
+ 3: 2000-03-01  19.722206 TerraClimate Model forcing
+ 4: 2000-04-01  52.197863 TerraClimate Model forcing
+ 5: 2000-05-01  87.489379 TerraClimate Model forcing
+ 6: 2000-06-01 110.380165 TerraClimate Model forcing
+ 7: 2000-07-01 107.296700 TerraClimate Model forcing
+ 8: 2000-08-01 111.219882 TerraClimate Model forcing
+ 9: 2000-09-01  65.276298 TerraClimate Model forcing
+10: 2000-10-01  42.080404 TerraClimate Model forcing
+11: 2000-11-01  16.396132 TerraClimate Model forcing
+12: 2000-12-01   6.029927 TerraClimate Model forcing
 ```
 
 ```{r odin_cz_ts, eval=FALSE}
@@ -450,19 +450,19 @@ head(pet_oudin_cz_ts, 12)
 ```
 
 ```         
-         date      value
- 1: 2001-01-01   3.473700
- 2: 2001-02-01   6.930045
- 3: 2001-03-01  19.420555
- 4: 2001-04-01  38.746838
- 5: 2001-05-01  85.328999
- 6: 2001-06-01  94.114641
- 7: 2001-07-01 120.078897
- 8: 2001-08-01 111.231710
- 9: 2001-09-01  58.833599
-10: 2001-10-01  43.545129
-11: 2001-11-01  10.677348
-12: 2001-12-01   1.429517
+         date      value         name          type
+ 1: 2000-01-01   2.643555 TerraClimate Model forcing
+ 2: 2000-02-01   9.312819 TerraClimate Model forcing
+ 3: 2000-03-01  19.611606 TerraClimate Model forcing
+ 4: 2000-04-01  51.935105 TerraClimate Model forcing
+ 5: 2000-05-01  87.271313 TerraClimate Model forcing
+ 6: 2000-06-01 110.079202 TerraClimate Model forcing
+ 7: 2000-07-01 106.833477 TerraClimate Model forcing
+ 8: 2000-08-01 110.965007 TerraClimate Model forcing
+ 9: 2000-09-01  65.153299 TerraClimate Model forcing
+10: 2000-10-01  41.721005 TerraClimate Model forcing
+11: 2000-11-01  16.031256 TerraClimate Model forcing
+12: 2000-12-01   5.822190 TerraClimate Model forcing
 ```
 
 ## Visualize
