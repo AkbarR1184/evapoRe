@@ -114,7 +114,7 @@ tibble::tribble(
   unclass() |> cat()
 ```
 
-### Hydrological Model Outputs
+### Hydrological Models
 
 ```{r models, echo=FALSE, results = 'asis'}
 tibble::tribble(
@@ -274,8 +274,7 @@ show_info(fldas_cz)
 
 ### PET calculation
 
-First we need to download temperature data. To to this we will use
-terraclimate temperature data from the [Zenodo
+First we need to download temperature data. To to this we will use temperature data from the [Zenodo
 repository](https://doi.org/10.5281/zenodo.7990413):
 
 *variable* is the variable name in which `t` stands for tavg, tmin, and
@@ -285,8 +284,7 @@ tmax.
 download_terraclimate(variable = "t", folder_path = ".")
 ```
 
-This will returns terraclimate temperature data in following name
-convention e.g.,
+This will download temperature data in following name convention e.g.,
 
 `terraclimate_tavg_land_19580101_20221231_025_monthly.nc`
 
@@ -297,7 +295,7 @@ method [@oudin2005potential], "mb" for McGuinness and Bordne method
 [@jensen1963estimating], and "br" for Baier and Robertson
 [@baier1965estimation].
 
-#### Calculate PET by oudin method
+#### Calculate PET by Oudin method
 
 ```{r pet_calc, eval=FALSE}
 tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
@@ -478,38 +476,28 @@ To see a map of any data set raw or processed, we use `plot_map` which
 takes only one layer of the RasterBrick as input.
 
 ```{r map_global, eval = FALSE}
-plot_map(fldas_global[[1]])
+plot_map(fldas_global[[1]]) 
+plot_map(pet_oudin_global[[289]]) 
 ```
 
-![](plots/map.png){width="90%"}
-
-```{r map_oudin_global, eval = FALSE}
-plot_map(pet_oudin_global[[1]])
-```
-
-![](plots/map_oudin_global.png){width="90%"}
+![](plots/map_fldas_global.png){width="8.4cm" height="5cm"}
+![](plots/map_oudin_global.png){width="8.4cm" height="5cm"}
 
 ```{r map_subset, eval = FALSE}
+plot_map(fldas_subset[[1]])
 plot_map(pet_oudin_subset[[1]])
 ```
 
-![](plots/map_ceu.png){width="90%"}
-
-```{r map_oudin_subset, eval = FALSE}
-plot_map(pet_oudin_subset[[1]])
-```
-![](plots/map_oudin_ceu.png){width="90%"}
+![](plots/map_fldas_ceu.png){width="8.4cm" height="5cm"}
+![](plots/map_oudin_ceu.png){width="8.4cm" height="5cm"}
 
 ```{r map_cz, eval = FALSE}
 plot_map(fldas_cz[[1]])
-```
-
-![](plots/map_cze.png){width="90%"}
-
-```{r map_oudin_cz, eval = FALSE}
 plot_map(pet_oudin_cz[[1]])
 ```
-![](plots/map_oudin_cze.png){width="90%"}
+
+![](plots/map_fldas_cze.png){width="8.4cm"
+height="5cm"}![](plots/map_oudin_cze.png){width="8.4cm" height="5cm"}
 
 ### Time Series Visuals
 
@@ -519,45 +507,75 @@ below, which takes only a `make_ts` ".csv" generated file.
 #### Lineplots
 
 ```{r}
-plot_line(fldas_global_ts, var = "Evapotranspiration")
-plot_line(fldas_subset_ts, var = "Evapotranspiration")
-plot_line(fldas_cz_ts, var = "Evapotranspiration")
-plot_line(pet_oudin_global_ts, var = "Evapotranspiration")
-plot_line(pet_oudin_subset_ts, var = "Evapotranspiration")
-plot_line(pet_oudin_cz_ts, var = "Evapotranspiration")
+
+# Plotting globals
+plot_line(fldas_global_ts, var = "Actual Evapotranspiration")
+plot_line(pet_oudin_global_ts, var = "Potential Evapotranspiration")
+
+# Plotting subsets
+plot_line(fldas_subset_ts, var = "Actual Evapotranspiration")
+plot_line(pet_oudin_subset_ts, var = "Potential Evapotranspiration")
+
+# Plotting cz
+plot_line(fldas_cz_ts, var = "Actual Evapotranspiration")
+plot_line(pet_oudin_cz_ts, var = "Potential Evapotranspiration")
+
 ```
 
 #### Heatmap
 
 ```{r}
+# Plotting globals
 plot_heatmap(fldas_global_ts)
-plot_heatmap(fldas_subset_ts)
-plot_heatmap(fldas_cz_ts)
 plot_heatmap(pet_oudin_global_ts)
+
+# Plotting subsets
+
+plot_heatmap(fldas_subset_ts)
 plot_heatmap(pet_oudin_subset_ts)
+
+# Plotting cz
+
+plot_heatmap(fldas_cz_ts)
 plot_heatmap(pet_oudin_cz_ts)
 ```
 
 #### Boxplot
 
 ```{r}
-plot_box(fldas_global_ts, var = "Evapotranspiration")
-plot_box(fldas_subset_ts, var = "Evapotranspiration")
-plot_box(fldas_cz_ts, var = "Evapotranspiration" )
-plot_box(pet_oudin_global_ts, var = "Evapotranspiration")
-plot_box(pet_oudin_subset_ts, var = "Evapotranspiration")
-plot_box(pet_oudin_cz_ts, var = "Evapotranspiration" )
+
+# Plotting globals
+plot_box(fldas_global_ts, var = "Actual\n Evapotranspiration")
+plot_box(pet_oudin_global_ts, var = "Potential\n Evapotranspiration")
+
+# Plotting subsets
+
+plot_box(fldas_subset_ts, var = "Actual\n Evapotranspiration")
+plot_box(pet_oudin_subset_ts, var = "Potential\n Evapotranspiration")
+
+# Plotting cz
+
+plot_box(fldas_cz_ts, var = "Actual\n Evapotranspiration" )
+plot_box(pet_oudin_cz_ts, var = "Potential\n Evapotranspiration" )
 ```
 
 #### Density plots
 
 ```{r}
-plot_density(fldas_global_ts, var = "Evapotranspiration")
-plot_density(fldas_subset_ts, var = "Evapotranspiration")
-plot_density(fldas_cz_ts, var = "Evapotranspiration")
-plot_density(pet_oudin_global_ts, var = "Evapotranspiration")
-plot_density(pet_oudin_subset_ts, var = "Evapotranspiration")
-plot_density(pet_oudin_cz_ts, var = "Evapotranspiration")
+# Plotting globals
+
+plot_density(fldas_global_ts, var = "Actual Evapotranspiration")
+plot_density(pet_oudin_global_ts, var = "Potential Evapotranspiration")
+
+# Plotting subsets
+
+plot_density(fldas_subset_ts, var = "Actual Evapotranspiration")
+plot_density(pet_oudin_subset_ts, var = "Potential Evapotranspiration")
+
+# Plotting cz
+
+plot_density(fldas_cz_ts, var = "Actual Evapotranspiration")
+plot_density(pet_oudin_cz_ts, var = "Potential Evapotranspiration")
 ```
 
 #### Summary
@@ -566,19 +584,21 @@ plot_density(pet_oudin_cz_ts, var = "Evapotranspiration")
 `ggsave(<filename>, <plot>, width = 16.3, height = 15.03)`.
 
 ```{r, eval=FALSE}
-plot_summary(fldas_global_ts, var = "Evapotranspiration")
+plot_summary(fldas_global_ts, var = "Actual Evapotranspiration")
 #plot_summary(fldas_subset_ts)
 #plot_summary(fldas_cz_ts)
 
 ```
+
 ![](plots/summary_fldas.png){width="95%"}
+
 ```{r, eval=FALSE}
-plot_summary(pet_oudin_global_ts, var = "Evapotranspiration")
+plot_summary(pet_oudin_global_ts, var = "Potential Evapotranspiration")
 #plot_summary(pet_oudin_subset_ts)
 #plot_summary(pet_oudin_cz_ts)
 ```
-![](plots/summary_oudin.png){width="95%"}
 
+![](plots/summary_oudin.png){width="95%"}
 
 # Coming Soon
 
