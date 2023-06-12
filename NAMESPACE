@@ -3,6 +3,7 @@
 export(download_data)
 export(download_terraclimate)
 export(pet_calc)
+import(pRecipe)
 importFrom(lubridate,month)
 importFrom(lubridate,yday)
 importFrom(methods,is)
