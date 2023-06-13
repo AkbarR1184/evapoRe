@@ -34,8 +34,8 @@ esr_dates <- function(x){
     dummie_dates[month(dummie_dates) == 12] <- sub("\\d{2}$", "10", dummie_dates[month(dummie_dates) == 12])
   } else if((dummie_dif == dummie_year_dif1) | (dummie_dif == dummie_year_dif1)){
     dummie_dates <- dummie
-    dummie_dates <- sub("\\-\\d{2}", '-06', dummie_dates)
-    dummie_dates<- sub("\\d{2}$", "30", dummie_dates)
+    dummie_dates <- sub("\\-\\d{2}", '-03', dummie_dates)
+    dummie_dates<- sub("\\d{2}$", "16", dummie_dates)
   }
   return(dummie_dates)
 }
