@@ -157,9 +157,9 @@ library(evapoRe)
 
 Downloading the entire data collection or only a few data sets is quite
 straightforward. You just call the `download_data` function, which has
-four arguments *name*, *destination*, *domain*, and *time_res*.
+four arguments *data_name*, *destination*, *domain*, and *time_res*.
 
--   *name* is set to "all" by default, but you can specify the names of
+-   *data_name* is set to "all" by default, but you can specify the names of
     your data sets of interest only.
 -   *destination* is set to "." by default. I.e., the current working
     directory. By replacing it for [your_project_folder], the downloaded
@@ -174,7 +174,7 @@ Let's download the fldas data set and inspect its content with
 `show_info`:
 
 ```{r download, eval = FALSE}
-download_data(name = 'fldas')
+download_data(data_name = 'fldas')
 fldas_global <- raster::brick('fldas_e_mm_land_198201_202212_025_monthly.nc')
 show_info(fldas_global)
 ```
@@ -220,9 +220,9 @@ the `subset_spacetime` function, which has four arguments *data*,
     automatically stored in the same location of the input file.
 
 Let's subset the fldas data set over Central Europe (2,28,42,58) for the
-1981-2020 period, and inspect its content with `show_info`:
+2001-2010 period, and inspect its content with `show_info`:
 
-```{r subset, eval = FALSE}
+```{r fldas_subset, eval = FALSE}
 fldas_subset <- subset_spacetime(fldas_global, years = c(2001, 2010), bbox = c(2,28,42,58))
 show_info(fldas_subset)
 ```
@@ -257,7 +257,7 @@ Let's crop our fldas subset to cover only Czechia with the respective
 file](https://geodata.ucdavis.edu/gadm/gadm4.1/shp/gadm41_CZE_shp.zip),
 and inspect its content with `show_info`:
 
-```{r crop, eval = FALSE}
+```{r fldas_crop, eval = FALSE}
 fldas_cz <- crop_data(fldas_subset, shp_path = "gadm41_CZE_0.shp")
 show_info(fldas_cz)
 ```
@@ -300,6 +300,8 @@ method [@oudin2005potential], "mb" for McGuinness and Bordne method
 
 #### Calculate PET by Oudin method
 
+Let's calculate PET from Oudin method. Then, same as fldas we can subset it  over Central Europe for the 2001-2010 period, and Czechia and inspect its content with `show_info`:
+
 ```{r pet_calc, eval=FALSE}
 tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
 pet_oudin_global <- pet_calc(method = "od", tavg = tavg_brick)
@@ -318,6 +320,41 @@ show_info(pet_oudin_global)
 [9] "max values :    211.0769,    183.8832,    180.3431,    181.3188,    208.0041,    219.7289,    233.0501,    226.3481,    191.6451,    182.9314,    191.2556,    208.2998,    216.5920,    182.6839,    189.2202, ... "
 [10] "Date/time  : 1958-01-01, 2022-12-01 (min, max)"
 ```
+```{r pet_oudin_subset, eval = FALSE}
+pet_oudin_subset <- subset_spacetime(pet_oudin_global, years = c(2001, 2010), bbox = c(2,28,42,58))
+show_info(pet_oudin_subset)
+```
+
+```
+[1] "class      : RasterBrick "
+[2] "dimensions : 64, 104, 6656, 120  (nrow, ncol, ncell, nlayers)"
+[3] "resolution : 0.25, 0.25  (x, y)"
+[4] "extent     : 2, 28, 42, 58  (xmin, xmax, ymin, ymax)"
+[5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
+[6] "source     : memory"
+[7] "names      : X2001.01.01, X2001.02.01, X2001.03.01, X2001.04.01, X2001.05.01, X2001.06.01, X2001.07.01, X2001.08.01, X2001.09.01, X2001.10.01, X2001.11.01, X2001.12.01, X2002.01.01, X2002.02.01, X2002.03.01, ... "
+[8] "min values :   0.0000000,   0.0000000,   0.0000000,   0.0000000,  29.6826839,  35.2862740,  56.8655243,  59.6474762,  18.5679646,  21.9732304,   0.0000000,   0.0000000,   0.0000000,   0.0000000,   0.0000000, ... "
+[9] "max values :    27.54286,    30.60882,    56.41196,    71.91792,   123.63754,   144.49162,   172.22604,   164.48526,   104.05064,    82.26010,    42.09394,    24.42895,    23.70211,    33.02557,    53.42158, ... "
+[10] "time       : 2001-01-01, 2010-12-01 (min, max)"
+```
+```{r pet_oudin_crop, eval = FALSE}
+pet_oudin_cz <- crop_data(pet_oudin_subset, shp_path = "gadm41_CZE_0.shp")
+show_info(pet_oudin_cz)
+```
+
+```
+[1] "class      : RasterBrick " 
+[2] "dimensions : 64, 104, 6656, 120  (nrow, ncol, ncell, nlayers)"
+[3] "resolution : 0.25, 0.25  (x, y)"
+[4] "extent     : 2, 28, 42, 58  (xmin, xmax, ymin, ymax)" 
+[5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
+[6] "source     : memory"  
+[7] "names      : X2001.01.01, X2001.02.01, X2001.03.01, X2001.04.01, X2001.05.01, X2001.06.01, X2001.07.01, X2001.08.01, X2001.09.01, X2001.10.01, X2001.11.01, X2001.12.01, X2002.01.01, X2002.02.01, X2002.03.01, ... "
+[8] "min values :    1.656290,    3.878582,   11.940824,   28.756351,   71.201210,   79.335274,  104.388397,   97.543289,   49.243000,   36.703739,    7.096017,    0.000000,    1.901990,    7.945362,   14.307798, ... "
+[9] "max values :   5.0574903,   9.8281002,  26.4252815,  48.3378906,  97.8983765, 108.8017654, 135.4944000, 125.5629272,  67.6883392,  48.5421448,  13.8211985,   3.3882675,   5.2703271,  13.7232389,  26.8243675, ... "
+[10] "time       : 2001-01-01, 2010-12-01 (min, max)" 
+
+```
 
 ### Generate Time series
 
@@ -327,7 +364,7 @@ To make a time series out of our data, we use the `make_ts` function,
 which has two arguments *data*, and *autosave*.
 
 -   *data* is the path to a ".nc" data set file or a RasterBrick object.
--   *name* is the dataset name.
+-   *name* is the short name of a data set. E.g., 'fldas'.
 -   *autosave* is set to FALSE by default. If TRUE data will be
     automatically stored in the same location of the input file.
 
@@ -400,11 +437,11 @@ head(fldas_cz_ts, 12)
 #### Time series for calculated PET
 
 Let's generate the time series for our three different PET calculated by
-oudin method (Global, Central Europe, and Czechia), and inspect its
+Oudin method (Global, Central Europe, and Czechia), and inspect its
 first 12 rows:
 
-```{r oudin_global_ts, eval=FALSE}
-pet_oudin_global_ts <- make_ts(pet_oudin, name = "terraclimate")
+```{r pet_oudin_global_ts, eval=FALSE}
+pet_oudin_global_ts <- make_ts(pet_oudin_global, name = "terraclimate")
 head(pet_oudin_global_ts, 12)
 ```
 
@@ -424,8 +461,8 @@ head(pet_oudin_global_ts, 12)
 12 1958-12-01  61.64263 TerraClimate Model forcing
 ```
 
-```{r oudin_subset_ts, eval=FALSE}
-pet_oudin_subset_ts <- make_ts(fldas_subset)
+```{r pet_oudin_subset_ts, eval=FALSE}
+pet_oudin_subset_ts <- make_ts(pet_oudin_subset, name = "terraclimate")
 head(pet_oudin_subset_ts, 12)
 ```
 
@@ -445,8 +482,8 @@ head(pet_oudin_subset_ts, 12)
 12: 2000-12-01   6.029927 TerraClimate Model forcing
 ```
 
-```{r odin_cz_ts, eval=FALSE}
-pet_oudin_cz_ts<-make_ts(pet_oudin_cz)
+```{r pet_odin_cz_ts, eval=FALSE}
+pet_oudin_cz_ts<- make_ts(pet_oudin_cz, name = "terraclimate")
 head(pet_oudin_cz_ts, 12)
 ```
 
@@ -514,15 +551,15 @@ below, which takes only a `make_ts` ".csv" generated file.
 # Plotting globals
 p01<-plot_line(fldas_global_ts, var = "Evapotranspiration")
 p02<-plot_line(pet_oudin_global_ts, var = "Potential Evapotranspiration")
-ggarrange(p01, p02, ncol = 1)
+ggpubr::ggarrange(p01, p02, ncol = 1)
 # Plotting subsets
 p01<- plot_line(fldas_subset_ts, var = "ET")
 p02<-plot_line(pet_oudin_subset_ts, var = "PET")
-ggarrange(p01, p02, ncol = 2)
+ggpubr::ggarrange(p01, p02, ncol = 2)
 # Plotting cz
 p01<- plot_line(fldas_cz_ts, var = "ET")
 p02<- plot_line(pet_oudin_cz_ts, var = "PET")
-ggarrange(p01, p02, ncol = 2)
+ggpubr::ggarrange(p01, p02, ncol = 2)
 
 ```
 
@@ -536,11 +573,11 @@ ggarrange(p01, p02, ncol = 2)
 # Plotting subsets
 p01<- plot_heatmap(fldas_subset_ts)
 p02<- plot_heatmap(pet_oudin_subset_ts)
-ggarrange(p01, p02, ncol = 2, common.legend = TRUE)
+ggpubr::ggarrange(p01, p02, ncol = 2, common.legend = TRUE, legend = "right")
 # Plotting cz
 p01<- plot_heatmap(fldas_cz_ts)
 p02<- plot_heatmap(pet_oudin_cz_ts)
-ggarrange(p01, p02, ncol = 2, common.legend = TRUE)
+ggpubr::ggarrange(p01, p02, ncol = 2, common.legend = TRUE, legend = "right")
 
 ```
 
@@ -551,19 +588,15 @@ ggarrange(p01, p02, ncol = 2, common.legend = TRUE)
 # Plotting globals
 p01<- plot_box(fldas_global_ts, var = "ET")
 p02<- plot_box(pet_oudin_global_ts, var = "PET")
-ggarrange(p01, p02, ncol = 2)
-
+ggpubr::ggarrange(p01, p02, ncol = 2)
 # Plotting subsets
-
 p01<- plot_box(fldas_subset_ts, var = "ET")
 p02<- plot_box(pet_oudin_subset_ts, var = "PET")
-ggarrange(p01, p02, ncol = 2)
-
+ggpubr::ggarrange(p01, p02, ncol = 2)
 # Plotting cz
-
 p01<- plot_box(fldas_cz_ts, var = "ET" )
 p02<- plot_box(pet_oudin_cz_ts, var = "PET" )
-ggarrange(p01, p02, ncol = 2)
+ggpubr::ggarrange(p01, p02, ncol = 2)
 
 ```
 
@@ -573,15 +606,15 @@ ggarrange(p01, p02, ncol = 2)
 # Plotting globals
 p01<- plot_density(fldas_global_ts, var = "ET")
 p02<- plot_density(pet_oudin_global_ts, var = "PET")
-ggarrange(p01, p02, ncol = 2)
+ggpubr::ggarrange(p01, p02, ncol = 2)
 # Plotting subsets
 p01<- plot_density(fldas_subset_ts, var = "ET")
 p02<- plot_density(pet_oudin_subset_ts, var = "PET")
-ggarrange(p01, p02, ncol = 2)
+ggpubr::ggarrange(p01, p02, ncol = 2)
 # Plotting cz
 p01<- plot_density(fldas_cz_ts, var = "ET")
 p02<- plot_density(pet_oudin_cz_ts, var = "PET")
-ggarrange(p01, p02, ncol = 2)
+ggpubr::ggarrange(p01, p02, ncol = 2)
 
 ```
 
