@@ -280,6 +280,8 @@ show_info(fldas_cz)
 First we need to download temperature data. To to this we will use temperature data from the [Zenodo
 repository](https://doi.org/10.5281/zenodo.7990413):
 
+**NOTE:** Temperature data available at the moment is limited to monthly and covers only the land domain. The data source used for this information is TerraClimate. 
+
 we use the `download_terraclimate` function, which has four arguments *variable*, *folder_path*, *time_res*, and *domain*.
 
 -   *variable* is the variable name in which `t` stands for tavg, tmin, and tmax.
