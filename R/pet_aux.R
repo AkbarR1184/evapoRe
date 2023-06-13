@@ -3,7 +3,6 @@
 #' Auxiliary function to calculate pet
 #'
 #' @importFrom raster brick calc setValues yFromCell ncell getZ
-#' @importFrom lubridate yday month
 #' @param x a RasterBrick object
 #' @return a RasterBrick object
 #' @keywords internal
