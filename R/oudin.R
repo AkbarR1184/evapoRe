@@ -7,7 +7,7 @@
 #' @import foreach
 #' @import parallel
 #' @importFrom methods as
-#' @importFrom lubridate day leap_year
+#' @importFrom lubridate day days_in_month leap_year
 #' @importFrom raster calc getZ init nlayers reclassify setZ
 #' @param tavg a RasterBrick object having average temperature 
 #' @return a RasterBrick object
@@ -47,6 +47,7 @@ oudin <- function(x){
       val[val < 0] <- NA
       return(val)
       })
+    dummie_od <- dummie_od*as.numeric(days_in_month(t_dates[t_layer]))
     return(dummie_od)
   }
   dummie_pet <- brick(dummie_pet)
