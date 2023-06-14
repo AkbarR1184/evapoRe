@@ -38,9 +38,9 @@ library(evapoRe)
 library(kableExtra)
 
 # Load data 
-data('fldas_global_ts')
-data('fldas_subset_ts')
-data('fldas_cz_ts')
+data('gldas_clsm_global_ts')
+data('gldas_clsm_subset_ts')
+data('gldas_clsm_cz_ts')
 data('pet_oudin_global_ts')
 data('pet_oudin_subset_ts')
 data('pet_oudin_cz_ts')
@@ -79,7 +79,7 @@ following naming convention:
 
 The `evapoRe` data collection was homogenized to these specifications:
 \* `<variable>` =  evapotranspiration (e) \* `<units>` =
-millimeters (mm) \* `<resolution>` = 0.25° \* `<time step>` = monthly
+millimeters (mm) \* `<resolution>` = 0.25° \*
 
 E.g., ERA5 [@hersbach_era5_2020] would be:
 
@@ -133,7 +133,7 @@ tibble::tribble(
 
 # Demo
 
-In this introductory demo we will first download the FLDAS data set.
+In this introductory demo we will first download the GLDAS-CLSM data set.
 We will then subset the downloaded data over Central Europe for the
 2001-2010 period, and crop it to the national scale for Czechia. In the
 next step, we will generate time series for our data sets and conclude
@@ -170,24 +170,24 @@ four arguments *data_name*, *path*, *domain*, and *time_res*.
 -   *time_res* is set to "monthly" by default, but if you prefer you can
     also download annual data with "yearly".
 
-Let's download the fldas data set and inspect its content with
+Let's download the GLDAS CLSM data set and inspect its content with
 `show_info`:
 
 ```{r download, eval = FALSE}
-download_data(data_name = 'fldas')
-fldas_global <- raster::brick('fldas_e_mm_land_198201_202212_025_monthly.nc')
-show_info(fldas_global)
+download_data(data_name = 'gldas-clsm')
+gldas_clsm_global <- raster::brick('gldas-clsm_e_mm_land_200001_202211_025_monthly.nc')
+show_info(gldas_clsm_global)
 ```
 
 ```         
 [1] "class      : RasterBrick "                                         
-[2] "dimensions : 720, 1440, 1036800, 492  (nrow, ncol, ncell, nlayers)"
+[2] "dimensions : 720, 1440, 1036800, 275  (nrow, ncol, ncell, nlayers)"
 [3] "resolution : 0.25, 0.25  (x, y)"
 [4] "extent     : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)"
 [5] "crs        : +proj=longlat +datum=WGS84 "
-[6] "source     : fldas_e_mm_land_198201_202212_025_monthly.nc "
-[7] "names      : X1982.01.01, X1982.02.01, X1982.03.01, X1982.04.01, X1982.05.01, X1982.06.01, X1982.07.01, X1982.08.01, X1982.09.01, X1982.10.01, X1982.11.01, X1982.12.01, X1983.01.01, X1983.02.01, X1983.03.01, ... "
-[8] "Date/time  : 1982-01-01, 2022-12-01 (min, max)"
+[6] "source     : gldas-clsm_e_mm_land_200001_202211_025_monthly.nc "
+[7] "names      : X2000.01.01, X2000.02.01, X2000.03.01, X2000.04.01, X2000.05.01, X2000.06.01, X2000.07.01, X2000.08.01, X2000.09.01, X2000.10.01, X2000.11.01, X2000.12.01, X2001.01.01, X2001.02.01, X2001.03.01, ... "
+[8] "Date       : 2000-01-01, 2022-11-01 (min, max)"
 [9] "varname    : e " 
 ```
 
@@ -219,24 +219,24 @@ the `subset_spacetime` function, which has four arguments *data*,
 -   *autosave* is set to FALSE by default. If TRUE data will be
     automatically stored in the same location of the input file.
 
-Let's subset the fldas data set over Central Europe (2,28,42,58) for the
+Let's subset the GLDAS CLSM data set over Central Europe (2,28,42,58) for the
 2001-2010 period, and inspect its content with `show_info`:
 
-```{r fldas_subset, eval = FALSE}
-fldas_subset <- subset_spacetime(fldas_global, years = c(2001, 2010), bbox = c(2,28,42,58))
-show_info(fldas_subset)
+```{r gldas_clsm_subset, eval = FALSE}
+gldas_clsm_subset <- subset_spacetime(gldas_clsm_global, years = c(2001, 2010), bbox = c(2,28,42,58))
+show_info(gldas_clsm_subset)
 ```
 
 ```         
 [1] "class      : RasterBrick "
-[2] "dimensions : 64, 104, 6656, 120  (nrow, ncol, ncell, nlayers)"
+[2] "dimensions : 64, 104, 6656, 120  (nrow, ncol, ncell, nlayers)" 
 [3] "resolution : 0.25, 0.25  (x, y)"
 [4] "extent     : 2, 28, 42, 58  (xmin, xmax, ymin, ymax)"
 [5] "crs        : +proj=longlat +datum=WGS84 "
 [6] "source     : memory"
 [7] "names      :  X2001.01.01,  X2001.02.01,  X2001.03.01,  X2001.04.01,  X2001.05.01,  X2001.06.01,  X2001.07.01,  X2001.08.01,  X2001.09.01,  X2001.10.01,  X2001.11.01,  X2001.12.01,  X2002.01.01,  X2002.02.01,  X2002.03.01, ... "
-[8] "min values : -3.7794194221, -0.4208407104, -0.5045991540, -0.0572454371, -0.0005709816,  0.0000000000,  0.0000000000,  0.0000000000, -0.3487000465, -1.6532191038, -0.4017279446, -2.5777058601, -2.6171388626, -0.3143836856, -0.2774783075, ... "
-[9] "max values :      56.90099,      69.52248,     113.14240,     125.60358,     174.75136,     190.40407,     189.30975,     155.39180,      99.69257,      76.16212,      62.63054,      47.89834,      40.91222,      68.70403,      99.67541, ... "
+[8] "min values :  -6.52199984,   2.92202687,   7.34032774,  21.86954689,  22.72333336,  40.87482834,  42.34235001,  48.86763763,  26.36499977,   9.97645855,   2.74581981,  -2.55925989, -13.23385811,  -5.90377951,  14.25008392, ... "
+[9] "max values :     39.34776,     59.50647,     71.14590,    111.53451,    170.21600,    187.99019,    192.55907,    190.69772,     92.26154,     70.78891,     55.01104,     50.32963,     50.21034,     67.48029,     76.13699, ... "
 [10] "time       : 2001-01-01, 2010-12-01 (min, max)"
 ```
 
@@ -252,14 +252,14 @@ use the `crop_data` function, which has three arguments *x*, *shp_path*,
 -   *autosave* is set to FALSE by default. If TRUE data will be
     automatically stored in the same location of the input file.
 
-Let's crop our fldas subset to cover only Czechia with the respective
+Let's crop our GLDAS CLSM subset to cover only Czechia with the respective
 [shape
 file](https://geodata.ucdavis.edu/gadm/gadm4.1/shp/gadm41_CZE_shp.zip),
 and inspect its content with `show_info`:
 
-```{r fldas_crop, eval = FALSE}
-fldas_cz <- crop_data(fldas_subset, shp_path = "gadm41_CZE_0.shp")
-show_info(fldas_cz)
+```{r gldas_clsm_crop, eval = FALSE}
+gldas_clsm_cz <- crop_data(gldas_clsm_subset, shp_path = "gadm41_CZE_0.shp")
+show_info(gldas_clsm_cz)
 ```
 
 ```         
@@ -270,9 +270,9 @@ show_info(fldas_cz)
 [5] "crs        : +proj=longlat +datum=WGS84 "
 [6] "source     : memory"
 [7] "names      : X2001.01.01, X2001.02.01, X2001.03.01, X2001.04.01, X2001.05.01, X2001.06.01, X2001.07.01, X2001.08.01, X2001.09.01, X2001.10.01, X2001.11.01, X2001.12.01, X2002.01.01, X2002.02.01, X2002.03.01, ... "
-[8] "min values :   2.8995819,   0.3797975,   3.0552430,   2.6468999,   2.3843012,   8.8729420,  10.6661291,   6.5048337,   3.1765358,   1.2650596,   2.0705938,   4.3670325,   8.1393061,   2.2920027,   1.8019267, ... "
-[9] "max values :    19.11826,    33.55016,    46.44899,    67.51703,   154.64659,   127.61076,   148.00507,   130.79279,    60.39583,    39.82825,    25.54001,    22.27194,    30.96886,    35.84626,    53.87944, ... "
-[10] "time       : 2001-01-01, 2010-12-01 (min, max)"
+[8] "min values :   0.4483199,   9.5629463,  13.3858862,  41.2026558, 100.3955154,  72.9504623,  90.1328659,  95.8753586,  28.9377785,  23.5860615,   2.7458198,   1.5310012,  -7.8326845,  13.8018255,  37.3040085, ... "
+[9] "max values :    5.531880,   15.336628,   34.385384,   69.114105,  138.656677,  106.782722,  129.662613,  127.534012,   39.665840,   39.544163,   14.476708,    7.447963,    5.591727,   24.932419,   51.806755, ... "
+[10] "time       : 2001-01-01, 2010-12-01 (min, max)" 
 ```
 
 ### PET calculation
@@ -280,7 +280,7 @@ show_info(fldas_cz)
 First we need to download temperature data. To to this we will use temperature data from the [Zenodo
 repository](https://doi.org/10.5281/zenodo.7990413):
 
-**NOTE:** Temperature data available at the moment is limited to monthly and covers only the land domain. The data source used for this information is TerraClimate. 
+**NOTE:** Temperature data available at the moment is limited to monthly and covers only the land domain. The data source used for this information is TerraClimate. We will only perform PET calculation over 2001 to 2010.
 
 we use the `download_terraclimate` function, which has four arguments *variable*, *folder_path*, *time_res*, and *domain*.
 
@@ -301,37 +301,58 @@ This will download temperature data in following naming convention e.g.,
 
 `terraclimate_tavg_land_19580101_20221231_025_monthly.nc`
 
-`pet_calc` function is calculating PET from various *method*. "hs" for
-Hargreaves Samani method [@hargreaves1982estimating], "od" for Oudin
-method [@oudin2005potential], "mb" for McGuinness and Bordne method
-[@mcguinness1972comparison], "jh" for Jensen Haise method
-[@jensen1963estimating], and "br" for Baier and Robertson
-[@baier1965estimation].
+Then, lets `brick` and subset temperature data over 2001 to 2010 to to this we will use `susbet_time` function which has three arguments *data*, *years*, and *autosave*.
+
+-   *data* is the path to the data set of interest or a RasterBrick
+    object.
+-   *years* is the period of interest in the form (start_year, end_year)
+    coordinates in degrees in the form (xmin, xmax, ymin, ymax).
+-   *autosave* is set to FALSE by default. If TRUE data will be
+    automatically stored in the same location of the input file.
+
+```{r subset_terraclimate, eval=FALSE}
+tavg_subset <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc") %>% subset_time(years = c(2001, 2010))
+show_info(tavg_subset)
+```
+
+```
+[1] "class      : RasterBrick "
+[2] "dimensions : 720, 1440, 1036800, 120  (nrow, ncol, ncell, nlayers)"
+[3] "resolution : 0.25, 0.25  (x, y)" 
+[4] "extent     : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)"
+[5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
+[6] "source     : memory"
+[7] "names      : X2001.01.01, X2001.02.01, X2001.03.01, X2001.04.01, X2001.05.01, X2001.06.01, X2001.07.01, X2001.08.01, X2001.09.01, X2001.10.01, X2001.11.01, X2001.12.01, X2002.01.01, X2002.02.01, X2002.03.01, ... "
+[8] "min values :      -50.11,      -44.95,      -57.11,      -66.30,      -65.19,      -63.78,      -67.91,      -66.51,      -61.80,      -54.57,      -40.74,      -45.09,      -48.34,      -44.80,      -53.75, ... "
+[9] "max values :       35.00,       33.30,       33.56,       35.38,       38.50,       39.84,       41.07,       39.78,       37.34,       33.96,       32.74,       32.76,       33.95,       32.41,       33.42, ... "
+[10] "time       : 2001-01-01, 2010-12-01 (min, max)" 
+```
+
+`pet` function is calculating PET from various *method*. "hs" for Hargreaves Samani method [@hargreaves1982estimating], "od" for Oudin method [@oudin2005potential], "mb" for McGuinness and Bordne method [@mcguinness1972comparison], "jh" for Jensen Haise method [@jensen1963estimating], and "br" for Baier and Robertson [@baier1965estimation].
 
 #### Calculate PET by Oudin method
 
-Let's calculate PET from Oudin method. Then, same as fldas we can subset it  over Central Europe for the 2001-2010 period, and Czechia and inspect its content with `show_info`:
+Let's calculate PET from Oudin method. Then, same as GLDAS CLSM we can subset it  over Central Europe for the 2001-2010 period, and Czechia and inspect its content with `show_info`:
 
 ```{r pet_calc, eval=FALSE}
-tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
-pet_oudin_global <- pet_calc(method = "od", tavg = tavg_brick)
+pet_oudin_global <- pet(method = "od", tavg = tavg_subset)
 show_info(pet_oudin_global)
 ```
 
 ```         
 [1] "class      : RasterBrick "
-[2] "dimensions : 720, 1440, 1036800, 780  (nrow, ncol, ncell, nlayers)" 
+[2] "dimensions : 720, 1440, 1036800, 120  (nrow, ncol, ncell, nlayers)" 
 [3] "resolution : 0.25, 0.25  (x, y)"
 [4] "extent     : 2, 28, 42, 58  (xmin, xmax, ymin, ymax)"
 [5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
 [6] "source     : memory"
-[7] "names      : X1958.01.01, X1958.02.01, X1958.03.01, X1958.04.01, X1958.05.01, X1958.06.01, X1958.07.01, X1958.08.01, X1958.09.01, X1958.10.01, X1958.11.01, X1958.12.01, X1959.01.01, X1959.02.01, X1959.03.01, ... "
-[8] "min values :           0,           0,           0,           0,           0,           0,           0,           0,           0,           0,           0,           0,           0,           0,           0, ... "
-[9] "max values :    211.0769,    183.8832,    180.3431,    181.3188,    208.0041,    219.7289,    233.0501,    226.3481,    191.6451,    182.9314,    191.2556,    208.2998,    216.5920,    182.6839,    189.2202, ... "
-[10] "Date/time  : 1958-01-01, 2022-12-01 (min, max)"
+[7] "names      :    layer.1,    layer.2,    layer.3,    layer.4,    layer.5,    layer.6,    layer.7,    layer.8,    layer.9,   layer.10,   layer.11,   layer.12,   layer.13,   layer.14,   layer.15, ... "
+[8] "min values :        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0, ... "
+[9] "max values : 219.7779, 175.7467, 185.8244, 190.6394, 223.7396, 225.7254, 237.2172, 220.6905, 186.1909, 181.9239, 191.0677, 201.9078, 208.3414, 172.4666, 185.1244, ... "
+[10] "time       : 2001-01-01, 2010-12-01 (min, max)"
 ```
 ```{r pet_oudin_subset, eval = FALSE}
-pet_oudin_subset <- subset_spacetime(pet_oudin_global, years = c(2001, 2010), bbox = c(2,28,42,58))
+pet_oudin_subset <- subset_space(pet_oudin_global, bbox = c(2,28,42,58))
 show_info(pet_oudin_subset)
 ```
 
@@ -342,9 +363,9 @@ show_info(pet_oudin_subset)
 [4] "extent     : 2, 28, 42, 58  (xmin, xmax, ymin, ymax)"
 [5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
 [6] "source     : memory"
-[7] "names      : X2001.01.01, X2001.02.01, X2001.03.01, X2001.04.01, X2001.05.01, X2001.06.01, X2001.07.01, X2001.08.01, X2001.09.01, X2001.10.01, X2001.11.01, X2001.12.01, X2002.01.01, X2002.02.01, X2002.03.01, ... "
-[8] "min values :   0.0000000,   0.0000000,   0.0000000,   0.0000000,  29.6826839,  35.2862740,  56.8655243,  59.6474762,  18.5679646,  21.9732304,   0.0000000,   0.0000000,   0.0000000,   0.0000000,   0.0000000, ... "
-[9] "max values :    27.54286,    30.60882,    56.41196,    71.91792,   123.63754,   144.49162,   172.22604,   164.48526,   104.05064,    82.26010,    42.09394,    24.42895,    23.70211,    33.02557,    53.42158, ... "
+[7] "names      :     layer.1,     layer.2,     layer.3,     layer.4,     layer.5,     layer.6,     layer.7,     layer.8,     layer.9,    layer.10,    layer.11,    layer.12,    layer.13,    layer.14,    layer.15, ... "
+[8] "min values :  0.12576219,  0.00000000,  0.00000000,  1.05604672, 32.00947189, 35.92906189, 54.95189667, 54.55910492, 16.11966896, 18.10258102,  0.05855137,  0.00000000,  0.03909161,  0.22155134,  1.23004317, ... "
+[9] "max values :    30.75089,    36.74055,    66.91117,    80.53060,   131.82990,   146.70442,   167.32909,   152.45963,    92.18681,    69.81499,    36.21566,    23.24545,    26.42857,    39.64144,    63.36422, ... "
 [10] "time       : 2001-01-01, 2010-12-01 (min, max)"
 ```
 ```{r pet_oudin_crop, eval = FALSE}
@@ -354,15 +375,15 @@ show_info(pet_oudin_cz)
 
 ```
 [1] "class      : RasterBrick " 
-[2] "dimensions : 64, 104, 6656, 120  (nrow, ncol, ncell, nlayers)"
+[2] "dimensions : 64, 104, 6656, 120  (nrow, ncol, ncell, nlayers)"  
 [3] "resolution : 0.25, 0.25  (x, y)"
 [4] "extent     : 2, 28, 42, 58  (xmin, xmax, ymin, ymax)" 
 [5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
 [6] "source     : memory"  
-[7] "names      : X2001.01.01, X2001.02.01, X2001.03.01, X2001.04.01, X2001.05.01, X2001.06.01, X2001.07.01, X2001.08.01, X2001.09.01, X2001.10.01, X2001.11.01, X2001.12.01, X2002.01.01, X2002.02.01, X2002.03.01, ... "
-[8] "min values :    1.656290,    3.878582,   11.940824,   28.756351,   71.201210,   79.335274,  104.388397,   97.543289,   49.243000,   36.703739,    7.096017,    0.000000,    1.901990,    7.945362,   14.307798, ... "
-[9] "max values :   5.0574903,   9.8281002,  26.4252815,  48.3378906,  97.8983765, 108.8017654, 135.4944000, 125.5629272,  67.6883392,  48.5421448,  13.8211985,   3.3882675,   5.2703271,  13.7232389,  26.8243675, ... "
-[10] "time       : 2001-01-01, 2010-12-01 (min, max)" 
+[7] "names      :      layer.1,      layer.2,      layer.3,      layer.4,      layer.5,      layer.6,      layer.7,      layer.8,      layer.9,     layer.10,     layer.11,     layer.12,     layer.13,     layer.14,     layer.15, ... "
+[8] "min values :   1.96738446,   5.01163816,  14.98480034,  33.31892395,  77.47163391,  80.97647858, 100.58403778,  88.21677399,  42.26998138,  29.46974945,   5.71132612,   0.01987622,   2.23067331,  10.26645279,  17.95516968, ... "
+[9] "max values :    5.9040089,   12.5150089,   32.8155899,   55.6794243,  106.1452255,  110.9343948,  130.5993805,  114.1246567,   58.1788139,   39.3826675,   11.2711630,    3.1375873,    6.2271786,   17.4750423,   33.3111839, ... "
+[10] "time       : 2001-01-01, 2010-12-01 (min, max)"
 ```
 
 ### Generate Time series
@@ -373,74 +394,74 @@ To make a time series out of our data, we use the `make_ts` function,
 which has two arguments *data*, and *autosave*.
 
 -   *data* is the path to a ".nc" data set file or a RasterBrick object.
--   *name* is the short name of a data set. E.g., 'fldas'.
+-   *name* is the short name of a data set. E.g., 'gldas-clsm'.
 -   *autosave* is set to FALSE by default. If TRUE data will be
     automatically stored in the same location of the input file.
 
-Let's generate the time series for our three different fldas data sets
+Let's generate the time series for our three different GLDAS CLSM data sets
 (Global, Central Europe, and Czechia), and inspect its first 12 rows:
 
-```{r fldas_global_ts, eval=FALSE}
-fldas_global_ts <- make_ts(fldas_global, name="fldas")
-head(fldas_global_ts, 12)
+```{r gldas_clsm_global_ts, eval=FALSE}
+gldas_clsm_global_ts <- make_ts(gldas_clsm_global, name="gldas-clsm")
+head(gldas_clsm_global_ts, 12)
 ```
 
 ```         
- date    value  name          type
- 1: 1982-01-01 40.01818 FLDAS Model forcing
- 2: 1982-02-01 39.05691 FLDAS Model forcing
- 3: 1982-03-01 45.63258 FLDAS Model forcing
- 4: 1982-04-01 48.38817 FLDAS Model forcing
- 5: 1982-05-01 56.04541 FLDAS Model forcing
- 6: 1982-06-01 59.48527 FLDAS Model forcing
- 7: 1982-07-01 63.42378 FLDAS Model forcing
- 8: 1982-08-01 58.08678 FLDAS Model forcing
- 9: 1982-09-01 47.53051 FLDAS Model forcing
-10: 1982-10-01 43.30959 FLDAS Model forcing
-11: 1982-11-01 39.14826 FLDAS Model forcing
-12: 1982-12-01 39.41859 FLDAS Model forcing
+      date    value            name          type
+ 1: 2000-01-01 42.63418 GLDAS CLSM v2.0 Model forcing
+ 2: 2000-02-01 40.28064 GLDAS CLSM v2.0 Model forcing
+ 3: 2000-03-01 46.65724 GLDAS CLSM v2.0 Model forcing
+ 4: 2000-04-01 49.73078 GLDAS CLSM v2.0 Model forcing
+ 5: 2000-05-01 61.78450 GLDAS CLSM v2.0 Model forcing
+ 6: 2000-06-01 71.51643 GLDAS CLSM v2.0 Model forcing
+ 7: 2000-07-01 78.34947 GLDAS CLSM v2.0 Model forcing
+ 8: 2000-08-01 68.59857 GLDAS CLSM v2.0 Model forcing
+ 9: 2000-09-01 52.40877 GLDAS CLSM v2.0 Model forcing
+10: 2000-10-01 45.95624 GLDAS CLSM v2.0 Model forcing
+11: 2000-11-01 40.95821 GLDAS CLSM v2.0 Model forcing
+12: 2000-12-01 41.50710 GLDAS CLSM v2.0 Model forcing
 ```
 
-```{r fldas_subset_ts, eval=FALSE}
-fldas_subset_ts <- make_ts(fldas_subset, name="fldas")
-head(fldas_subset_ts, 12)
-```
-
-```         
-          date     value  name          type
- 1: 2001-01-01  14.47523 FLDAS Model forcing
- 2: 2001-02-01  24.55700 FLDAS Model forcing
- 3: 2001-03-01  43.77176 FLDAS Model forcing
- 4: 2001-04-01  61.23033 FLDAS Model forcing
- 5: 2001-05-01 112.55881 FLDAS Model forcing
- 6: 2001-06-01 114.57058 FLDAS Model forcing
- 7: 2001-07-01 116.47619 FLDAS Model forcing
- 8: 2001-08-01  79.83941 FLDAS Model forcing
- 9: 2001-09-01  50.78079 FLDAS Model forcing
-10: 2001-10-01  32.62168 FLDAS Model forcing
-11: 2001-11-01  20.41700 FLDAS Model forcing
-12: 2001-12-01  13.59456 FLDAS Model forcing
-```
-
-```{r fldas_cz_ts, eval=FALSE}
-fldas_cz_ts <- make_ts(fldas_cz, name = "fldas")
-head(fldas_cz_ts, 12)
+```{r gldas_clsm_subset_ts, eval=FALSE}
+gldas_clsm_subset_ts <- make_ts(gldas_clsm_subset, name="gldas-clsm")
+head(gldas_clsm_subset_ts, 12)
 ```
 
 ```         
-          date     value  name          type
- 1: 2001-01-01  12.23963 FLDAS Model forcing
- 2: 2001-02-01  23.80942 FLDAS Model forcing
- 3: 2001-03-01  36.08155 FLDAS Model forcing
- 4: 2001-04-01  50.36031 FLDAS Model forcing
- 5: 2001-05-01 105.76477 FLDAS Model forcing
- 6: 2001-06-01  95.73339 FLDAS Model forcing
- 7: 2001-07-01  99.95880 FLDAS Model forcing
- 8: 2001-08-01  80.05314 FLDAS Model forcing
- 9: 2001-09-01  42.28572 FLDAS Model forcing
-10: 2001-10-01  24.04546 FLDAS Model forcing
-11: 2001-11-01  15.01222 FLDAS Model forcing
-12: 2001-12-01  12.39291 FLDAS Model forcing
+     date      value            name          type
+ 1: 2001-01-01   6.684203 GLDAS CLSM v2.0 Model forcing
+ 2: 2001-02-01  15.447494 GLDAS CLSM v2.0 Model forcing
+ 3: 2001-03-01  26.575641 GLDAS CLSM v2.0 Model forcing
+ 4: 2001-04-01  53.388876 GLDAS CLSM v2.0 Model forcing
+ 5: 2001-05-01 111.508691 GLDAS CLSM v2.0 Model forcing
+ 6: 2001-06-01 103.385836 GLDAS CLSM v2.0 Model forcing
+ 7: 2001-07-01 119.376406 GLDAS CLSM v2.0 Model forcing
+ 8: 2001-08-01 108.626158 GLDAS CLSM v2.0 Model forcing
+ 9: 2001-09-01  45.849332 GLDAS CLSM v2.0 Model forcing
+10: 2001-10-01  32.508406 GLDAS CLSM v2.0 Model forcing
+11: 2001-11-01  15.332365 GLDAS CLSM v2.0 Model forcing
+12: 2001-12-01   9.997737 GLDAS CLSM v2.0 Model forcing
+```
+
+```{r gldas_clsm_cz_ts, eval=FALSE}
+gldas_clsm_cz_ts <- make_ts(gldas_clsm_cz, name = "gldas-clsm")
+head(gldas_clsm_cz_ts, 12)
+```
+
+```         
+         date      value            name          type
+ 1: 2001-01-01   1.843749 GLDAS CLSM v2.0 Model forcing
+ 2: 2001-02-01  11.758140 GLDAS CLSM v2.0 Model forcing
+ 3: 2001-03-01  17.860222 GLDAS CLSM v2.0 Model forcing
+ 4: 2001-04-01  48.019425 GLDAS CLSM v2.0 Model forcing
+ 5: 2001-05-01 114.183978 GLDAS CLSM v2.0 Model forcing
+ 6: 2001-06-01  82.153565 GLDAS CLSM v2.0 Model forcing
+ 7: 2001-07-01 108.249534 GLDAS CLSM v2.0 Model forcing
+ 8: 2001-08-01 109.140553 GLDAS CLSM v2.0 Model forcing
+ 9: 2001-09-01  33.501152 GLDAS CLSM v2.0 Model forcing
+10: 2001-10-01  27.275303 GLDAS CLSM v2.0 Model forcing
+11: 2001-11-01   8.356745 GLDAS CLSM v2.0 Model forcing
+12: 2001-12-01   6.125528 GLDAS CLSM v2.0 Model forcing
 ```
 
 #### Time series for calculated PET
@@ -456,18 +477,18 @@ head(pet_oudin_global_ts, 12)
 
 ```         
         date     value         name          type
-1  1958-01-01  61.30534 TerraClimate Model forcing
-2  1958-02-01  57.55157 TerraClimate Model forcing
-3  1958-03-01  69.26975 TerraClimate Model forcing
-4  1958-04-01  75.33172 TerraClimate Model forcing
-5  1958-05-01  88.64012 TerraClimate Model forcing
-6  1958-06-01  97.28295 TerraClimate Model forcing
-7  1958-07-01 107.45549 TerraClimate Model forcing
-8  1958-08-01 102.36428 TerraClimate Model forcing
-9  1958-09-01  86.36096 TerraClimate Model forcing
-10 1958-10-01  76.35980 TerraClimate Model forcing
-11 1958-11-01  64.49735 TerraClimate Model forcing
-12 1958-12-01  61.64263 TerraClimate Model forcing
+ 1: 2001-01-01  90.95112 TerraClimate Model forcing
+ 2: 2001-02-01  91.66514 TerraClimate Model forcing
+ 3: 2001-03-01 101.58235 TerraClimate Model forcing
+ 4: 2001-04-01  95.16555 TerraClimate Model forcing
+ 5: 2001-05-01  98.58120 TerraClimate Model forcing
+ 6: 2001-06-01 101.73452 TerraClimate Model forcing
+ 7: 2001-07-01 110.60216 TerraClimate Model forcing
+ 8: 2001-08-01 107.84045 TerraClimate Model forcing
+ 9: 2001-09-01  94.12793 TerraClimate Model forcing
+10: 2001-10-01  90.64953 TerraClimate Model forcing
+11: 2001-11-01  83.37564 TerraClimate Model forcing
+12: 2001-12-01  89.26847 TerraClimate Model forcing
 ```
 
 ```{r pet_oudin_subset_ts, eval=FALSE}
@@ -475,20 +496,20 @@ pet_oudin_subset_ts <- make_ts(pet_oudin_subset, name = "terraclimate")
 head(pet_oudin_subset_ts, 12)
 ```
 
-```         
-               date      value         name          type
- 1: 2000-01-01   2.665469 TerraClimate Model forcing
- 2: 2000-02-01   9.319429 TerraClimate Model forcing
- 3: 2000-03-01  19.722206 TerraClimate Model forcing
- 4: 2000-04-01  52.197863 TerraClimate Model forcing
- 5: 2000-05-01  87.489379 TerraClimate Model forcing
- 6: 2000-06-01 110.380165 TerraClimate Model forcing
- 7: 2000-07-01 107.296700 TerraClimate Model forcing
- 8: 2000-08-01 111.219882 TerraClimate Model forcing
- 9: 2000-09-01  65.276298 TerraClimate Model forcing
-10: 2000-10-01  42.080404 TerraClimate Model forcing
-11: 2000-11-01  16.396132 TerraClimate Model forcing
-12: 2000-12-01   6.029927 TerraClimate Model forcing
+```
+         date      value         name          type
+ 1: 2001-01-01   7.620077 TerraClimate Model forcing
+ 2: 2001-02-01  11.655452 TerraClimate Model forcing
+ 3: 2001-03-01  29.309794 TerraClimate Model forcing
+ 4: 2001-04-01  50.257311 TerraClimate Model forcing
+ 5: 2001-05-01  93.835662 TerraClimate Model forcing
+ 6: 2001-06-01 103.771513 TerraClimate Model forcing
+ 7: 2001-07-01 125.393676 TerraClimate Model forcing
+ 8: 2001-08-01 106.738780 TerraClimate Model forcing
+ 9: 2001-09-01  56.908180 TerraClimate Model forcing
+10: 2001-10-01  37.982284 TerraClimate Model forcing
+11: 2001-11-01  11.427742 TerraClimate Model forcing
+12: 2001-12-01   4.599400 TerraClimate Model forcing
 ```
 
 ```{r pet_odin_cz_ts, eval=FALSE}
@@ -498,18 +519,18 @@ head(pet_oudin_cz_ts, 12)
 
 ```         
          date      value         name          type
- 1: 2000-01-01   2.643555 TerraClimate Model forcing
- 2: 2000-02-01   9.312819 TerraClimate Model forcing
- 3: 2000-03-01  19.611606 TerraClimate Model forcing
- 4: 2000-04-01  51.935105 TerraClimate Model forcing
- 5: 2000-05-01  87.271313 TerraClimate Model forcing
- 6: 2000-06-01 110.079202 TerraClimate Model forcing
- 7: 2000-07-01 106.833477 TerraClimate Model forcing
- 8: 2000-08-01 110.965007 TerraClimate Model forcing
- 9: 2000-09-01  65.153299 TerraClimate Model forcing
-10: 2000-10-01  41.721005 TerraClimate Model forcing
-11: 2000-11-01  16.031256 TerraClimate Model forcing
-12: 2000-12-01   5.822190 TerraClimate Model forcing
+ 1: 2001-01-01   4.088036 TerraClimate Model forcing
+ 2: 2001-02-01   8.909776 TerraClimate Model forcing
+ 3: 2001-03-01  24.280493 TerraClimate Model forcing
+ 4: 2001-04-01  44.816892 TerraClimate Model forcing
+ 5: 2001-05-01  92.737708 TerraClimate Model forcing
+ 6: 2001-06-01  96.017031 TerraClimate Model forcing
+ 7: 2001-07-01 115.609065 TerraClimate Model forcing
+ 8: 2001-08-01 100.815075 TerraClimate Model forcing
+ 9: 2001-09-01  50.340782 TerraClimate Model forcing
+10: 2001-10-01  35.079328 TerraClimate Model forcing
+11: 2001-11-01   8.630342 TerraClimate Model forcing
+12: 2001-12-01   1.422131 TerraClimate Model forcing
 ```
 
 ## Visualize
@@ -525,28 +546,28 @@ To see a map of any data set raw or processed, we use `plot_map` which
 takes only one layer of the RasterBrick as input.
 
 ```{r map_global, eval = FALSE}
-plot_map(fldas_global[[1]]) 
-plot_map(pet_oudin_global[[289]]) 
+plot_map(gldas_clsm_global[[13]]) 
+plot_map(pet_oudin_global[[1]]) 
 ```
 
-![](plots/map_fldas_global.png){width="8.4cm" height="5cm"}
+![](plots/map_gldas_global.png){width="8.4cm" height="5cm"}
 ![](plots/map_oudin_global.png){width="8.4cm" height="5cm"}
 
 ```{r map_subset, eval = FALSE}
-plot_map(fldas_subset[[1]])
+plot_map(gldas_clsm_subset[[1]])
 plot_map(pet_oudin_subset[[1]])
 ```
 
-![](plots/map_fldas_ceu.png){width="8.4cm" height="5cm"}
-![](plots/map_oudin_ceu.png){width="8.4cm" height="5cm"}
+![](plots/map_gldas_subset.png){width="8.4cm" height="5cm"}
+![](plots/map_oudin_subset.png){width="8.4cm" height="5cm"}
 
 ```{r map_cz, eval = FALSE}
-plot_map(fldas_cz[[1]])
+plot_map(gldas_clsm_cz[[1]])
 plot_map(pet_oudin_cz[[1]])
 ```
 
-![](plots/map_fldas_cze.png){width="8.4cm"
-height="5cm"}![](plots/map_oudin_cze.png){width="8.4cm" height="5cm"}
+![](plots/map_gldas_cz.png){width="8.4cm"
+height="5cm"}![](plots/map_oudin_cz.png){width="8.4cm" height="5cm"}
 
 ### Time Series Visuals
 
@@ -558,15 +579,15 @@ below, which takes only a `make_ts` ".csv" generated file.
 ```{r}
 
 # Plotting globals
-p01<- plot_line(fldas_global_ts, var = "Evapotranspiration")
+p01<- plot_line(gldas_clsm_global_ts, var = "Evapotranspiration")
 p02<- plot_line(pet_oudin_global_ts, var = "Potential Evapotranspiration")
 ggpubr::ggarrange(p01, p02, ncol = 1)
 # Plotting subsets
-p01<- plot_line(fldas_subset_ts, var = "ET")
+p01<- plot_line(gldas_clsm_subset_ts, var = "ET")
 p02<- plot_line(pet_oudin_subset_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 # Plotting cz
-p01<- plot_line(fldas_cz_ts, var = "ET")
+p01<- plot_line(gldas_clsm_cz_ts, var = "ET")
 p02<- plot_line(pet_oudin_cz_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 
@@ -577,14 +598,14 @@ ggpubr::ggarrange(p01, p02, ncol = 2)
 ```{r}
 
 # Plotting globals
- plot_heatmap(fldas_global_ts)
+ plot_heatmap(gldas_clsm_global_ts)
  plot_heatmap(pet_oudin_global_ts)
 # Plotting subsets
-p01<- plot_heatmap(fldas_subset_ts)
+p01<- plot_heatmap(gldas_clsm_subset_ts)
 p02<- plot_heatmap(pet_oudin_subset_ts)
 ggpubr::ggarrange(p01, p02, ncol = 2, common.legend = TRUE, legend = "right")
 # Plotting cz
-p01<- plot_heatmap(fldas_cz_ts)
+p01<- plot_heatmap(gldas_clsm_cz_ts)
 p02<- plot_heatmap(pet_oudin_cz_ts)
 ggpubr::ggarrange(p01, p02, ncol = 2, common.legend = TRUE, legend = "right")
 
@@ -595,15 +616,15 @@ ggpubr::ggarrange(p01, p02, ncol = 2, common.legend = TRUE, legend = "right")
 ```{r}
 
 # Plotting globals
-p01<- plot_box(fldas_global_ts, var = "ET")
+p01<- plot_box(gldas_clsm_global_ts, var = "ET")
 p02<- plot_box(pet_oudin_global_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 # Plotting subsets
-p01<- plot_box(fldas_subset_ts, var = "ET")
+p01<- plot_box(gldas_clsm_subset_ts, var = "ET")
 p02<- plot_box(pet_oudin_subset_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 # Plotting cz
-p01<- plot_box(fldas_cz_ts, var = "ET" )
+p01<- plot_box(gldas_clsm_cz_ts, var = "ET" )
 p02<- plot_box(pet_oudin_cz_ts, var = "PET" )
 ggpubr::ggarrange(p01, p02, ncol = 2)
 
@@ -613,15 +634,15 @@ ggpubr::ggarrange(p01, p02, ncol = 2)
 
 ```{r}
 # Plotting globals
-p01<- plot_density(fldas_global_ts, var = "ET")
+p01<- plot_density(gldas_clsm_global_ts, var = "ET")
 p02<- plot_density(pet_oudin_global_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 # Plotting subsets
-p01<- plot_density(fldas_subset_ts, var = "ET")
+p01<- plot_density(gldas_clsm_subset_ts, var = "ET")
 p02<- plot_density(pet_oudin_subset_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 # Plotting cz
-p01<- plot_density(fldas_cz_ts, var = "ET")
+p01<- plot_density(gldas_clsm_cz_ts, var = "ET")
 p02<- plot_density(pet_oudin_cz_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 
@@ -633,13 +654,13 @@ ggpubr::ggarrange(p01, p02, ncol = 2)
 `ggsave(<filename>, <plot>, width = 16.3, height = 15.03)`.
 
 ```{r, eval=FALSE}
-plot_summary(fldas_global_ts, var = "Evapotranspiration")
-#plot_summary(fldas_subset_ts)
-#plot_summary(fldas_cz_ts)
+plot_summary(gldas_clsm_global_ts, var = "Evapotranspiration")
+#plot_summary(gldas_clsm_subset_ts, var = "Evapotranspiration")
+#plot_summary(gldas_clsm_cz_ts, var = "Evapotranspiration")
 
 ```
 
-![](plots/summary_fldas.png){width="95%"}
+![](plots/gldas_global_summary.png){width="95%"}
 
 ```{r, eval=FALSE}
 plot_summary(pet_oudin_global_ts, var = "Potential Evapotranspiration")
@@ -647,7 +668,7 @@ plot_summary(pet_oudin_global_ts, var = "Potential Evapotranspiration")
 #plot_summary(pet_oudin_cz_ts)
 ```
 
-![](plots/summary_oudin.png){width="95%"}
+![](plots/oudin_global_summary.png){width="95%"}
 
 # Coming Soon
 
