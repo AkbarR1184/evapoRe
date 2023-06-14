@@ -2,17 +2,6 @@
 #'
 #' The function \code{pet_calc} calculate selected PET method  
 #' 
-#' @details Different PET methods require different meteorological inputs, such 
-#' as tmax (maximum temperature), tmin (minimum temperature), and tavg (average temperature). 
-#' The required inputs corresponding to each PET method are listed as follows:
-#' \itemize{
-#' \item{"hs" (Hargreaves-Samani): tavg, tmin, tmax,}
-#' \item{"od" (Oudin): tavg,}
-#' \item{"mb" (McGuinness and Bordne method): tavg,}
-#' \item{"jh" (Jensen-Haise): tavg,}
-#' \item{"br" (Baier and Robertson): tmin, tmax.}
-#' }
-#' Function \code{\link{download_terraclimate}} is used to download temperature data
 #' @param method a character string indicating the method name to calculate PET. Available options are:
 #' \itemize{
 #' \item{"hs" for Hargreaves Samani method,}
@@ -25,6 +14,16 @@
 #' @param tmax a RasterBrick object having maximum temperature 
 #' @param tmin a RasterBrick object having minimum temperature
 #' @return a RasterBrick object
+#' @details
+#' Different PET methods require different meteorological inputs, such as tmax (maximum temperature), tmin (minimum temperature), and tavg (average temperature). The required inputs corresponding to each PET method are listed as follows:
+#' \itemize{
+#' \item{"hs" (Hargreaves-Samani): tavg, tmin, tmax,}
+#' \item{"od" (Oudin): tavg,}
+#' \item{"mb" (McGuinness and Bordne method): tavg,}
+#' \item{"jh" (Jensen-Haise): tavg,}
+#' \item{"br" (Baier and Robertson): tmin, tmax.}
+#' }
+#' Function \code{\link{download_terraclimate}} is used to download temperature data
 #' @export
 #' @examples 
 #' \dontrun{

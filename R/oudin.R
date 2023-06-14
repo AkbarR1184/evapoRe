@@ -43,6 +43,10 @@ oudin <- function(x){
     dummie_re <- re[[re_layer]]
     lambda <- 2.501 - 0.002361*dummie_t
     dummie_od <- dummie_re*(dummie_t + 5)/(100*lambda)
+    dummie_od <- calc(dummie_od, fun = function(val) {
+      val[val < 0] <- NA
+      return(val)
+      })
     return(dummie_od)
   }
   dummie_pet <- brick(dummie_pet)
