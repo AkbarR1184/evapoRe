@@ -19,7 +19,7 @@ esr_dates <- function(x){
   dummie_dif <- dummie[2] - dummie[1]
   if (dummie_dif == dummie_day_dif){
     dummie_dates <- dummie
-  } else if (dummie_dif == dummie_month_dif){
+  } else if ((dummie_dif > dummie_day_dif) & (dummie_dif <= dummie_month_dif)) {
     dummie_dates <- dummie
     dummie_dates[month(dummie_dates) == 1] <- sub("\\d{2}$", "17", dummie_dates[month(dummie_dates) == 1])
     dummie_dates[month(dummie_dates) == 2] <- sub("\\d{2}$", "16", dummie_dates[month(dummie_dates) == 2])

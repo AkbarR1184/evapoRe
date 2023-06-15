@@ -2,48 +2,34 @@
 % Please edit documentation in R/pet.R
 \name{pet}
 \alias{pet}
-\title{Calculate PET by various offline methods}
+\title{Potential Evapotranspiration}
 \usage{
-pet(method = "od", tavg = NULL, tmax = NULL, tmin = NULL)
+pet(x, method = "od")
 }
 \arguments{
-\item{method}{a character string indicating the method name to calculate PET. Available options are:
+\item{x}{a RasterBrick object with average temperature data.}
+
+\item{method}{a character string indicating the method to be used. Available options are:
 \itemize{
-\item{"hs" for Hargreaves Samani method,}
-\item{"od" for Oudin method,}
-\item{"mb" for McGuinness and Bordne method,}
-\item{"jh" for Jensen Haise method,}
-\item{"br" for Baier and Robertson.}
+\item{"bc" for Blaney and Criddle (1950),}
+\item{"ha" for Hamon (1961),}
+\item{"jh" for Jensen and Haise (1963),}
+\item{"mb" for McGuinness and Bordne (1972),}
+\item{"od" for Oudin (2005). Default,
+\item{"th" for Thornthwaite (1948).}}
 }}
-
-\item{tavg}{a RasterBrick object having average temperature}
-
-\item{tmax}{a RasterBrick object having maximum temperature}
-
-\item{tmin}{a RasterBrick object having minimum temperature}
 }
 \value{
-a RasterBrick object
+a RasterBrick object with potential evapotranspiration in [mm/day].
 }
 \description{
-The function \code{pet_calc} calculate selected PET method
-}
-\details{
-Different PET methods require different meteorological inputs, such as tmax (maximum temperature), tmin (minimum temperature), and tavg (average temperature). The required inputs corresponding to each PET method are listed as follows:
-\itemize{
-\item{"hs" (Hargreaves-Samani): tavg, tmin, tmax,}
-\item{"od" (Oudin): tavg,}
-\item{"mb" (McGuinness and Bordne method): tavg,}
-\item{"jh" (Jensen-Haise): tavg,}
-\item{"br" (Baier and Robertson): tmin, tmax.}
-}
-Function \code{\link{download_terraclimate}} is used to download temperature data
+The function \code{pet} estimates PET by different methods
 }
 \examples{
 \dontrun{
 #Calculate PET by Hargreaves-Samani method 
-tavg_brick <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
-tmax_brick <- raster::brick("terraclimate_tmax_land_19580101_20221231_025_monthly.nc")
-tmin_brick <- raster::brick("terraclimate_tmin_land_19580101_20221231_025_monthly.nc")
-pet_hs <- pet_calc(method = "hs",tavg = tavg_brick, tmax = tmax_brick, tmin = tmin_brick)}
+tavg <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
+pet_oudin <- pet(tavg, method = "od")
+pet_oudin <- muldpm(pet_oudin)
+}
 }

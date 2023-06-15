@@ -1,4 +1,4 @@
-#' PET calculation by Oudin method
+#' PET calculation by McGuinness Bordne method
 #'
 #' Function to calculate pet
 #' 
@@ -13,7 +13,7 @@
 #' @return a RasterBrick object
 #' @keywords internal
 
-oudin <- function(x){
+mcguinness_bordne <- function(x){
   no_cores <- detectCores() - 1
   if (no_cores < 1 | is.na(no_cores))(no_cores <- 1)
   registerDoParallel(cores = no_cores)
@@ -38,12 +38,12 @@ oudin <- function(x){
     dummie_t <- tavg[[t_layer]]
     dummie_re <- re[[re_layer]]
     lambda <- 2.501 - 0.002361*dummie_t
-    dummie_o <- dummie_re*(dummie_t + 5)/(100*lambda)
-    dummie_o <- calc(dummie_o, fun = function(val) {
+    dummie_mb <- dummie_re*(dummie_t + 5)/(68*lambda)
+    dummie_mb <- calc(dummie_mb, fun = function(val) {
       val[val < 0] <- NA
       return(val)
-      })
-    return(dummie_o)
+    })
+    return(dummie_mb)
   }
   dummie_pet <- brick(dummie_pet)
   dummie_pet <- setZ(dummie_pet, t_dates)
