@@ -8,7 +8,7 @@
 #' @import parallel
 #' @importFrom methods as
 #' @importFrom lubridate day days_in_month leap_year
-#' @importFrom raster calc getZ init nlayers reclassify setZ
+#' @importFrom raster brick calc getZ init nlayers reclassify setZ
 #' @param x a RasterBrick object having average temperature 
 #' @return a RasterBrick object
 #' @keywords internal

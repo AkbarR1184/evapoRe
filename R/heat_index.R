@@ -6,6 +6,7 @@
 #' @importFrom methods as
 #' @importFrom lubridate day leap_year ymd
 #' @importFrom raster getZ setZ stackApply
+#' @importFrom utils tail
 #' @param x a character string with the path to the data file.
 #' @return data.table
 #' @keywords internal
