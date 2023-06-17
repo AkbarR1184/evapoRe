@@ -1,6 +1,6 @@
 ---
 title: "evapoRe"
-author: "Akbar Rahmati Ziveh, Mijael Rodrigo Vargas Godoy, Vishal Thakur,  Yannis Markonis"
+author: "Akbar Rahmati Ziveh, Mijael Rodrigo Vargas Godoy, Vishal Thakur, Yannis Markonis"
 date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
@@ -16,14 +16,12 @@ bibliography: evapoRe.bib
 link-citations: true
 ---
 
-```{=html}
 <style>
 body {
 text-align: justify}
 </style>
-```
 
-------------------------------------------------------------------------
+***
 
 ```{r start, include = FALSE}
 knitr::opts_chunk$set(
@@ -33,11 +31,8 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE
 )
-# Load packages
 library(evapoRe)
 library(kableExtra)
-
-# Load data 
 data('gldas_clsm_global_ts')
 data('gldas_clsm_subset_ts')
 data('gldas_clsm_cz_ts')
@@ -46,19 +41,17 @@ data('pet_oudin_subset_ts')
 data('pet_oudin_cz_ts')
 ```
 
-The `evapoRe` package developed as a complementary toolbox to the pRecipe package [@godoy2023precipitation], available at [https://cran.r-project.org/web/packages/pRecipe/index.html]. `evapoRe` facilitates the download, exploration, visualization, and analysis of evapotranspiration (ET) data. Additionally, evapoRe offers the functionality to calculate various Potential EvapoTranspiration (PET) methods.
+The `evapoRe` package developed as a complementary toolbox to the pRecipe package [@vargas-godoy2023precipitation], available at [https://cran.r-project.org/web/packages/pRecipe/index.html]. `evapoRe` facilitates the download, exploration, visualization, and analysis of evapotranspiration (ET) data. Additionally, evapoRe offers the functionality to calculate various Potential EvapoTranspiration (PET) methods.
 
-------------------------------------------------------------------------
+***
 
 ## Before We Start
 
 Like many other R packages, `evapoRe` has some system requirements:
 
--   [PROJ](https://proj.org/download.html)
--   Geospatial Data Abstraction Library
-    [(GDAL)](https://gdal.org/download.html)
--   Network Common Data Form
-    [(NetCDF)](https://www.unidata.ucar.edu/software/netcdf/)
+* [PROJ](https://proj.org/download.html)
+* Geospatial Data Abstraction Library [(GDAL)](https://gdal.org/download.html)
+* Network Common Data Form [(NetCDF)](https://www.unidata.ucar.edu/software/netcdf/)
 
 ## Data
 
@@ -68,8 +61,10 @@ following naming convention:
 `<data set>_<variable>_<units>_<coverage>_<start date>_<end date>_<resolution>_<time step>.nc`
 
 The `evapoRe` data collection was homogenized to these specifications:
-\* `<variable>` =  evapotranspiration (e) \* `<units>` =
-millimeters (mm) \* `<resolution>` = 0.25° \*
+
+* `<variable>` =  evapotranspiration (e)
+* `<units>` = millimeters (mm) 
+* `<resolution>` = 0.25°
 
 E.g., ERA5 [@hersbach_era5_2020] would be:
 
@@ -123,8 +118,7 @@ tibble::tribble(
 
 # Demo
 
-In this introductory demo we will first download the GLDAS-CLSM data set.
-We will then subset the downloaded data over Central Europe for the 2001-2010 period, and crop it to the national scale for Czechia. In paralel, we will estimate potential evapotranspiration over the same domain and the same record length. In the next step, we will generate time series for our data sets and conclude with the visualization of our data.
+In this introductory demo we will first download the GLDAS-CLSM data set. We will then subset the downloaded data over Central Europe for the 2001-2010 period, and crop it to the national scale for Czechia. In paralel, we will estimate potential evapotranspiration over the same domain and the same record length. In the next step, we will generate time series for our data sets and conclude with the visualization of our data.
 
 ## Installation
 
@@ -138,19 +132,12 @@ library(evapoRe)
 
 Downloading the entire data collection or only a few data sets is quite straightforward. You just call the `download_data` function, which has four arguments *data_name*, *path*, *domain*, and *time_res*.
 
--   *data_name* is set to "all" by default, but you can specify the names of
-    your data sets of interest only.
--   *path* is set to "." by default. I.e., the current working
-    directory. By replacing it for [your_project_folder], the downloaded
-    files will be stored in [your_project_folder] instead.
--   *domain* is set to "raw" by default, but you can specify the domain
-    of your interest only. E.g., "ocean" for ocean only data sets (For
-    availability please check the [Data] section).
--   *time_res* is set to "monthly" by default, but if you prefer you can
-    also download annual data with "yearly".
+* *data_name* is set to "all" by default, but you can specify the names of your data sets of interest only.
+* *path* is set to "." by default. I.e., the current working directory. By replacing it for [your_project_folder], the downloaded files will be stored in [your_project_folder] instead.
+* *domain* is set to "raw" by default, but you can specify the domain of your interest only. E.g., "ocean" for ocean only data sets (For availability please check the [Data] section).
+* *time_res* is set to "monthly" by default, but if you prefer you can also download annual data with "yearly".
 
-Let's download the GLDAS CLSM data set and inspect its content with
-`show_info`:
+Let's download the GLDAS CLSM data set and inspect its content with `show_info`:
 
 ```{r download, eval = FALSE}
 download_data(data_name = 'gldas-clsm')
@@ -172,32 +159,25 @@ show_info(gldas_clsm_global)
 
 ## Processing
 
-Once we have downloaded our database, we can start processing the data
-with:
+Once we have downloaded our database, we can start processing the data with:
 
--   `subset_spacetime` to subset the data in time and space.
--   `subset_space` to subset the data to the region of interest.
--   `subset_time` to select the years of interest.
--   `mon_to_year` to aggregate the data from monthly into annual.
--   `rescale_data` to go from the native resolution (0.25°) to coarser
-    ones (e.g., 0.5°, 1°, 1.5°, 2°, etc).
--   `make_ts` to generate a time series by taking the area weighted
-    average over each time step.
+* `subset_spacetime` to subset the data in time and space.
+* `subset_space` to subset the data to the region of interest.
+* `subset_time` to select the years of interest.
+* `mon_to_year` to aggregate the data from monthly into annual.
+* `rescale_data` to go from the native resolution (0.25°) to coarser ones (e.g., 0.5°, 1°, 1.5°, 2°, etc).
+* `make_ts` to generate a time series by taking the area weighted average over each time step.
 
 ### Subset
 
 To subset our data to a desired region and period of interest, we use the `subset_spacetime` function, which has four arguments *data*, *years*, *bbox*, and *autosave*.
 
--   *data* is the path to the data set of interest or a RasterBrick
-    object.
--   *years* is the period of interest in the form (start_year, end_year)
--   *bbox* is the bounding box of the region of interest with the
-    coordinates in degrees in the form (xmin, xmax, ymin, ymax).
--   *autosave* is set to FALSE by default. If TRUE data will be
-    automatically stored in the same location of the input file.
+* *data* is the path to the data set of interest or a RasterBrick object.
+* *years* is the period of interest in the form (start_year, end_year)
+* *bbox* is the bounding box of the region of interest with the coordinates in degrees in the form (xmin, xmax, ymin, ymax).
+* *autosave* is set to FALSE by default. If TRUE data will be automatically stored in the same location of the input file.
 
-Let's subset the GLDAS CLSM data set over Central Europe (2,28,42,58) for the
-2001-2010 period, and inspect its content with `show_info`:
+Let's subset the GLDAS CLSM data set over Central Europe (2,28,42,58) for the 2001-2010 period, and inspect its content with `show_info`:
 
 ```{r gldas_clsm_subset, eval = FALSE}
 gldas_clsm_subset <- subset_spacetime(gldas_clsm_global, years = c(2001, 2010), bbox = c(2,28,42,58))
@@ -221,12 +201,11 @@ show_info(gldas_clsm_subset)
 
 To further crop our data to a desired polygon other than a rectangle, we use the `crop_data` function, which has three arguments *x*, *shp_path*, and *autosave*.
 
--   *x* is the path to a ".nc" data set file or a RasterBrick object.
--   *shp_path* is the path to a ".shp" file that we want to use to crop our data.
--   *autosave* is set to FALSE by default. If TRUE data will be automatically stored in the same location of the input file.
+* *x* is the path to a ".nc" data set file or a RasterBrick object.
+* *shp_path* is the path to a ".shp" file that we want to use to crop our data.
+* *autosave* is set to FALSE by default. If TRUE data will be automatically stored in the same location of the input file.
 
-Let's crop our GLDAS CLSM subset to cover only Czechia with the respective [shape
-file](https://geodata.ucdavis.edu/gadm/gadm4.1/shp/gadm41_CZE_shp.zip), and inspect its content with `show_info`:
+Let's crop our GLDAS CLSM subset to cover only Czechia with the respective [shape file](https://geodata.ucdavis.edu/gadm/gadm4.1/shp/gadm41_CZE_shp.zip), and inspect its content with `show_info`:
 
 ```{r gldas_clsm_crop, eval = FALSE}
 gldas_clsm_cz <- crop_data(gldas_clsm_subset, shp_path = "gadm41_CZE_0.shp")
@@ -254,14 +233,10 @@ First we need to download temperature data, available at: [Zenodo repository](ht
 
 we use the `download_terraclimate` function, which has four arguments *variable*, *folder_path*, *time_res*, and *domain*.
 
--   *variable* is the variable name in which `t` stands for tavg, tmin, and tmax.
--   *folder_path* is set to "." by default. I.e., the current working
-    directory.
--   *domain* is set to "raw" by default, but you can specify the domain
-    of your interest only. E.g., "ocean" for ocean only data sets (For
-    availability please check the [Data] section).
--   *time_res* is set to "monthly" by default, but if you prefer you can
-    also download annual data with "yearly".
+* *variable* is the variable name in which `t` stands for tavg, tmin, and tmax.
+* *folder_path* is set to "." by default. I.e., the current working directory.
+* *domain* is set to "raw" by default, but you can specify the domain of your interest only. E.g., "ocean" for ocean only data sets (For availability please check the [Data] section).
+* *time_res* is set to "monthly" by default, but if you prefer you can also download annual data with "yearly".
 
 ```{r download_terraclimate, eval=FALSE}
 download_terraclimate(variable = "t", folder_path = ".")
@@ -293,17 +268,17 @@ show_info(tavg_global)
 
 The `pet` function estimates PET using a method of choice from the following available options:
 
--   *bc* for Blaney and Criddle [@blaney1952determining].
--   *ha* for Hamon [@hamon1961estimating]
--   *jh* for Jensen and Haise [@jensen1963estimating]
--   *mb* for McGuinness and Bordne [@mcguinness1972comparison]
--   *od* for Oudin [@oudin2005potential]
--   *th* for Thornthwaite [@thornthwaite1948approach]
+* *bc* for Blaney and Criddle [@blaney1952determining].
+* *ha* for Hamon [@hamon1961estimating]
+* *jh* for Jensen and Haise [@jensen1963estimating]
+* *mb* for McGuinness and Bordne [@mcguinness1972comparison]
+* *od* for Oudin [@oudin2005potential]
+* *th* for Thornthwaite [@thornthwaite1948approach]
 
 The `pet` function has two arguments *x* and *method*.
 
--   *x* is a RasterBrick object with average temperature data.
--   *method* a character string indicating the method to be used.
+* *x* is a RasterBrick object with average temperature data.
+* *method* a character string indicating the method to be used.
 
 Let's calculate PET using the Oudin formulation. Then, same as GLDAS CLSM we can subset it  over Central Europe and Czechia, and inspect its content with `show_info`:
 
@@ -365,16 +340,13 @@ show_info(pet_oudin_cz)
 
 #### Time series for global ET products
 
-To make a time series out of our data, we use the `make_ts` function,
-which has two arguments *data*, and *autosave*.
+To make a time series out of our data, we use the `make_ts` function, which has two arguments *data*, and *autosave*.
 
--   *data* is the path to a ".nc" data set file or a RasterBrick object.
--   *name* is the short name of a data set. E.g., 'gldas-clsm'.
--   *autosave* is set to FALSE by default. If TRUE data will be
-    automatically stored in the same location of the input file.
+* *data* is the path to a ".nc" data set file or a RasterBrick object.
+* *name* is the short name of a data set. E.g., 'gldas-clsm'.
+* *autosave* is set to FALSE by default. If TRUE data will be automatically stored in the same location of the input file.
 
-Let's generate the time series for our three different GLDAS CLSM data sets
-(Global, Central Europe, and Czechia), and inspect its first 12 rows:
+Let's generate the time series for our three different GLDAS CLSM data sets (Global, Central Europe, and Czechia), and inspect its first 12 rows:
 
 ```{r gldas_clsm_global_ts, eval=FALSE}
 gldas_clsm_global_ts <- make_ts(gldas_clsm_global, name="gldas-clsm")
@@ -441,9 +413,7 @@ head(gldas_clsm_cz_ts, 12)
 
 #### Time series for calculated PET
 
-Let's generate the time series for our three different PET calculated by
-Oudin method (Global, Central Europe, and Czechia), and inspect its
-first 12 rows:
+Let's generate the time series for our three different PET calculated by Oudin method (Global, Central Europe, and Czechia), and inspect its first 12 rows:
 
 ```{r pet_oudin_global_ts, eval=FALSE}
 pet_oudin_global_ts <- make_ts(pet_oudin_global, name = "terraclimate")
@@ -510,15 +480,11 @@ head(pet_oudin_cz_ts, 12)
 
 ## Visualize
 
-Either after we have processed our data as required or right after
-downloaded, we have six different options to visualize our data for more
-information refer to [visualisation section of
-pRecipe](https://cran.r-project.org/web/packages/pRecipe/vignettes/pRecipe.html#visualize):
+Either after we have processed our data as required or right after downloaded, we have six different options to visualize our data for more information refer to [visualisation section of pRecipe](https://cran.r-project.org/web/packages/pRecipe/vignettes/pRecipe.html#visualize):
 
 ### Maps
 
-To see a map of any data set raw or processed, we use `plot_map` which
-takes only one layer of the RasterBrick as input.
+To see a map of any data set raw or processed, we use `plot_map` which takes only one layer of the RasterBrick as input.
 
 ```{r map_global, eval = FALSE}
 plot_map(gldas_clsm_global[[13]]) 
@@ -546,8 +512,7 @@ height="5cm"}![](plots/map_oudin_cz.png){width="8.4cm" height="5cm"}
 
 ### Time Series Visuals
 
-To draw a time series generated by `make_ts`, we use any of the options
-below, which takes only a `make_ts` ".csv" generated file.
+To draw a time series generated by `make_ts`, we use any of the options below, which takes only a `make_ts` ".csv" generated file.
 
 #### Lineplots
 
@@ -573,8 +538,8 @@ ggpubr::ggarrange(p01, p02, ncol = 2)
 ```{r}
 
 # Plotting globals
- plot_heatmap(gldas_clsm_global_ts)
- plot_heatmap(pet_oudin_global_ts)
+plot_heatmap(gldas_clsm_global_ts)
+plot_heatmap(pet_oudin_global_ts)
 # Plotting subsets
 p01 <- plot_heatmap(gldas_clsm_subset_ts)
 p02 <- plot_heatmap(pet_oudin_subset_ts)
@@ -625,8 +590,7 @@ ggpubr::ggarrange(p01, p02, ncol = 2)
 
 #### Summary
 
-**NOTE:** For good aesthetics we recommend saving `plot_summary` with
-`ggsave(<filename>, <plot>, width = 16.3, height = 15.03)`.
+**NOTE:** For good aesthetics we recommend saving `plot_summary` with `ggsave(<filename>, <plot>, width = 16.3, height = 15.03)`.
 
 ```{r, eval=FALSE}
 plot_summary(gldas_clsm_global_ts, var = "Evapotranspiration")
@@ -647,12 +611,6 @@ plot_summary(pet_oudin_global_ts, var = "Potential Evapotranspiration")
 
 # Coming Soon
 
-We will introduce significant enhancements to ET database and PET
-calculation methods. This expansion builds upon our existing
-temperature-based approach and incorporates a radiation-based PET
-calculation methods, along with an expanded range of temperature-based
-methods. Our aim is to provide users with a more comprehensive and
-accurate estimation of ET and PET, catering to a broader range of
-applications and requirements.
+We will introduce significant enhancements to ET database and PET calculation methods. This expansion builds upon our existing temperature-based approach and incorporates a radiation-based PET calculation methods, along with an expanded range of temperature-based methods. Our aim is to provide users with a more comprehensive and accurate estimation of ET and PET, catering to a broader range of applications and requirements.
 
 # References
