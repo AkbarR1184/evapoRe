@@ -15,6 +15,8 @@ download_data(
 \item{data_name}{a character string with the name(s) of the desired data set. Suitable options are:
 \itemize{
 \item{"all" for all of the below listed data sets (default),}
+\item{"bess" for BESS,}
+\item{"camele" for CAMELE,}
 \item{"era5" for ERA5,}
 \item{"era5_land" for ERA5-Land,}
 \item{"fldas" for FLDAS,} 

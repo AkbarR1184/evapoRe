@@ -2,7 +2,6 @@
 
 export(download_data)
 export(download_t_data)
-export(download_terraclimate)
 export(muldpm)
 export(pet)
 import(data.table)

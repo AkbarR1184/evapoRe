@@ -9,14 +9,15 @@ download_t_data(
   path = ".",
   domain = "raw",
   time_res = "monthly",
-  variables = "all"
+  variable = "all"
 )
 }
 \arguments{
 \item{dataset}{a character string indicating the dataset to download. Suitable options are:
 \itemize{
 \item{"terraclimate" for TerraClimate dataset,}
-\item{"em_earth" for EM-Earth dataset.}
+\item{"cru" for CRU dataset,}
+\item{"mswx" for MSWX dataset.}
 }}
 
 \item{path}{a character string with the path where the data will be downloaded.}
@@ -35,25 +36,23 @@ download_t_data(
 \item{"yearly".}
 }}
 
-\item{variables}{a character string indicating the variable to download for each dataset. Suitable options are:
+\item{variable}{a character string indicating the variable to download. Suitable options are:
 For TerraClimate dataset:
 \itemize{
-\item{"tavg" for average temperature,}
+\item{"t2m" for average temperature,}
 \item{"tmin" for minimum temperature,}
 \item{"tmax" for maximum temperature.}
-}
-For EM-Earth dataset:
-\itemize{
-\item{"tdew" for dew point temperature,}
-\item{"tavg" for average temperature,}
-\item{"trange" for temperature range.}
 }
 Use "all" to download all available variables for the dataset.}
 }
 \value{
-No return value, called to download the data set.
+No return value, called to download the required data sets.
 }
 \description{
 Function for downloading Temperature data from different datasets.
 }
-\keyword{internal}
+\examples{
+\donttest{
+download_t_data("cru", tempdir())
+}
+}
