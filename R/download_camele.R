@@ -1,6 +1,6 @@
-#' FLDAS data downloader
+#' CAMELE data downloader
 #'
-#' Function for downloading FLDAS evapotranspiration data.
+#' Function for downloading CAMELE evapotranspiration data.
 #'
 #' @importFrom utils download.file
 #' @param folder_path a character string with the path where the data will be downloaded.
@@ -19,18 +19,14 @@
 #' @return No return value, called to download the data set.
 #' @keywords internal
 
-download_fldas <- function(folder_path = ".", domain = "raw", time_res = "monthly"){
+download_camele <- function(folder_path = ".", domain = "raw", time_res = "monthly"){
   old_options <- options()
   options(timeout = 6000)
   on.exit(options(old_options))
-  if (domain == "raw" | domain == "land"){
-    domain <- "land"
-  } else {
-    warning(paste0('The ', domain, ' domain is not available'))
-  }
+  if (domain == "raw"){domain <- "land"}
   zenodo_base <- "https://zenodo.org/records/10011192/files/"
   zenodo_end <- "?download=1"
-  file_name <- paste0("fldas_e_mm_", domain, "_198201_202212_025_", time_res, ".nc")
+  file_name <- paste0("camele_e_mm_", domain, "_198001_202212_025_", time_res, ".nc")
   file_url <- paste0(zenodo_base, file_name, zenodo_end)
   file_destination <- paste(folder_path, file_name, sep = "/")
   try(download.file(file_url, file_destination, mode = "wb"), silent = TRUE)

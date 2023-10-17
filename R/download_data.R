@@ -6,6 +6,8 @@
 #' @param data_name a character string with the name(s) of the desired data set. Suitable options are:
 #' \itemize{
 #' \item{"all" for all of the below listed data sets (default),}
+#' \item{"bess" for BESS,}
+#' \item{"camele" for CAMELE,}
 #' \item{"era5" for ERA5,}
 #' \item{"era5_land" for ERA5-Land,}
 #' \item{"fldas" for FLDAS,} 
@@ -38,7 +40,7 @@
 #' }
 
 download_data <- function(data_name = "all", path = ".", domain = "raw", time_res = "monthly"){
-  if (!Reduce("&", is.element(data_name, c("all", "era5", "era5_land", "fldas", "gldas-clsm", "gldas-noah", "gldas-vic", "gleam", "jra_55", "merra2","terraclimate")))){
+  if (!Reduce("&", is.element(data_name, c("all","bess","camele", "era5", "era5_land", "fldas", "gldas-clsm", "gldas-noah", "gldas-vic", "gleam", "jra_55", "merra2","terraclimate")))){
     stop("Error: Data set not available. Select from era5, era5_land, fldas, gldas-clsm, gldas-noah, gldas-vic, gleam, jra_55, merra2, terraclimate")
   }
   old_options <- options()
@@ -46,6 +48,8 @@ download_data <- function(data_name = "all", path = ".", domain = "raw", time_re
   on.exit(options(old_options))
   lapply(data_name, function(dataset) switch(dataset,
                                         "all"  = download_all(path, domain, time_res),
+                                        "bess" = download_bess(path, domain, time_res),
+                                        "camele" = download_camele(path, domain, time_res),
                                         "era5" = download_era5(path, domain, time_res),
                                         "era5_land" = download_era5_land(path, domain, time_res),
                                         "fldas" = download_fldas(path, domain, time_res),

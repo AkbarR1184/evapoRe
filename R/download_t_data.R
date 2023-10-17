@@ -6,7 +6,8 @@
 #' @param dataset a character string indicating the dataset to download. Suitable options are:
 #' \itemize{
 #' \item{"terraclimate" for TerraClimate dataset,}
-#' \item{"em_earth" for EM-Earth dataset.}
+#' \item{"cru" for CRU dataset,}
+#' \item{"mswx" for MSWX dataset.}
 #' }
 #' @param path a character string with the path where the data will be downloaded.
 #' @param domain a character string with the desired domain data set. Suitable options are:
@@ -21,26 +22,25 @@
 #' \item{"monthly",}
 #' \item{"yearly".}
 #' }
-#' @param variables a character string indicating the variable to download for each dataset. Suitable options are:
+#' @param variable a character string indicating the variable to download. Suitable options are:
 #' For TerraClimate dataset:
 #' \itemize{
-#' \item{"tavg" for average temperature,}
+#' \item{"t2m" for average temperature,}
 #' \item{"tmin" for minimum temperature,}
 #' \item{"tmax" for maximum temperature.}
 #' }
-#' For EM-Earth dataset:
-#' \itemize{
-#' \item{"tdew" for dew point temperature,}
-#' \item{"tavg" for average temperature,}
-#' \item{"trange" for temperature range.}
-#' }
 #' Use "all" to download all available variables for the dataset.
-#' @return No return value, called to download the data set.
-#' @keywords internal
+#' @return No return value, called to download the required data sets.
 #' @export
-download_t_data <- function(dataset, path = ".", domain = "raw", time_res = "monthly", variables = "all") {
+#' @examples
+#' \donttest{
+#' download_t_data("cru", tempdir())
+#' }
+download_t_data <- function(dataset, path = ".", domain = "raw", time_res = "monthly", variable = "all") {
   if (domain == "raw" | domain == "land") {
     domain <- "land"
+  } else if (domain == "global") {
+    # Code for the global domain
   } else {
     warning(paste0('The ', domain, ' domain is not available'))
   }
@@ -51,44 +51,64 @@ download_t_data <- function(dataset, path = ".", domain = "raw", time_res = "mon
   
   switch(dataset,
          "terraclimate" = {
-           zenodo_base <- "https://zenodo.org/record/7990413/files/"
-           zenodo_end <- "?download=1"
+           terraclimate_base <- "https://zenodo.org/records/10009796/files/"
+           terraclimate_end <- "?download=1"
            
-           switch(variables,
+           switch(variable,
                   "all" = {
-                    variables <- c("tavg", "tmin", "tmax")
+                    variable <- c("t2m", "tmin", "tmax")
                   },
-                  "tavg" = {},
+                  "t2m" = {},
                   "tmin" = {},
                   "tmax" = {},
                   stop("Invalid variable option provided for TerraClimate dataset.")
            )
            
-           file_ext <- paste0("_", domain, "_19580101_20221231_025_", time_res, ".nc")
-           file_name <- paste0("terraclimate_", variables, file_ext)
+           file_ext <- paste0("_degC_", domain, "_195801_202212_025_", time_res, ".nc")
+           file_name <- paste0("terraclimate_", variable, file_ext)
          },
-         "em_earth" = {
-           em_earth_base <- "https://em-earth.eu/dataset/files/"
-           em_earth_end <- "?download=1"
+         "cru" = {
+           cru_base <- "https://zenodo.org/records/10009796/files/"
+           cru_end <- "?download=1"
            
-           switch(variables,
+           switch(variable,
                   "all" = {
-                    variables <- c("tdew", "tavg", "trange")
+                    variable <- c("t2m", "tmin", "tmax")
                   },
-                  "tdew" = {},
-                  "tavg" = {},
-                  "trange" = {},
-                  stop("Invalid variable option provided for EM-Earth dataset.")
+                  "t2m" = {},
+                  "tmin" = {},
+                  "tmax" = {},
+                  stop("Invalid variable option provided for CRU dataset.")
            )
            
-           file_ext <- paste0("_", domain, "_19580101_20221231_025_", time_res, ".nc")
-           file_name <- paste0("em-earth_", variables, file_ext)
+           file_ext <- paste0("_degC_", domain, "_190101_202212_025_", time_res, ".nc")
+           file_name <- paste0("cru_", variable, file_ext)
+         },
+         "mswx" = {
+           mswx_base <- "https://zenodo.org/records/10009796/files/"  
+           mswx_end <- "?download=1"  
+           
+           switch(variable,
+                  "all" = {
+                    variable <- c("t2m", "tmin", "tmax")
+                  },
+                  "t2m" = {},
+                  "tmin" = {},
+                  "tmax" = {},
+                  stop("Invalid variable option provided for MSWX dataset.")
+           )
+           
+           file_ext <- paste0("_degC_", domain, "_197901_202308_025_", time_res, ".nc") 
+           file_name <- paste0("mswx_", variable, file_ext)
          },
          stop("Invalid dataset option provided.")
   )
   
-  file_url <- paste0(ifelse(dataset == "terraclimate", zenodo_base, em_earth_base), file_name, ifelse(dataset == "terraclimate", zenodo_end, em_earth_end))
+  file_url <- paste0(ifelse(dataset == "terraclimate", terraclimate_base,
+                            ifelse(dataset == "cru", cru_base, mswx_base)), file_name,
+                     ifelse(dataset == "terraclimate", terraclimate_end,
+                            ifelse(dataset == "cru", cru_end, mswx_end)))
   file_destination <- paste(path, file_name, sep = "/")
   
-  try(download.file(file_url, file_destination, mode = "wb"), silent = TRUE)
+  try(download.file(file_url, file_destination, mode = "wb"), silent = F)
 }

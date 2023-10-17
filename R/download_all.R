@@ -19,6 +19,8 @@
 #' @keywords internal
 
 download_all <- function(folder_path = ".", domain = "raw", time_res = "monthly"){
+  download_bess(folder_path, domain, time_res)
+  download_camele(folder_path, domain, time_res)
   download_era5_land(folder_path, domain, time_res)
   download_era5(folder_path, domain, time_res)
   download_fldas(folder_path, domain, time_res)
