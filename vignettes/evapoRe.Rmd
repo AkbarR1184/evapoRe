@@ -16,12 +16,14 @@ bibliography: evapoRe.bib
 link-citations: true
 ---
 
+```{=html}
 <style>
 body {
 text-align: justify}
 </style>
+```
 
-***
+------------------------------------------------------------------------
 
 ```{r start, include = FALSE}
 knitr::opts_chunk$set(
@@ -41,30 +43,43 @@ data('pet_oudin_subset_ts')
 data('pet_oudin_cz_ts')
 ```
 
-The `evapoRe` package developed as a complementary toolbox to the pRecipe package [@vargas-godoy2023precipitation], available at [https://cran.r-project.org/web/packages/pRecipe/index.html]. `evapoRe` facilitates the download, exploration, visualization, and analysis of evapotranspiration (ET) data. Additionally, evapoRe offers the functionality to calculate various Potential EvapoTranspiration (PET) methods.
+The `evapoRe` package developed as a complementary toolbox to the
+pRecipe package [@vargas-godoy2023precipitation], available at
+[<https://cran.r-project.org/web/packages/pRecipe/index.html>].
+`evapoRe` facilitates the download, exploration, visualization, and
+analysis of evapotranspiration (ET) data. Additionally, evapoRe offers
+the functionality to calculate various Potential EvapoTranspiration
+(PET) methods.
 
-***
+------------------------------------------------------------------------
 
 ## Before We Start
 
 Like many other R packages, `evapoRe` has some system requirements:
 
-* [PROJ](https://proj.org/download.html)
-* Geospatial Data Abstraction Library [(GDAL)](https://gdal.org/download.html)
-* Network Common Data Form [(NetCDF)](https://www.unidata.ucar.edu/software/netcdf/)
+-   [PROJ](https://proj.org/download.html)
+-   Geospatial Data Abstraction Library
+    [(GDAL)](https://gdal.org/download.html)
+-   Network Common Data Form
+    [(NetCDF)](https://www.unidata.ucar.edu/software/netcdf/)
 
 ## Data
 
-`evapoRe` database hosts 10 different ET data sets; one satellite-based, four reanalysis, and five hydrological model products. Their native specifications, as well as links to their providers, and their respective references are detailed in the following subsections. We have already homogenized, compacted to a single file, and stored them in a [Zenodo repository](https://doi.org/10.5281/zenodo.7990413) under the
+`evapoRe` database hosts 10 different ET data sets; one satellite-based,
+four reanalysis, and five hydrological model products. Their native
+specifications, as well as links to their providers, and their
+respective references are detailed in the following subsections. We have
+already homogenized, compacted to a single file, and stored them in a
+[Zenodo repository](https://doi.org/10.5281/zenodo.7990413) under the
 following naming convention:
 
 `<data set>_<variable>_<units>_<coverage>_<start date>_<end date>_<resolution>_<time step>.nc`
 
 The `evapoRe` data collection was homogenized to these specifications:
 
-* `<variable>` =  evapotranspiration (e)
-* `<units>` = millimeters (mm) 
-* `<resolution>` = 0.25°
+-   `<variable>` = evapotranspiration (e)
+-   `<units>` = millimeters (mm)
+-   `<resolution>` = 0.25°
 
 E.g., ERA5 [@hersbach_era5_2020] would be:
 
@@ -118,7 +133,13 @@ tibble::tribble(
 
 # Demo
 
-In this introductory demo we will first download the GLDAS-CLSM data set. We will then subset the downloaded data over Mediterranean region for the 2001-2010 period, and crop it to the national scale for Spain. In paralel, we will estimate potential evapotranspiration over the same domain and the same record length. In the next step, we will generate time series for our data sets and conclude with the visualization of our data.
+In this introductory demo we will first download the GLDAS-CLSM data
+set. We will then subset the downloaded data over Mediterranean region
+for the 2001-2010 period, and crop it to the national scale for Spain.
+In paralel, we will estimate potential evapotranspiration over the same
+domain and the same record length. In the next step, we will generate
+time series for our data sets and conclude with the visualization of our
+data.
 
 ## Installation
 
@@ -130,14 +151,23 @@ library(evapoRe)
 
 ## Download
 
-Downloading the entire data collection or only a few data sets is quite straightforward. You just call the `download_data` function, which has four arguments *data_name*, *path*, *domain*, and *time_res*.
+Downloading the entire data collection or only a few data sets is quite
+straightforward. You just call the `download_data` function, which has
+four arguments *data_name*, *path*, *domain*, and *time_res*.
 
-* *data_name* is set to "all" by default, but you can specify the names of your data sets of interest only.
-* *path* is set to "." by default. I.e., the current working directory. By replacing it for [your_project_folder], the downloaded files will be stored in [your_project_folder] instead.
-* *domain* is set to "raw" by default, but you can specify the domain of your interest only. E.g., "ocean" for ocean only data sets (For availability please check the [Data] section).
-* *time_res* is set to "monthly" by default, but if you prefer you can also download annual data with "yearly".
+-   *data_name* is set to "all" by default, but you can specify the
+    names of your data sets of interest only.
+-   *path* is set to "." by default. I.e., the current working
+    directory. By replacing it for [your_project_folder], the downloaded
+    files will be stored in [your_project_folder] instead.
+-   *domain* is set to "raw" by default, but you can specify the domain
+    of your interest only. E.g., "ocean" for ocean only data sets (For
+    availability please check the [Data] section).
+-   *time_res* is set to "monthly" by default, but if you prefer you can
+    also download annual data with "yearly".
 
-Let's download the GLDAS CLSM data set and inspect its content with `infoNC`:
+Let's download the GLDAS CLSM data set and inspect its content with
+`infoNC`:
 
 ```{r download, eval = FALSE}
 download_data(data_name = 'gldas-clsm')
@@ -159,23 +189,32 @@ infoNC(gldas_clsm_global)
 
 ## Processing
 
-Once we have downloaded our database, we can start processing the data with:
+Once we have downloaded our database, we can start processing the data
+with:
 
-* `crop_data` to crop the data using a shapefile.
-* `fldmean` to generate a time series by taking the area weighted average over each timestep.
-* `remap` to go from the native resolution (0.25°) to coarser ones (e.g., 0.5°, 1°, 1.5°, ...).
-* `subset_data` to subset the data in time and/or space.
-* `yearstat` to aggregate the data from monthly into annual.
+-   `crop_data` to crop the data using a shapefile.
+-   `fldmean` to generate a time series by taking the area weighted
+    average over each timestep.
+-   `remap` to go from the native resolution (0.25°) to coarser ones
+    (e.g., 0.5°, 1°, 1.5°, ...).
+-   `subset_data` to subset the data in time and/or space.
+-   `yearstat` to aggregate the data from monthly into annual.
 
 ### Subset
 
-To subset our data to a desired region and period of interest, we use the `subset_data` function, which has three arguments *x*, *box*, and *yrs*.
+To subset our data to a desired region and period of interest, we use
+the `subset_data` function, which has three arguments *x*, *box*, and
+*yrs*.
 
-* *x* Raster* object or a data.table or a filename (character).
-* *box* is the bounding box of the region of interest with the coordinates in degrees in the form (xmin, xmax, ymin, ymax).
-* *yrs* is the period of interest with years in the form (start_year, end_year).
+-   *x* Raster\* object or a data.table or a filename (character).
+-   *box* is the bounding box of the region of interest with the
+    coordinates in degrees in the form (xmin, xmax, ymin, ymax).
+-   *yrs* is the period of interest with years in the form (start_year,
+    end_year).
 
-Let's subset the GLDAS CLSM data set over Mediterranean region (-10,40,30,45) for the 2001-2010 period, and inspect its content with `infoNC`:
+Let's subset the GLDAS CLSM data set over Mediterranean region
+(-10,40,30,45) for the 2001-2010 period, and inspect its content with
+`infoNC`:
 
 ```{r gldas-clsm_subset, eval = FALSE}
 gldas_clsm_subset <- subset_data(gldas_clsm_global,box = c(-10,40,30,45) ,yrs = c(2001, 2010))
@@ -197,12 +236,16 @@ infoNC(gldas_clsm_subset)
 
 ### Crop
 
-To further crop our data to a desired polygon other than a rectangle, we use the `crop_data` function, which has two arguments *x*, and *y*.
+To further crop our data to a desired polygon other than a rectangle, we
+use the `crop_data` function, which has two arguments *x*, and *y*.
 
-* *x* Raster* object or a data.table or a *.nc filename (character).
-* *y* is a ".shp" filename (character).
+-   *x* Raster\* object or a data.table or a \*.nc filename (character).
+-   *y* is a ".shp" filename (character).
 
-Let's crop our GLDAS CLSM subset to cover only Spain with the respective [shape file](https://geodata.ucdavis.edu/gadm/gadm4.1/shp/gadm41_ESP_shp.zip), and inspect its content with `infoNC`:
+Let's crop our GLDAS CLSM subset to cover only Spain with the respective
+[shape
+file](https://geodata.ucdavis.edu/gadm/gadm4.1/shp/gadm41_ESP_shp.zip),
+and inspect its content with `infoNC`:
 
 ```{r gldas-clsm_crop, eval = FALSE}
 gldas_clsm_esp <- crop_data(gldas_clsm_subset, "gadm41_ESP_0.shp")
@@ -224,33 +267,43 @@ infoNC(gldas_clsm_esp)
 
 ### PET calculation
 
-First we need to download temperature data, available at: [Zenodo repository](https://doi.org/10.5281/zenodo.7990413):
+First we need to download temperature data, available at: [Zenodo
+repository](https://doi.org/10.5281/zenodo.10009796):
 
-**NOTE:** Temperature data available at the moment is limited to monthly and covers only the land domain. The data set is TerraClimate, and for brevity We will only estimate PET over the 2001 to 2010 period.
+**NOTE:** Temperature data available at the moment is limited to monthly. The data sets are TerraClimate, MSWX, and CRU and for brevity We will only
+estimate PET over the 2001 to 2010 period using MSWX dataset.
 
-we use the `download_terraclimate` function, which has four arguments *variable*, *folder_path*, *time_res*, and *domain*.
+we use the `download_t_data` function, which has five arguments
+*dataset*, *variable*, *path*, *time_res*, and *domain*.
 
-* *variable* is the variable name in which `t` stands for tavg, tmin, and tmax.
-* *folder_path* is set to "." by default. I.e., the current working directory.
-* *domain* is set to "raw" by default, but you can specify the domain of your interest only. E.g., "ocean" for ocean only data sets (For availability please check the [Data] section).
-* *time_res* is set to "monthly" by default, but if you prefer you can also download annual data with "yearly".
+-   *dataset* is the dataset name you can specify the names of your data sets of interest only.
+-   *variable* is the variable name in which `t2m`,`tmin`, and `tmax` stand for average temperature, minimum temperature, and maximum temperature.
+-   *path* is set to "." by default. I.e., the current working
+    directory.
+-   *domain* is set to "raw" by default, but you can specify the domain
+    of your interest only. E.g., "ocean" for ocean only data sets (For
+    availability please check the [Data] section).
+-   *time_res* is set to "monthly" by default, but if you prefer you can
+    also download annual data with "yearly".
 
-```{r download_terraclimate, eval=FALSE}
-download_terraclimate(variable = "t", folder_path = ".")
+```{r download_mswx, eval=FALSE}
+download_t_data(dataset="mswx", variable = "t2m", path = ".", domain = "global")
 ```
 
 This will download temperature data in following naming convention e.g.,
 
-`terraclimate_tavg_land_19580101_20221231_025_monthly.nc`
+`mswx_t2m_degC_global_197901_202308_025_monthly.nc`
 
-As stated above we will work only with the 2001-2010 period. Since `evapoRe` makes all of `pRecipe` functions available we can load and subset the data as follows:
+As stated above we will work only with the 2001-2010 period. Since
+`evapoRe` makes all of `pRecipe` functions available we can load and
+subset the data as follows:
 
-```{r subset_terraclimate, eval=FALSE}
-tavg_global <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc") %>% subset_time(years = c(2001, 2010))
-infoNC(tavg_global)
+```{r subset_mswx, eval=FALSE}
+t2m_global <- raster::brick("mswx_t2m_degC_global_197901_202308_025_monthly.nc") %>% subset_data(yrs = c(2001, 2010))
+infoNC(t2m_global)
 ```
 
-```
+```         
 [1] "class      : RasterBrick "
 [2] "dimensions : 720, 1440, 1036800, 120  (nrow, ncol, ncell, nlayers)"
 [3] "resolution : 0.25, 0.25  (x, y)" 
@@ -258,31 +311,35 @@ infoNC(tavg_global)
 [5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
 [6] "source     : memory"
 [7] "names      : X2001.01.01, X2001.02.01, X2001.03.01, X2001.04.01, X2001.05.01, X2001.06.01, X2001.07.01, X2001.08.01, X2001.09.01, X2001.10.01, X2001.11.01, X2001.12.01, X2002.01.01, X2002.02.01, X2002.03.01, ... "
-[8] "min values :      -50.11,      -44.95,      -57.11,      -66.30,      -65.19,      -63.78,      -67.91,      -66.51,      -61.80,      -54.57,      -40.74,      -45.09,      -48.34,      -44.80,      -53.75, ... "
-[9] "max values :       35.00,       33.30,       33.56,       35.38,       38.50,       39.84,       41.07,       39.78,       37.34,       33.96,       32.74,       32.76,       33.95,       32.41,       33.42, ... "
+[8] "min values :   -49.86768,   -45.24437,   -56.82771,   -61.03486,   -61.46924,   -63.51792,   -65.22484,   -68.83775,   -62.22537,   -57.00378,   -42.79177,   -44.69320,   -46.77869,   -47.19707,   -56.07567, ... "
+[9] "max values :    35.00875,    33.52000,    33.29000,    35.04688,    38.26308,    39.35505,    40.33314,    39.98806,    36.99562,    33.00374,    32.52186,    33.59248,    34.46944,    33.25062,    33.71313, ... "
 [10] "time       : 2001-01-01, 2010-12-01 (min, max)" 
 ```
 
-The `pet` function estimates PET using a method of choice from the following available options:
+The `pet` function estimates PET using a method of choice from the
+following available options:
 
-* *bc* for Blaney and Criddle [@blaney1952determining].
-* *ha* for Hamon [@hamon1961estimating]
-* *jh* for Jensen and Haise [@jensen1963estimating]
-* *mb* for McGuinness and Bordne [@mcguinness1972comparison]
-* *od* for Oudin [@oudin2005potential]
-* *th* for Thornthwaite [@thornthwaite1948approach]
+-   *bc* for Blaney and Criddle [@blaney1952determining].
+-   *ha* for Hamon [@hamon1961estimating]
+-   *jh* for Jensen and Haise [@jensen1963estimating]
+-   *mb* for McGuinness and Bordne [@mcguinness1972comparison]
+-   *od* for Oudin [@oudin2005potential]
+-   *th* for Thornthwaite [@thornthwaite1948approach]
 
 The `pet` function has two arguments *x* and *method*.
 
-* *x* is a RasterBrick object with average temperature data.
-* *method* a character string indicating the method to be used.
+-   *x* is a RasterBrick object with average temperature data.
+-   *method* a character string indicating the method to be used.
 
-Let's calculate PET using the Oudin formulation. Then, same as GLDAS CLSM we can subset it  over Mediterranean region and Spain, and inspect its content with `infoNC`:
+Let's calculate PET using the Oudin formulation. Then, same as GLDAS
+CLSM we can subset it over Mediterranean region and Spain, and inspect
+its content with `infoNC`:
 
-**NOTE:** `pet` output is [mm/day], in order to get values in [mm] for a 1 to 1 comparison  we use `muldpm` function.  
+**NOTE:** `pet` output is [mm/day], in order to get values in [mm] for a
+1 to 1 comparison we use `muldpm` function.
 
 ```{r pet, eval=FALSE}
-pet_oudin_global <- pet(tavg_global, method = "od") %>% muldpm
+pet_oudin_global <- pet(t2m_global, method = "od") %>% muldpm
 infoNC(pet_oudin_global)
 ```
 
@@ -295,41 +352,43 @@ infoNC(pet_oudin_global)
 [6] "source     : memory"
 [7] "names      :    layer.1,    layer.2,    layer.3,    layer.4,    layer.5,    layer.6,    layer.7,    layer.8,    layer.9,   layer.10,   layer.11,   layer.12,   layer.13,   layer.14,   layer.15, ... "
 [8] "min values :        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0, ... "
-[9] "max values : 219.7779, 175.7467, 185.8244, 190.6394, 223.7396, 225.7254, 237.2172, 220.6906, 186.1909, 181.9239, 191.0677, 201.9077, 208.3414, 172.4666, 185.1244, ... "
+[9] "max values : 219.5310, 176.8754, 184.4747, 189.0052, 222.4694, 224.2932, 233.6676, 220.5922, 187.6766, 182.0405, 189.9230, 206.4958, 214.1489, 176.4865, 184.7495, ... "
 [10] "time       : 2001-01-01, 2010-12-01 (min, max)"
 ```
+
 ```{r pet_oudin_subset, eval = FALSE}
 pet_oudin_subset <- subset_data(pet_oudin_global, box = c(-10,40,30,45))
 infoNC(pet_oudin_subset)
 ```
 
-```
+```         
 [1] "class      : RasterBrick "
 [2] "dimensions : 64, 104, 6656, 120  (nrow, ncol, ncell, nlayers)"
 [3] "resolution : 0.25, 0.25  (x, y)"
-[4] "extent     : 2, 28, 42, 58  (xmin, xmax, ymin, ymax)"
+[4] "extent     : -10, 40, 30, 45  (xmin, xmax, ymin, ymax)"
 [5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
 [6] "source     : memory"
 [7] "names      :     layer.1,     layer.2,     layer.3,     layer.4,     layer.5,     layer.6,     layer.7,     layer.8,     layer.9,    layer.10,    layer.11,    layer.12,    layer.13,    layer.14,    layer.15, ... "
-[8] "min values :  0.12576219,  0.00000000,  0.00000000,  1.05604672, 32.00947189, 35.92906189, 54.95189667, 54.55910492, 16.11966896, 18.10258102,  0.05855137,  0.00000000,  0.03909161,  0.22155134,  1.23004317, ... "
-[9] "max values :    30.75089,    36.74055,    66.91117,    80.53060,   131.82990,   146.70442,   167.32909,   152.45963,    92.18681,    69.81499,    36.21566,    23.24545,    26.42857,    39.64144,    63.36422, ... "
+[8] "min values :  0.099306993,  0.740073621, 13.313356400, 11.852478027, 47.733558655, 62.935859680, 79.710861206, 77.624824524, 33.284637451, 28.931745529,  4.929368973,  0.039311446,  0.030302685,  2.928590298,  8.578594208, ... "
+[9] "max values :     57.49900,     63.00223,    115.40463,    131.55266,    177.77098,    204.70670,    222.70251,    200.23511,    165.45422,    117.08133,     69.63583,     57.67846,     60.12381,     65.31674,    103.43404, ... "
 [10] "time       : 2001-01-01, 2010-12-01 (min, max)"
 ```
+
 ```{r pet_oudin_crop, eval = FALSE}
 pet_oudin_esp <- crop_data(pet_oudin_subset, "gadm41_ESP_0.shp")
 infoNC(pet_oudin_esp)
 ```
 
-```
+```         
 [1] "class      : RasterBrick " 
-[2] "dimensions : 64, 104, 6656, 120  (nrow, ncol, ncell, nlayers)"  
+[2] "dimensions : 56, 58, 3248, 120  (nrow, ncol, ncell, nlayers)"  
 [3] "resolution : 0.25, 0.25  (x, y)"
-[4] "extent     : 2, 28, 42, 58  (xmin, xmax, ymin, ymax)" 
+[4] "extent     : -10, 4.5, 30, 44  (xmin, xmax, ymin, ymax)"
 [5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
 [6] "source     : memory"  
 [7] "names      :      layer.1,      layer.2,      layer.3,      layer.4,      layer.5,      layer.6,      layer.7,      layer.8,      layer.9,     layer.10,     layer.11,     layer.12,     layer.13,     layer.14,     layer.15, ... "
-[8] "min values :   1.96738446,   5.01163816,  14.98480034,  33.31892395,  77.47163391,  80.97647858, 100.58403778,  88.21677399,  42.26998138,  29.46974945,   5.71132612,   0.01987622,   2.23067331,  10.26645279,  17.95516968, ... "
-[9] "max values :    5.9040089,   12.5150089,   32.8155899,   55.6794243,  106.1452255,  110.9343948,  130.5993805,  114.1246567,   58.1788139,   39.3826675,   11.2711630,    3.1375873,    6.2271786,   17.4750423,   33.3111839, ... "
+[8] "min values :   3.5873966,   3.6652386,  23.3621693,  26.7197380,  54.5738144,  83.2696991,  93.0016861,  91.4133835,  49.0935822,  34.9640312,   5.8351221,   0.5116812,   4.7784176,   7.1974645,  19.2179432, ... "
+[9] "max values :    40.66180,    48.18053,    80.11776,   100.17784,   125.64010,   160.57205,   165.80086,   155.79111,   111.13911,    80.95558,    44.86891,    37.12437,    40.82948,    48.49249,    74.67580, ... "
 [10] "time       : 2001-01-01, 2010-12-01 (min, max)"
 ```
 
@@ -337,11 +396,14 @@ infoNC(pet_oudin_esp)
 
 #### Time series for global ET products
 
-To make a time series out of our data, we use the `fldmean` function, which has one argument *x*.
+To make a time series out of our data, we use the `fldmean` function,
+which has one argument *x*.
 
-* *x* Raster* object or a data.table or a *.nc filename (character).
+-   *x* Raster\* object or a data.table or a \*.nc filename (character).
 
-Let's generate the time series for our three different GLDAS CLSM data sets (Global, Mediterranean region, and Spain), and inspect its first 12 rows:
+Let's generate the time series for our three different GLDAS CLSM data
+sets (Global, Mediterranean region, and Spain), and inspect its first 12
+rows:
 
 ```{r gldas_clsm_global_ts, eval=FALSE}
 gldas_clsm_global_ts <- fldmean(gldas_clsm_global)
@@ -408,7 +470,9 @@ head(gldas_clsm_esp_ts, 12)
 
 #### Time series for calculated PET
 
-Let's generate the time series for our three different PET calculated by Oudin method (Global, Mediterranean region, and Spain), and inspect its first 12 rows:
+Let's generate the time series for our three different PET calculated by
+Oudin method (Global, Mediterranean region, and Spain), and inspect its
+first 12 rows:
 
 ```{r pet_oudin_global_ts, eval=FALSE}
 pet_oudin_global_ts <- fldmean(pet_oudin_global)
@@ -436,7 +500,7 @@ pet_oudin_subset_ts <- fldmean(pet_oudin_subset)
 head(pet_oudin_subset_ts, 12)
 ```
 
-```
+```         
          date      value         name          type
  1: 2001-01-01   7.620077 TerraClimate Model forcing
  2: 2001-02-01  11.655452 TerraClimate Model forcing
@@ -475,11 +539,15 @@ head(pet_oudin_esp_ts, 12)
 
 ## Visualize
 
-Either after we have processed our data as required or right after downloaded, we have six different options to visualize our data for more information refer to [visualisation section of pRecipe](https://cran.r-project.org/web/packages/pRecipe/vignettes/pRecipe.html#visualize):
+Either after we have processed our data as required or right after
+downloaded, we have six different options to visualize our data for more
+information refer to [visualisation section of
+pRecipe](https://cran.r-project.org/web/packages/pRecipe/vignettes/pRecipe.html#visualize):
 
 ### Maps
 
-To see a map of any data set raw or processed, we use `plot_map` which takes only one layer of the RasterBrick as input.
+To see a map of any data set raw or processed, we use `plot_map` which
+takes only one layer of the RasterBrick as input.
 
 ```{r map_global, eval = FALSE}
 plot_map(gldas_clsm_global[[13]]) 
@@ -507,7 +575,8 @@ height="5cm"}![](plots/map_oudin_esp.png){width="8.4cm" height="5cm"}
 
 ### Time Series Visuals
 
-To draw a time series generated by `fldmean`, we use any of the options below, which takes only a `fldmean` ".csv" generated file.
+To draw a time series generated by `fldmean`, we use any of the options
+below, which takes only a `fldmean` ".csv" generated file.
 
 #### Lineplots
 
@@ -585,7 +654,8 @@ ggpubr::ggarrange(p01, p02, ncol = 2)
 
 #### Summary
 
-**NOTE:** For good aesthetics we recommend saving `plot_summary` with `ggsave(<filename>, <plot>, width = 16.3, height = 15.03)`.
+**NOTE:** For good aesthetics we recommend saving `plot_summary` with
+`ggsave(<filename>, <plot>, width = 16.3, height = 15.03)`.
 
 ```{r, eval=FALSE}
 plot_summary(gldas_clsm_global_ts, var = "Evapotranspiration")
@@ -606,6 +676,12 @@ plot_summary(pet_oudin_global_ts, var = "Potential Evapotranspiration")
 
 # Coming Soon
 
-We will introduce significant enhancements to ET database and PET calculation methods. This expansion builds upon our existing temperature-based approach and incorporates a radiation-based PET calculation methods, along with an expanded range of temperature-based methods. Our aim is to provide users with a more comprehensive and accurate estimation of ET and PET, catering to a broader range of applications and requirements.
+We will introduce significant enhancements to ET database and PET
+calculation methods. This expansion builds upon our existing
+temperature-based approach and incorporates a radiation-based PET
+calculation methods, along with an expanded range of temperature-based
+methods. Our aim is to provide users with a more comprehensive and
+accurate estimation of ET and PET, catering to a broader range of
+applications and requirements.
 
 # References
