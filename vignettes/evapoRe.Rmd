@@ -40,7 +40,7 @@ data('gldas_clsm_subset_ts')
 data('gldas_clsm_esp_ts')
 data('pet_oudin_global_ts')
 data('pet_oudin_subset_ts')
-data('pet_oudin_cz_ts')
+data('pet_oudin_esp_ts')
 ```
 
 The `evapoRe` package developed as a complementary toolbox to the
@@ -287,7 +287,7 @@ we use the `download_t_data` function, which has five arguments
     also download annual data with "yearly".
 
 ```{r download_mswx, eval=FALSE}
-download_t_data(dataset="mswx", variable = "t2m", path = ".")
+download_t_data(dataset="mswx", variable = "t2m", path = ".", domain = "land")
 ```
 
 This will download temperature data in following naming convention e.g.,
@@ -299,7 +299,7 @@ As stated above we will work only with the 2001-2010 period. Since
 subset the data as follows:
 
 ```{r subset_mswx, eval=FALSE}
-t2m_global <- raster::brick("mswx_t2m_degC_global_197901_202308_025_monthly.nc") %>% subset_data(yrs = c(2001, 2010))
+t2m_global <- raster::brick("mswx_t2m_degC_land_197901_202308_025_monthly.nc") %>% subset_data(yrs = c(2001, 2010))
 infoNC(t2m_global)
 ```
 
@@ -522,19 +522,19 @@ head(pet_oudin_esp_ts, 12)
 ```
 
 ```         
-         date      value         name          type
- 1: 2001-01-01   4.088036 TerraClimate Model forcing
- 2: 2001-02-01   8.909776 TerraClimate Model forcing
- 3: 2001-03-01  24.280493 TerraClimate Model forcing
- 4: 2001-04-01  44.816892 TerraClimate Model forcing
- 5: 2001-05-01  92.737708 TerraClimate Model forcing
- 6: 2001-06-01  96.017031 TerraClimate Model forcing
- 7: 2001-07-01 115.609065 TerraClimate Model forcing
- 8: 2001-08-01 100.815075 TerraClimate Model forcing
- 9: 2001-09-01  50.340782 TerraClimate Model forcing
-10: 2001-10-01  35.079328 TerraClimate Model forcing
-11: 2001-11-01   8.630342 TerraClimate Model forcing
-12: 2001-12-01   1.422131 TerraClimate Model forcing
+         date     value
+ 1: 2001-01-01  23.33118
+ 2: 2001-02-01  28.85419
+ 3: 2001-03-01  57.39954
+ 4: 2001-04-01  71.95438
+ 5: 2001-05-01 101.37500
+ 6: 2001-06-01 134.48663
+ 7: 2001-07-01 139.09158
+ 8: 2001-08-01 131.25821
+ 9: 2001-09-01  87.49866
+10: 2001-10-01  59.00385
+11: 2001-11-01  25.24541
+12: 2001-12-01  16.16446
 ```
 
 ## Visualize
@@ -550,8 +550,8 @@ To see a map of any data set raw or processed, we use `plot_map` which
 takes only one layer of the RasterBrick as input.
 
 ```{r map_global, eval = FALSE}
-plot_map(gldas_clsm_global[[13]]) 
-plot_map(pet_oudin_global[[1]]) 
+plot_map(gldas_clsm_global[[6]]) 
+plot_map(pet_oudin_global[[6]]) 
 ```
 
 ![](plots/map_gldas_global.png){width="8.4cm" height="5cm"}

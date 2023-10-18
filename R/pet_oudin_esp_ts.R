@@ -1,6 +1,6 @@
 #' Monthly Potential Evapotranspiration data
 #'
-#' Monthly Potential Evapotranspiration data in mm calculated by Oudin method. More details of the used method can be found \href{https://www.sciencedirect.com/science/article/pii/S0022169404004056}{here}.
+#' A subset of calculated monthly Potential Evapotranspiration data in mm over Spain. More details of the used method can be found \href{https://www.sciencedirect.com/science/article/pii/S0022169404004056}{here}.
 #'
 #' @format A data.table with 120 obs. of 2 variables:
 #' \describe{
@@ -9,4 +9,4 @@
 #' }
 #' @source Data was calculated using the Oudin method based on raw temperature data. More details of the raw data
 #'  can be found \href{https://journals.ametsoc.org/view/journals/bams/103/3/BAMS-D-21-0145.1.xml}{here}.
-"pet_oudin_global_ts"
+"pet_oudin_esp_ts"

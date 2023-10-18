@@ -1,14 +1,12 @@
 #' Monthly Potential Evapotranspiration data
 #'
-#' A subset of Monthly Potential Evapotranspiration data in mm calculated by Oudin method over 2-28E, 42-58N. More details of the used method can be found \href{https://www.sciencedirect.com/science/article/pii/S0022169404004056}{here}.
+#' A subset of Monthly Potential Evapotranspiration data in mm calculated by Oudin method over -10-40E, 30-45N. More details of the used method can be found \href{https://www.sciencedirect.com/science/article/pii/S0022169404004056}{here}.
 #' 
-#' @format A data.table with 120 obs. of 4 variables:
+#' @format A data.table with 120 obs. of 2 variables:
 #' \describe{
 #'   \item{date}{IDate format \%Y-\%m-\%d}
 #'   \item{value}{monthly average values}
-#'   \item{name}{full name of the data set}
-#'   \item{type}{source type of the data set}
 #' }
 #' @source Data was calculated using the Oudin method based on raw temperature data. More details of the raw data
-#'  can be found \href{https://www.climatologylab.org/terraclimate.html}{here}. 
+#'  can be found \href{https://journals.ametsoc.org/view/journals/bams/103/3/BAMS-D-21-0145.1.xml}{here}. 
 "pet_oudin_subset_ts"
