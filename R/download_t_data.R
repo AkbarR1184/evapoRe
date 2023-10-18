@@ -3,7 +3,7 @@
 #' Function for downloading Temperature data from different datasets.
 #'
 #' @importFrom utils download.file
-#' @param dataset a character string indicating the dataset to download. Suitable options are:
+#' @param data_name a character string indicating the dataset to download. Suitable options are:
 #' \itemize{
 #' \item{"terraclimate" for TerraClimate dataset,}
 #' \item{"cru" for CRU dataset,}
@@ -36,7 +36,7 @@
 #' \donttest{
 #' download_t_data("cru", tempdir())
 #' }
-download_t_data <- function(dataset, path = ".", domain = "raw", time_res = "monthly", variable = "all") {
+download_t_data <- function(data_name, path = ".", domain = "raw", time_res = "monthly", variable = "all") {
   if (domain == "raw" | domain == "land") {
     domain <- "land"
   } else if (domain == "global") {
@@ -49,9 +49,9 @@ download_t_data <- function(dataset, path = ".", domain = "raw", time_res = "mon
   options(timeout = 6000)
   on.exit(options(old_options))
   
-  switch(dataset,
+  switch(data_name,
          "terraclimate" = {
-           terraclimate_base <- "https://zenodo.org/records/10009796/files/"
+           terraclimate_base <- "https://zenodo.org/records/10019933/files/"
            terraclimate_end <- "?download=1"
            
            switch(variable,
@@ -68,7 +68,7 @@ download_t_data <- function(dataset, path = ".", domain = "raw", time_res = "mon
            file_name <- paste0("terraclimate_", variable, file_ext)
          },
          "cru" = {
-           cru_base <- "https://zenodo.org/records/10009796/files/"
+           cru_base <- "https://zenodo.org/records/10019933/files/"
            cru_end <- "?download=1"
            
            switch(variable,
@@ -85,7 +85,7 @@ download_t_data <- function(dataset, path = ".", domain = "raw", time_res = "mon
            file_name <- paste0("cru_", variable, file_ext)
          },
          "mswx" = {
-           mswx_base <- "https://zenodo.org/records/10009796/files/"  
+           mswx_base <- "https://zenodo.org/records/10019933/files/"  
            mswx_end <- "?download=1"  
            
            switch(variable,
@@ -104,10 +104,10 @@ download_t_data <- function(dataset, path = ".", domain = "raw", time_res = "mon
          stop("Invalid dataset option provided.")
   )
   
-  file_url <- paste0(ifelse(dataset == "terraclimate", terraclimate_base,
-                            ifelse(dataset == "cru", cru_base, mswx_base)), file_name,
-                     ifelse(dataset == "terraclimate", terraclimate_end,
-                            ifelse(dataset == "cru", cru_end, mswx_end)))
+  file_url <- paste0(ifelse(data_name == "terraclimate", terraclimate_base,
+                            ifelse(data_name == "cru", cru_base, mswx_base)), file_name,
+                     ifelse(data_name == "terraclimate", terraclimate_end,
+                            ifelse(data_name == "cru", cru_end, mswx_end)))
   file_destination <- paste(path, file_name, sep = "/")
   
   try(download.file(file_url, file_destination, mode = "wb"), silent = F)

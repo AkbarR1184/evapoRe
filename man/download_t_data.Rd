@@ -5,7 +5,7 @@
 \title{Temperature Data Downloader}
 \usage{
 download_t_data(
-  dataset,
+  data_name,
   path = ".",
   domain = "raw",
   time_res = "monthly",
@@ -13,7 +13,7 @@ download_t_data(
 )
 }
 \arguments{
-\item{dataset}{a character string indicating the dataset to download. Suitable options are:
+\item{data_name}{a character string indicating the dataset to download. Suitable options are:
 \itemize{
 \item{"terraclimate" for TerraClimate dataset,}
 \item{"cru" for CRU dataset,}

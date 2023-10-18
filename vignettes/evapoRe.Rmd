@@ -274,9 +274,9 @@ repository](https://doi.org/10.5281/zenodo.10009796):
 estimate PET over the 2001 to 2010 period using MSWX dataset.
 
 we use the `download_t_data` function, which has five arguments
-*dataset*, *variable*, *path*, *time_res*, and *domain*.
+*data_name*, *variable*, *path*, *time_res*, and *domain*.
 
--   *dataset* is the dataset name you can specify the names of your data sets of interest only.
+-   *data_name* is the dataset name you can specify the names of your data sets of interest.
 -   *variable* is the variable name in which `t2m`,`tmin`, and `tmax` stand for average temperature, minimum temperature, and maximum temperature.
 -   *path* is set to "." by default. I.e., the current working
     directory.
@@ -287,12 +287,12 @@ we use the `download_t_data` function, which has five arguments
     also download annual data with "yearly".
 
 ```{r download_mswx, eval=FALSE}
-download_t_data(dataset="mswx", variable = "t2m", path = ".", domain = "land")
+download_t_data(dataset="mswx", variable = "t2m", path = ".")
 ```
 
 This will download temperature data in following naming convention e.g.,
 
-`mswx_t2m_degC_global_197901_202308_025_monthly.nc`
+`mswx_t2m_degC_land_197901_202308_025_monthly.nc`
 
 As stated above we will work only with the 2001-2010 period. Since
 `evapoRe` makes all of `pRecipe` functions available we can load and
