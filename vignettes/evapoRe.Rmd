@@ -287,7 +287,7 @@ we use the `download_t_data` function, which has five arguments
     also download annual data with "yearly".
 
 ```{r download_mswx, eval=FALSE}
-download_t_data(dataset="mswx", variable = "t2m", path = ".", domain = "global")
+download_t_data(dataset="mswx", variable = "t2m", path = ".")
 ```
 
 This will download temperature data in following naming convention e.g.,
@@ -311,7 +311,7 @@ infoNC(t2m_global)
 [5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
 [6] "source     : memory"
 [7] "names      : X2001.01.01, X2001.02.01, X2001.03.01, X2001.04.01, X2001.05.01, X2001.06.01, X2001.07.01, X2001.08.01, X2001.09.01, X2001.10.01, X2001.11.01, X2001.12.01, X2002.01.01, X2002.02.01, X2002.03.01, ... "
-[8] "min values :   -49.86768,   -45.24437,   -56.82771,   -61.03486,   -61.46924,   -63.51792,   -65.22484,   -68.83775,   -62.22537,   -57.00378,   -42.79177,   -44.69320,   -46.77869,   -47.19707,   -56.07567, ... "
+[8] "min values :  -49.867680,  -45.244373,  -42.529930,  -33.551258,  -22.829224,  -15.122508,  -13.402536,  -14.673846,  -18.428692,  -27.443539,  -35.674980,  -44.693199,  -46.778694,  -47.197075,  -42.277370, ... "
 [9] "max values :    35.00875,    33.52000,    33.29000,    35.04688,    38.26308,    39.35505,    40.33314,    39.98806,    36.99562,    33.00374,    32.52186,    33.59248,    34.46944,    33.25062,    33.71313, ... "
 [10] "time       : 2001-01-01, 2010-12-01 (min, max)" 
 ```
@@ -351,8 +351,8 @@ infoNC(pet_oudin_global)
 [5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
 [6] "source     : memory"
 [7] "names      :    layer.1,    layer.2,    layer.3,    layer.4,    layer.5,    layer.6,    layer.7,    layer.8,    layer.9,   layer.10,   layer.11,   layer.12,   layer.13,   layer.14,   layer.15, ... "
-[8] "min values :        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0, ... "
-[9] "max values : 219.5310, 176.8754, 184.4747, 189.0052, 222.4694, 224.2932, 233.6676, 220.5922, 187.6766, 182.0405, 189.9230, 206.4958, 214.1489, 176.4865, 184.7495, ... "
+[8] "min values : 0.000000e+00, 0.000000e+00, 8.728488e-04, 8.322404e-04, 3.890790e-04, 0.000000e+00, 0.000000e+00, 2.140520e-04, 8.102036e-04, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 1.431775e-04, ... "
+[9] "max values :     219.5310,     176.8754,     184.4747,     189.0052,     222.4694,     224.2932,     233.6676,     220.5922,     187.6766,     182.0405,     189.9230,     206.4958,     214.1489,     176.4865,     184.7495, ... "
 [10] "time       : 2001-01-01, 2010-12-01 (min, max)"
 ```
 
@@ -369,8 +369,8 @@ infoNC(pet_oudin_subset)
 [5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
 [6] "source     : memory"
 [7] "names      :     layer.1,     layer.2,     layer.3,     layer.4,     layer.5,     layer.6,     layer.7,     layer.8,     layer.9,    layer.10,    layer.11,    layer.12,    layer.13,    layer.14,    layer.15, ... "
-[8] "min values :  0.099306993,  0.740073621, 13.313356400, 11.852478027, 47.733558655, 62.935859680, 79.710861206, 77.624824524, 33.284637451, 28.931745529,  4.929368973,  0.039311446,  0.030302685,  2.928590298,  8.578594208, ... "
-[9] "max values :     57.49900,     63.00223,    115.40463,    131.55266,    177.77098,    204.70670,    222.70251,    200.23511,    165.45422,    117.08133,     69.63583,     57.67846,     60.12381,     65.31674,    103.43404, ... "
+[8] "min values :  0.099306993,  0.740073629, 13.313356668, 11.852477789, 47.733557582, 62.935860157, 79.710862637, 77.624826193, 33.284636736, 28.931746244,  4.929369092,  0.039311446,  0.030302684,  2.928590268,  8.578593999, ... "
+[9] "max values :     54.77562,     62.65787,    115.40463,    131.55265,    177.77098,    204.70669,    222.70252,    200.23511,    165.45423,    117.08133,     69.63583,     55.89678,     58.23283,     65.31674,    103.43404, ... "
 [10] "time       : 2001-01-01, 2010-12-01 (min, max)"
 ```
 
@@ -387,8 +387,8 @@ infoNC(pet_oudin_esp)
 [5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
 [6] "source     : memory"  
 [7] "names      :      layer.1,      layer.2,      layer.3,      layer.4,      layer.5,      layer.6,      layer.7,      layer.8,      layer.9,     layer.10,     layer.11,     layer.12,     layer.13,     layer.14,     layer.15, ... "
-[8] "min values :   3.5873966,   3.6652386,  23.3621693,  26.7197380,  54.5738144,  83.2696991,  93.0016861,  91.4133835,  49.0935822,  34.9640312,   5.8351221,   0.5116812,   4.7784176,   7.1974645,  19.2179432, ... "
-[9] "max values :    40.66180,    48.18053,    80.11776,   100.17784,   125.64010,   160.57205,   165.80086,   155.79111,   111.13911,    80.95558,    44.86891,    37.12437,    40.82948,    48.49249,    74.67580, ... "
+[8] "min values :   3.5873966,   3.6652387,  23.3621691,  26.7197371,  54.5738134,  83.2697010,  93.0016851,  91.4133866,  49.0935838,  34.9640317,   5.8351220,   0.5116812,   4.7784175,   7.1974645,  19.2179436, ... "
+[9] "max values :    40.66180,    48.18053,    80.11776,   100.17784,   125.64010,   160.57205,   165.80086,   155.79110,   111.13910,    80.95558,    44.86891,    37.12437,    40.82948,    48.49249,    74.67580, ... "
 [10] "time       : 2001-01-01, 2010-12-01 (min, max)"
 ```
 
@@ -411,19 +411,19 @@ head(gldas_clsm_global_ts, 12)
 ```
 
 ```         
-      date    value            name          type
- 1: 2000-01-01 42.63418 GLDAS CLSM v2.0 Model forcing
- 2: 2000-02-01 40.28064 GLDAS CLSM v2.0 Model forcing
- 3: 2000-03-01 46.65724 GLDAS CLSM v2.0 Model forcing
- 4: 2000-04-01 49.73078 GLDAS CLSM v2.0 Model forcing
- 5: 2000-05-01 61.78450 GLDAS CLSM v2.0 Model forcing
- 6: 2000-06-01 71.51643 GLDAS CLSM v2.0 Model forcing
- 7: 2000-07-01 78.34947 GLDAS CLSM v2.0 Model forcing
- 8: 2000-08-01 68.59857 GLDAS CLSM v2.0 Model forcing
- 9: 2000-09-01 52.40877 GLDAS CLSM v2.0 Model forcing
-10: 2000-10-01 45.95624 GLDAS CLSM v2.0 Model forcing
-11: 2000-11-01 40.95821 GLDAS CLSM v2.0 Model forcing
-12: 2000-12-01 41.50710 GLDAS CLSM v2.0 Model forcing
+      date    value
+ 1: 2000-01-01 42.63418
+ 2: 2000-02-01 40.28064
+ 3: 2000-03-01 46.65724
+ 4: 2000-04-01 49.73078
+ 5: 2000-05-01 61.78450
+ 6: 2000-06-01 71.51643
+ 7: 2000-07-01 78.34947
+ 8: 2000-08-01 68.59857
+ 9: 2000-09-01 52.40877
+10: 2000-10-01 45.95624
+11: 2000-11-01 40.95821
+12: 2000-12-01 41.50710
 ```
 
 ```{r gldas_clsm_subset_ts, eval=FALSE}
@@ -432,19 +432,19 @@ head(gldas_clsm_subset_ts, 12)
 ```
 
 ```         
-     date      value            name          type
- 1: 2001-01-01   6.684203 GLDAS CLSM v2.0 Model forcing
- 2: 2001-02-01  15.447494 GLDAS CLSM v2.0 Model forcing
- 3: 2001-03-01  26.575641 GLDAS CLSM v2.0 Model forcing
- 4: 2001-04-01  53.388876 GLDAS CLSM v2.0 Model forcing
- 5: 2001-05-01 111.508691 GLDAS CLSM v2.0 Model forcing
- 6: 2001-06-01 103.385836 GLDAS CLSM v2.0 Model forcing
- 7: 2001-07-01 119.376406 GLDAS CLSM v2.0 Model forcing
- 8: 2001-08-01 108.626158 GLDAS CLSM v2.0 Model forcing
- 9: 2001-09-01  45.849332 GLDAS CLSM v2.0 Model forcing
-10: 2001-10-01  32.508406 GLDAS CLSM v2.0 Model forcing
-11: 2001-11-01  15.332365 GLDAS CLSM v2.0 Model forcing
-12: 2001-12-01   9.997737 GLDAS CLSM v2.0 Model forcing
+     date    value
+ 1: 2001-01-01 14.47589
+ 2: 2001-02-01 19.65537
+ 3: 2001-03-01 38.58488
+ 4: 2001-04-01 45.47299
+ 5: 2001-05-01 57.83225
+ 6: 2001-06-01 63.57403
+ 7: 2001-07-01 51.30824
+ 8: 2001-08-01 41.88030
+ 9: 2001-09-01 29.30722
+10: 2001-10-01 24.02233
+11: 2001-11-01 16.56476
+12: 2001-12-01 12.67189
 ```
 
 ```{r gldas_clsm_esp_ts, eval=FALSE}
@@ -453,19 +453,19 @@ head(gldas_clsm_esp_ts, 12)
 ```
 
 ```         
-         date      value            name          type
- 1: 2001-01-01   1.843749 GLDAS CLSM v2.0 Model forcing
- 2: 2001-02-01  11.758140 GLDAS CLSM v2.0 Model forcing
- 3: 2001-03-01  17.860222 GLDAS CLSM v2.0 Model forcing
- 4: 2001-04-01  48.019425 GLDAS CLSM v2.0 Model forcing
- 5: 2001-05-01 114.183978 GLDAS CLSM v2.0 Model forcing
- 6: 2001-06-01  82.153565 GLDAS CLSM v2.0 Model forcing
- 7: 2001-07-01 108.249534 GLDAS CLSM v2.0 Model forcing
- 8: 2001-08-01 109.140553 GLDAS CLSM v2.0 Model forcing
- 9: 2001-09-01  33.501152 GLDAS CLSM v2.0 Model forcing
-10: 2001-10-01  27.275303 GLDAS CLSM v2.0 Model forcing
-11: 2001-11-01   8.356745 GLDAS CLSM v2.0 Model forcing
-12: 2001-12-01   6.125528 GLDAS CLSM v2.0 Model forcing
+        date     value
+ 1: 2001-01-01  17.99823
+ 2: 2001-02-01  31.41443
+ 3: 2001-03-01  57.23334
+ 4: 2001-04-01  84.13048
+ 5: 2001-05-01  95.06479
+ 6: 2001-06-01 118.33516
+ 7: 2001-07-01  87.58777
+ 8: 2001-08-01  74.37666
+ 9: 2001-09-01  45.09689
+10: 2001-10-01  43.91893
+11: 2001-11-01  25.11206
+12: 2001-12-01  16.99089
 ```
 
 #### Time series for calculated PET
@@ -480,19 +480,19 @@ head(pet_oudin_global_ts, 12)
 ```
 
 ```         
-        date     value         name          type
- 1: 2001-01-01  90.95112 TerraClimate Model forcing
- 2: 2001-02-01  91.66514 TerraClimate Model forcing
- 3: 2001-03-01 101.58235 TerraClimate Model forcing
- 4: 2001-04-01  95.16555 TerraClimate Model forcing
- 5: 2001-05-01  98.58120 TerraClimate Model forcing
- 6: 2001-06-01 101.73452 TerraClimate Model forcing
- 7: 2001-07-01 110.60216 TerraClimate Model forcing
- 8: 2001-08-01 107.84045 TerraClimate Model forcing
- 9: 2001-09-01  94.12793 TerraClimate Model forcing
-10: 2001-10-01  90.64953 TerraClimate Model forcing
-11: 2001-11-01  83.37564 TerraClimate Model forcing
-12: 2001-12-01  89.26847 TerraClimate Model forcing
+        date     value
+ 1: 2001-01-01  90.97581
+ 2: 2001-02-01  90.72542
+ 3: 2001-03-01 100.12134
+ 4: 2001-04-01  96.08822
+ 5: 2001-05-01 105.25369
+ 6: 2001-06-01 110.88759
+ 7: 2001-07-01 119.98619
+ 8: 2001-08-01 112.29808
+ 9: 2001-09-01  94.00018
+10: 2001-10-01  89.70338
+11: 2001-11-01  82.71571
+12: 2001-12-01  90.02744
 ```
 
 ```{r pet_oudin_subset_ts, eval=FALSE}
@@ -501,19 +501,19 @@ head(pet_oudin_subset_ts, 12)
 ```
 
 ```         
-         date      value         name          type
- 1: 2001-01-01   7.620077 TerraClimate Model forcing
- 2: 2001-02-01  11.655452 TerraClimate Model forcing
- 3: 2001-03-01  29.309794 TerraClimate Model forcing
- 4: 2001-04-01  50.257311 TerraClimate Model forcing
- 5: 2001-05-01  93.835662 TerraClimate Model forcing
- 6: 2001-06-01 103.771513 TerraClimate Model forcing
- 7: 2001-07-01 125.393676 TerraClimate Model forcing
- 8: 2001-08-01 106.738780 TerraClimate Model forcing
- 9: 2001-09-01  56.908180 TerraClimate Model forcing
-10: 2001-10-01  37.982284 TerraClimate Model forcing
-11: 2001-11-01  11.427742 TerraClimate Model forcing
-12: 2001-12-01   4.599400 TerraClimate Model forcing
+         date     value
+ 1: 2001-01-01  28.41624
+ 2: 2001-02-01  34.31941
+ 3: 2001-03-01  70.77386
+ 4: 2001-04-01  85.68093
+ 5: 2001-05-01 119.92428
+ 6: 2001-06-01 146.10311
+ 7: 2001-07-01 161.36373
+ 8: 2001-08-01 147.05941
+ 9: 2001-09-01 105.36592
+10: 2001-10-01  73.91439
+11: 2001-11-01  37.36657
+12: 2001-12-01  24.99642
 ```
 
 ```{r pet_odin_esp_ts, eval=FALSE}
