@@ -175,17 +175,15 @@ gldas_clsm_global <- raster::brick('gldas-clsm_e_mm_land_200001_202211_025_month
 infoNC(gldas_clsm_global)
 ```
 
-```         
-[1] "class      : RasterBrick "                                         
-[2] "dimensions : 720, 1440, 1036800, 275  (nrow, ncol, ncell, nlayers)"
-[3] "resolution : 0.25, 0.25  (x, y)"
-[4] "extent     : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)"
-[5] "crs        : +proj=longlat +datum=WGS84 "
-[6] "source     : gldas-clsm_e_mm_land_200001_202211_025_monthly.nc "
-[7] "names      : X2000.01.01, X2000.02.01, X2000.03.01, X2000.04.01, X2000.05.01, X2000.06.01, X2000.07.01, X2000.08.01, X2000.09.01, X2000.10.01, X2000.11.01, X2000.12.01, X2001.01.01, X2001.02.01, X2001.03.01, ... "
-[8] "Date       : 2000-01-01, 2022-11-01 (min, max)"
-[9] "varname    : e " 
-```
+    [1] "class      : RasterBrick "                                         
+    [2] "dimensions : 720, 1440, 1036800, 275  (nrow, ncol, ncell, nlayers)"
+    [3] "resolution : 0.25, 0.25  (x, y)"
+    [4] "extent     : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)"
+    [5] "crs        : +proj=longlat +datum=WGS84 "
+    [6] "source     : gldas-clsm_e_mm_land_200001_202211_025_monthly.nc "
+    [7] "names      : X2000.01.01, X2000.02.01, X2000.03.01, X2000.04.01, X2000.05.01, X2000.06.01, X2000.07.01, X2000.08.01, X2000.09.01, X2000.10.01, X2000.11.01, X2000.12.01, X2001.01.01, X2001.02.01, X2001.03.01, ... "
+    [8] "Date       : 2000-01-01, 2022-11-01 (min, max)"
+    [9] "varname    : e " 
 
 ## Processing
 
@@ -221,18 +219,16 @@ gldas_clsm_subset <- subset_data(gldas_clsm_global,box = c(-10,40,30,45) ,yrs = 
 infoNC(gldas_clsm_subset)
 ```
 
-```         
-[1] "class      : RasterBrick "
-[2] "dimensions : 60, 200, 12000, 120  (nrow, ncol, ncell, nlayers)" 
-[3] "resolution : 0.25, 0.25  (x, y)"
-[4] "extent     : -10, 40, 30, 45  (xmin, xmax, ymin, ymax)"
-[5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
-[6] "source     : memory"
-[7] "names      :  X2001.01.01,  X2001.02.01,  X2001.03.01,  X2001.04.01,  X2001.05.01,  X2001.06.01,  X2001.07.01,  X2001.08.01,  X2001.09.01,  X2001.10.01,  X2001.11.01,  X2001.12.01,  X2002.01.01,  X2002.02.01,  X2002.03.01, ... "
-[8] "min values :  0.85979986,  1.62062681,  1.42477119,  0.76781327,  0.75662607,  0.34450921,  0.25072542,  0.15768366,  0.13057871,  0.05979802,  0.11780920, -0.69875073,  0.36552662,  0.70131457,  0.63548779, ... "
-[9] "max values :    80.61240,    89.56071,   101.81876,   143.45859,   158.37830,   202.83186,   192.55907,   190.07066,   111.40405,   116.93645,    67.32398,    48.42713,    74.23843,    59.85103,    88.96181, ... "
-[10] "time       : 2001-01-01, 2010-12-01 (min, max)"
-```
+    [1] "class      : RasterBrick "
+    [2] "dimensions : 60, 200, 12000, 120  (nrow, ncol, ncell, nlayers)" 
+    [3] "resolution : 0.25, 0.25  (x, y)"
+    [4] "extent     : -10, 40, 30, 45  (xmin, xmax, ymin, ymax)"
+    [5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
+    [6] "source     : memory"
+    [7] "names      :  X2001.01.01,  X2001.02.01,  X2001.03.01,  X2001.04.01,  X2001.05.01,  X2001.06.01,  X2001.07.01,  X2001.08.01,  X2001.09.01,  X2001.10.01,  X2001.11.01,  X2001.12.01,  X2002.01.01,  X2002.02.01,  X2002.03.01, ... "
+    [8] "min values :  0.85979986,  1.62062681,  1.42477119,  0.76781327,  0.75662607,  0.34450921,  0.25072542,  0.15768366,  0.13057871,  0.05979802,  0.11780920, -0.69875073,  0.36552662,  0.70131457,  0.63548779, ... "
+    [9] "max values :    80.61240,    89.56071,   101.81876,   143.45859,   158.37830,   202.83186,   192.55907,   190.07066,   111.40405,   116.93645,    67.32398,    48.42713,    74.23843,    59.85103,    88.96181, ... "
+    [10] "time       : 2001-01-01, 2010-12-01 (min, max)"
 
 ### Crop
 
@@ -252,32 +248,35 @@ gldas_clsm_esp <- crop_data(gldas_clsm_subset, "gadm41_ESP_0.shp")
 infoNC(gldas_clsm_esp)
 ```
 
-```         
-[1] "class      : RasterBrick "
-[2] "dimensions : 56, 58, 3248, 120  (nrow, ncol, ncell, nlayers)"
-[3] "resolution : 0.25, 0.25  (x, y)"
-[4] "extent     : -10, 4.5, 30, 44  (xmin, xmax, ymin, ymax)"
-[5] "crs        : +proj=longlat +datum=WGS84 +no_defs " 
-[6] "source     : memory"
-[7] "names      : X2001.01.01, X2001.02.01, X2001.03.01, X2001.04.01, X2001.05.01, X2001.06.01, X2001.07.01, X2001.08.01, X2001.09.01, X2001.10.01, X2001.11.01, X2001.12.01, X2002.01.01, X2002.02.01, X2002.03.01, ... "
-[8] "min values :   7.216680,   18.606867,   32.398956,   37.939827,   39.484840,   29.796391,   15.073787,   17.676109,   15.789503,   26.564753,   13.147447,    9.846310,    8.794820,   14.355796,   26.288857, ... "
-[9] "max values :    80.61240,    89.56071,   101.81876,   139.86717,   151.03282,   197.47284,   146.44232,   145.36212,   111.40405,   116.93645,    67.32398,    48.42713,    74.23843,    58.79382,    88.13857, ... "
-[10] "time       : 2001-01-01, 2010-12-01 (min, max)" 
-```
+    [1] "class      : RasterBrick "
+    [2] "dimensions : 56, 58, 3248, 120  (nrow, ncol, ncell, nlayers)"
+    [3] "resolution : 0.25, 0.25  (x, y)"
+    [4] "extent     : -10, 4.5, 30, 44  (xmin, xmax, ymin, ymax)"
+    [5] "crs        : +proj=longlat +datum=WGS84 +no_defs " 
+    [6] "source     : memory"
+    [7] "names      : X2001.01.01, X2001.02.01, X2001.03.01, X2001.04.01, X2001.05.01, X2001.06.01, X2001.07.01, X2001.08.01, X2001.09.01, X2001.10.01, X2001.11.01, X2001.12.01, X2002.01.01, X2002.02.01, X2002.03.01, ... "
+    [8] "min values :   7.216680,   18.606867,   32.398956,   37.939827,   39.484840,   29.796391,   15.073787,   17.676109,   15.789503,   26.564753,   13.147447,    9.846310,    8.794820,   14.355796,   26.288857, ... "
+    [9] "max values :    80.61240,    89.56071,   101.81876,   139.86717,   151.03282,   197.47284,   146.44232,   145.36212,   111.40405,   116.93645,    67.32398,    48.42713,    74.23843,    58.79382,    88.13857, ... "
+    [10] "time       : 2001-01-01, 2010-12-01 (min, max)" 
 
 ### PET calculation
 
 First we need to download temperature data, available at: [Zenodo
 repository](https://doi.org/10.5281/zenodo.10009796):
 
-**NOTE:** Temperature data available at the moment is limited to monthly. The data sets are TerraClimate, MSWX, and CRU and for brevity We will only
-estimate PET over the 2001 to 2010 period using MSWX dataset.
+**NOTE:** Temperature data available at the moment is limited to
+monthly. The data sets are TerraClimate, MSWX, and CRU and for brevity
+We will only estimate PET over the 2001 to 2010 period using MSWX
+dataset.
 
 we use the `download_t_data` function, which has five arguments
 *data_name*, *variable*, *path*, *time_res*, and *domain*.
 
--   *data_name* is the dataset name you can specify the names of your data sets of interest.
--   *variable* is the variable name in which `t2m`,`tmin`, and `tmax` stand for average temperature, minimum temperature, and maximum temperature.
+-   *data_name* is the dataset name you can specify the names of your
+    data sets of interest.
+-   *variable* is the variable name in which `t2m`,`tmin`, and `tmax`
+    stand for average temperature, minimum temperature, and maximum
+    temperature.
 -   *path* is set to "." by default. I.e., the current working
     directory.
 -   *domain* is set to "raw" by default, but you can specify the domain
@@ -287,7 +286,7 @@ we use the `download_t_data` function, which has five arguments
     also download annual data with "yearly".
 
 ```{r download_mswx, eval=FALSE}
-download_t_data(dataset="mswx", variable = "t2m", path = ".")
+download_t_data(data_name ="mswx", variable = "t2m")
 ```
 
 This will download temperature data in following naming convention e.g.,
@@ -303,18 +302,16 @@ t2m_global <- raster::brick("mswx_t2m_degC_land_197901_202308_025_monthly.nc") %
 infoNC(t2m_global)
 ```
 
-```         
-[1] "class      : RasterBrick "
-[2] "dimensions : 720, 1440, 1036800, 120  (nrow, ncol, ncell, nlayers)"
-[3] "resolution : 0.25, 0.25  (x, y)" 
-[4] "extent     : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)"
-[5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
-[6] "source     : memory"
-[7] "names      : X2001.01.01, X2001.02.01, X2001.03.01, X2001.04.01, X2001.05.01, X2001.06.01, X2001.07.01, X2001.08.01, X2001.09.01, X2001.10.01, X2001.11.01, X2001.12.01, X2002.01.01, X2002.02.01, X2002.03.01, ... "
-[8] "min values :  -49.867680,  -45.244373,  -42.529930,  -33.551258,  -22.829224,  -15.122508,  -13.402536,  -14.673846,  -18.428692,  -27.443539,  -35.674980,  -44.693199,  -46.778694,  -47.197075,  -42.277370, ... "
-[9] "max values :    35.00875,    33.52000,    33.29000,    35.04688,    38.26308,    39.35505,    40.33314,    39.98806,    36.99562,    33.00374,    32.52186,    33.59248,    34.46944,    33.25062,    33.71313, ... "
-[10] "time       : 2001-01-01, 2010-12-01 (min, max)" 
-```
+    [1] "class      : RasterBrick "
+    [2] "dimensions : 720, 1440, 1036800, 120  (nrow, ncol, ncell, nlayers)"
+    [3] "resolution : 0.25, 0.25  (x, y)" 
+    [4] "extent     : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)"
+    [5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
+    [6] "source     : memory"
+    [7] "names      : X2001.01.01, X2001.02.01, X2001.03.01, X2001.04.01, X2001.05.01, X2001.06.01, X2001.07.01, X2001.08.01, X2001.09.01, X2001.10.01, X2001.11.01, X2001.12.01, X2002.01.01, X2002.02.01, X2002.03.01, ... "
+    [8] "min values :  -49.867680,  -45.244373,  -42.529930,  -33.551258,  -22.829224,  -15.122508,  -13.402536,  -14.673846,  -18.428692,  -27.443539,  -35.674980,  -44.693199,  -46.778694,  -47.197075,  -42.277370, ... "
+    [9] "max values :    35.00875,    33.52000,    33.29000,    35.04688,    38.26308,    39.35505,    40.33314,    39.98806,    36.99562,    33.00374,    32.52186,    33.59248,    34.46944,    33.25062,    33.71313, ... "
+    [10] "time       : 2001-01-01, 2010-12-01 (min, max)" 
 
 The `pet` function estimates PET using a method of choice from the
 following available options:
@@ -343,54 +340,48 @@ pet_oudin_global <- pet(t2m_global, method = "od") %>% muldpm
 infoNC(pet_oudin_global)
 ```
 
-```         
-[1] "class      : RasterBrick "
-[2] "dimensions : 720, 1440, 1036800, 120  (nrow, ncol, ncell, nlayers)" 
-[3] "resolution : 0.25, 0.25  (x, y)"
-[4] "extent     : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)"
-[5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
-[6] "source     : memory"
-[7] "names      :    layer.1,    layer.2,    layer.3,    layer.4,    layer.5,    layer.6,    layer.7,    layer.8,    layer.9,   layer.10,   layer.11,   layer.12,   layer.13,   layer.14,   layer.15, ... "
-[8] "min values : 0.000000e+00, 0.000000e+00, 8.728488e-04, 8.322404e-04, 3.890790e-04, 0.000000e+00, 0.000000e+00, 2.140520e-04, 8.102036e-04, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 1.431775e-04, ... "
-[9] "max values :     219.5310,     176.8754,     184.4747,     189.0052,     222.4694,     224.2932,     233.6676,     220.5922,     187.6766,     182.0405,     189.9230,     206.4958,     214.1489,     176.4865,     184.7495, ... "
-[10] "time       : 2001-01-01, 2010-12-01 (min, max)"
-```
+    [1] "class      : RasterBrick "
+    [2] "dimensions : 720, 1440, 1036800, 120  (nrow, ncol, ncell, nlayers)" 
+    [3] "resolution : 0.25, 0.25  (x, y)"
+    [4] "extent     : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)"
+    [5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
+    [6] "source     : memory"
+    [7] "names      :    layer.1,    layer.2,    layer.3,    layer.4,    layer.5,    layer.6,    layer.7,    layer.8,    layer.9,   layer.10,   layer.11,   layer.12,   layer.13,   layer.14,   layer.15, ... "
+    [8] "min values : 0.000000e+00, 0.000000e+00, 8.728488e-04, 8.322404e-04, 3.890790e-04, 0.000000e+00, 0.000000e+00, 2.140520e-04, 8.102036e-04, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 1.431775e-04, ... "
+    [9] "max values :     219.5310,     176.8754,     184.4747,     189.0052,     222.4694,     224.2932,     233.6676,     220.5922,     187.6766,     182.0405,     189.9230,     206.4958,     214.1489,     176.4865,     184.7495, ... "
+    [10] "time       : 2001-01-01, 2010-12-01 (min, max)"
 
 ```{r pet_oudin_subset, eval = FALSE}
 pet_oudin_subset <- subset_data(pet_oudin_global, box = c(-10,40,30,45))
 infoNC(pet_oudin_subset)
 ```
 
-```         
-[1] "class      : RasterBrick "
-[2] "dimensions : 64, 104, 6656, 120  (nrow, ncol, ncell, nlayers)"
-[3] "resolution : 0.25, 0.25  (x, y)"
-[4] "extent     : -10, 40, 30, 45  (xmin, xmax, ymin, ymax)"
-[5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
-[6] "source     : memory"
-[7] "names      :     layer.1,     layer.2,     layer.3,     layer.4,     layer.5,     layer.6,     layer.7,     layer.8,     layer.9,    layer.10,    layer.11,    layer.12,    layer.13,    layer.14,    layer.15, ... "
-[8] "min values :  0.099306993,  0.740073629, 13.313356668, 11.852477789, 47.733557582, 62.935860157, 79.710862637, 77.624826193, 33.284636736, 28.931746244,  4.929369092,  0.039311446,  0.030302684,  2.928590268,  8.578593999, ... "
-[9] "max values :     54.77562,     62.65787,    115.40463,    131.55265,    177.77098,    204.70669,    222.70252,    200.23511,    165.45423,    117.08133,     69.63583,     55.89678,     58.23283,     65.31674,    103.43404, ... "
-[10] "time       : 2001-01-01, 2010-12-01 (min, max)"
-```
+    [1] "class      : RasterBrick "
+    [2] "dimensions : 64, 104, 6656, 120  (nrow, ncol, ncell, nlayers)"
+    [3] "resolution : 0.25, 0.25  (x, y)"
+    [4] "extent     : -10, 40, 30, 45  (xmin, xmax, ymin, ymax)"
+    [5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
+    [6] "source     : memory"
+    [7] "names      :     layer.1,     layer.2,     layer.3,     layer.4,     layer.5,     layer.6,     layer.7,     layer.8,     layer.9,    layer.10,    layer.11,    layer.12,    layer.13,    layer.14,    layer.15, ... "
+    [8] "min values :  0.099306993,  0.740073629, 13.313356668, 11.852477789, 47.733557582, 62.935860157, 79.710862637, 77.624826193, 33.284636736, 28.931746244,  4.929369092,  0.039311446,  0.030302684,  2.928590268,  8.578593999, ... "
+    [9] "max values :     54.77562,     62.65787,    115.40463,    131.55265,    177.77098,    204.70669,    222.70252,    200.23511,    165.45423,    117.08133,     69.63583,     55.89678,     58.23283,     65.31674,    103.43404, ... "
+    [10] "time       : 2001-01-01, 2010-12-01 (min, max)"
 
 ```{r pet_oudin_crop, eval = FALSE}
 pet_oudin_esp <- crop_data(pet_oudin_subset, "gadm41_ESP_0.shp")
 infoNC(pet_oudin_esp)
 ```
 
-```         
-[1] "class      : RasterBrick " 
-[2] "dimensions : 56, 58, 3248, 120  (nrow, ncol, ncell, nlayers)"  
-[3] "resolution : 0.25, 0.25  (x, y)"
-[4] "extent     : -10, 4.5, 30, 44  (xmin, xmax, ymin, ymax)"
-[5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
-[6] "source     : memory"  
-[7] "names      :      layer.1,      layer.2,      layer.3,      layer.4,      layer.5,      layer.6,      layer.7,      layer.8,      layer.9,     layer.10,     layer.11,     layer.12,     layer.13,     layer.14,     layer.15, ... "
-[8] "min values :   3.5873966,   3.6652387,  23.3621691,  26.7197371,  54.5738134,  83.2697010,  93.0016851,  91.4133866,  49.0935838,  34.9640317,   5.8351220,   0.5116812,   4.7784175,   7.1974645,  19.2179436, ... "
-[9] "max values :    40.66180,    48.18053,    80.11776,   100.17784,   125.64010,   160.57205,   165.80086,   155.79110,   111.13910,    80.95558,    44.86891,    37.12437,    40.82948,    48.49249,    74.67580, ... "
-[10] "time       : 2001-01-01, 2010-12-01 (min, max)"
-```
+    [1] "class      : RasterBrick " 
+    [2] "dimensions : 56, 58, 3248, 120  (nrow, ncol, ncell, nlayers)"  
+    [3] "resolution : 0.25, 0.25  (x, y)"
+    [4] "extent     : -10, 4.5, 30, 44  (xmin, xmax, ymin, ymax)"
+    [5] "crs        : +proj=longlat +datum=WGS84 +no_defs "
+    [6] "source     : memory"  
+    [7] "names      :      layer.1,      layer.2,      layer.3,      layer.4,      layer.5,      layer.6,      layer.7,      layer.8,      layer.9,     layer.10,     layer.11,     layer.12,     layer.13,     layer.14,     layer.15, ... "
+    [8] "min values :   3.5873966,   3.6652387,  23.3621691,  26.7197371,  54.5738134,  83.2697010,  93.0016851,  91.4133866,  49.0935838,  34.9640317,   5.8351220,   0.5116812,   4.7784175,   7.1974645,  19.2179436, ... "
+    [9] "max values :    40.66180,    48.18053,    80.11776,   100.17784,   125.64010,   160.57205,   165.80086,   155.79110,   111.13910,    80.95558,    44.86891,    37.12437,    40.82948,    48.49249,    74.67580, ... "
+    [10] "time       : 2001-01-01, 2010-12-01 (min, max)"
 
 ### Generate Time series
 
@@ -410,63 +401,57 @@ gldas_clsm_global_ts <- fldmean(gldas_clsm_global)
 head(gldas_clsm_global_ts, 12)
 ```
 
-```         
-      date    value
- 1: 2000-01-01 42.63418
- 2: 2000-02-01 40.28064
- 3: 2000-03-01 46.65724
- 4: 2000-04-01 49.73078
- 5: 2000-05-01 61.78450
- 6: 2000-06-01 71.51643
- 7: 2000-07-01 78.34947
- 8: 2000-08-01 68.59857
- 9: 2000-09-01 52.40877
-10: 2000-10-01 45.95624
-11: 2000-11-01 40.95821
-12: 2000-12-01 41.50710
-```
+          date    value
+     1: 2000-01-01 42.63418
+     2: 2000-02-01 40.28064
+     3: 2000-03-01 46.65724
+     4: 2000-04-01 49.73078
+     5: 2000-05-01 61.78450
+     6: 2000-06-01 71.51643
+     7: 2000-07-01 78.34947
+     8: 2000-08-01 68.59857
+     9: 2000-09-01 52.40877
+    10: 2000-10-01 45.95624
+    11: 2000-11-01 40.95821
+    12: 2000-12-01 41.50710
 
 ```{r gldas_clsm_subset_ts, eval=FALSE}
 gldas_clsm_subset_ts <- fldmean(gldas_clsm_subset)
 head(gldas_clsm_subset_ts, 12)
 ```
 
-```         
-     date    value
- 1: 2001-01-01 14.47589
- 2: 2001-02-01 19.65537
- 3: 2001-03-01 38.58488
- 4: 2001-04-01 45.47299
- 5: 2001-05-01 57.83225
- 6: 2001-06-01 63.57403
- 7: 2001-07-01 51.30824
- 8: 2001-08-01 41.88030
- 9: 2001-09-01 29.30722
-10: 2001-10-01 24.02233
-11: 2001-11-01 16.56476
-12: 2001-12-01 12.67189
-```
+         date    value
+     1: 2001-01-01 14.47589
+     2: 2001-02-01 19.65537
+     3: 2001-03-01 38.58488
+     4: 2001-04-01 45.47299
+     5: 2001-05-01 57.83225
+     6: 2001-06-01 63.57403
+     7: 2001-07-01 51.30824
+     8: 2001-08-01 41.88030
+     9: 2001-09-01 29.30722
+    10: 2001-10-01 24.02233
+    11: 2001-11-01 16.56476
+    12: 2001-12-01 12.67189
 
 ```{r gldas_clsm_esp_ts, eval=FALSE}
 gldas_clsm_esp_ts <- fldmean(gldas_clsm_esp)
 head(gldas_clsm_esp_ts, 12)
 ```
 
-```         
-        date     value
- 1: 2001-01-01  17.99823
- 2: 2001-02-01  31.41443
- 3: 2001-03-01  57.23334
- 4: 2001-04-01  84.13048
- 5: 2001-05-01  95.06479
- 6: 2001-06-01 118.33516
- 7: 2001-07-01  87.58777
- 8: 2001-08-01  74.37666
- 9: 2001-09-01  45.09689
-10: 2001-10-01  43.91893
-11: 2001-11-01  25.11206
-12: 2001-12-01  16.99089
-```
+            date     value
+     1: 2001-01-01  17.99823
+     2: 2001-02-01  31.41443
+     3: 2001-03-01  57.23334
+     4: 2001-04-01  84.13048
+     5: 2001-05-01  95.06479
+     6: 2001-06-01 118.33516
+     7: 2001-07-01  87.58777
+     8: 2001-08-01  74.37666
+     9: 2001-09-01  45.09689
+    10: 2001-10-01  43.91893
+    11: 2001-11-01  25.11206
+    12: 2001-12-01  16.99089
 
 #### Time series for calculated PET
 
@@ -479,63 +464,57 @@ pet_oudin_global_ts <- fldmean(pet_oudin_global)
 head(pet_oudin_global_ts, 12)
 ```
 
-```         
-        date     value
- 1: 2001-01-01  90.97581
- 2: 2001-02-01  90.72542
- 3: 2001-03-01 100.12134
- 4: 2001-04-01  96.08822
- 5: 2001-05-01 105.25369
- 6: 2001-06-01 110.88759
- 7: 2001-07-01 119.98619
- 8: 2001-08-01 112.29808
- 9: 2001-09-01  94.00018
-10: 2001-10-01  89.70338
-11: 2001-11-01  82.71571
-12: 2001-12-01  90.02744
-```
+            date     value
+     1: 2001-01-01  90.97581
+     2: 2001-02-01  90.72542
+     3: 2001-03-01 100.12134
+     4: 2001-04-01  96.08822
+     5: 2001-05-01 105.25369
+     6: 2001-06-01 110.88759
+     7: 2001-07-01 119.98619
+     8: 2001-08-01 112.29808
+     9: 2001-09-01  94.00018
+    10: 2001-10-01  89.70338
+    11: 2001-11-01  82.71571
+    12: 2001-12-01  90.02744
 
 ```{r pet_oudin_subset_ts, eval=FALSE}
 pet_oudin_subset_ts <- fldmean(pet_oudin_subset)
 head(pet_oudin_subset_ts, 12)
 ```
 
-```         
-         date     value
- 1: 2001-01-01  28.41624
- 2: 2001-02-01  34.31941
- 3: 2001-03-01  70.77386
- 4: 2001-04-01  85.68093
- 5: 2001-05-01 119.92428
- 6: 2001-06-01 146.10311
- 7: 2001-07-01 161.36373
- 8: 2001-08-01 147.05941
- 9: 2001-09-01 105.36592
-10: 2001-10-01  73.91439
-11: 2001-11-01  37.36657
-12: 2001-12-01  24.99642
-```
+             date     value
+     1: 2001-01-01  28.41624
+     2: 2001-02-01  34.31941
+     3: 2001-03-01  70.77386
+     4: 2001-04-01  85.68093
+     5: 2001-05-01 119.92428
+     6: 2001-06-01 146.10311
+     7: 2001-07-01 161.36373
+     8: 2001-08-01 147.05941
+     9: 2001-09-01 105.36592
+    10: 2001-10-01  73.91439
+    11: 2001-11-01  37.36657
+    12: 2001-12-01  24.99642
 
 ```{r pet_odin_esp_ts, eval=FALSE}
 pet_oudin_esp_ts <- fldmean(pet_oudin_esp)
 head(pet_oudin_esp_ts, 12)
 ```
 
-```         
-         date     value
- 1: 2001-01-01  23.33118
- 2: 2001-02-01  28.85419
- 3: 2001-03-01  57.39954
- 4: 2001-04-01  71.95438
- 5: 2001-05-01 101.37500
- 6: 2001-06-01 134.48663
- 7: 2001-07-01 139.09158
- 8: 2001-08-01 131.25821
- 9: 2001-09-01  87.49866
-10: 2001-10-01  59.00385
-11: 2001-11-01  25.24541
-12: 2001-12-01  16.16446
-```
+             date     value
+     1: 2001-01-01  23.33118
+     2: 2001-02-01  28.85419
+     3: 2001-03-01  57.39954
+     4: 2001-04-01  71.95438
+     5: 2001-05-01 101.37500
+     6: 2001-06-01 134.48663
+     7: 2001-07-01 139.09158
+     8: 2001-08-01 131.25821
+     9: 2001-09-01  87.49866
+    10: 2001-10-01  59.00385
+    11: 2001-11-01  25.24541
+    12: 2001-12-01  16.16446
 
 ## Visualize
 
@@ -549,29 +528,29 @@ pRecipe](https://cran.r-project.org/web/packages/pRecipe/vignettes/pRecipe.html#
 To see a map of any data set raw or processed, we use `plot_map` which
 takes only one layer of the RasterBrick as input.
 
-```{r map_global, eval = FALSE}
-plot_map(gldas_clsm_global[[6]]) 
+```{r map_global, eval = F}
+plot_map(gldas_clsm_global[[18]]) 
 plot_map(pet_oudin_global[[6]]) 
 ```
 
-![](plots/map_gldas_global.png){width="8.4cm" height="5cm"}
-![](plots/map_oudin_global.png){width="8.4cm" height="5cm"}
+![](plots/map_gldas_global.png){width="8.2cm"}
+![](plots/map_pet_oudin_global.png){width="8.2cm"}
 
 ```{r map_subset, eval = FALSE}
-plot_map(gldas_clsm_subset[[1]])
-plot_map(pet_oudin_subset[[1]])
+plot_map(gldas_clsm_subset[[6]])
+plot_map(pet_oudin_subset[[6]])
 ```
 
-![](plots/map_gldas_subset.png){width="8.4cm" height="5cm"}
-![](plots/map_oudin_subset.png){width="8.4cm" height="5cm"}
+![](plots/map_gldas_subset.png){width="8cm"}![](plots/map_pet_oudin_subset.png){width="8cm"}
 
 ```{r map_esp, eval = FALSE}
 plot_map(gldas_clsm_esp[[1]])
 plot_map(pet_oudin_esp[[1]])
 ```
 
-![](plots/map_gldas_esp.png){width="8.4cm"
-height="5cm"}![](plots/map_oudin_esp.png){width="8.4cm" height="5cm"}
+![](plots/map_gldas_esp.png){width="8cm"}
+
+![](plots/map_pet_oudin_esp.png){width="8cm"}
 
 ### Time Series Visuals
 
@@ -664,7 +643,7 @@ plot_summary(gldas_clsm_global_ts, var = "Evapotranspiration")
 
 ```
 
-![](plots/gldas_global_summary.png){width="95%"}
+![](plots/summary_gldas.png)
 
 ```{r, eval=FALSE}
 plot_summary(pet_oudin_global_ts, var = "Potential Evapotranspiration")
@@ -672,7 +651,7 @@ plot_summary(pet_oudin_global_ts, var = "Potential Evapotranspiration")
 #plot_summary(pet_oudin_esp_ts)
 ```
 
-![](plots/oudin_global_summary.png){width="95%"}
+![](plots/summary_pet_oudin.png){width="637"}
 
 # Coming Soon
 
