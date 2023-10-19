@@ -70,7 +70,7 @@ four reanalysis, and five hydrological model products. Their native
 specifications, as well as links to their providers, and their
 respective references are detailed in the following subsections. We have
 already homogenized, compacted to a single file, and stored them in a
-[Zenodo repository](https://doi.org/10.5281/zenodo.7990413) under the
+[Zenodo repository](https://doi.org/10.5281/zenodo.10011192) under the
 following naming convention:
 
 `<data set>_<variable>_<units>_<coverage>_<start date>_<end date>_<resolution>_<time step>.nc`
@@ -90,7 +90,8 @@ E.g., ERA5 [@hersbach_era5_2020] would be:
 ```{r satellite, echo=FALSE, results = 'asis'}
 tibble::tribble(
   ~"Data Set", ~"Spatial Resolution", ~Global, ~Land, ~Ocean, ~"Temporal Resolution", ~"Record Length", ~"Get Data", ~Reference, 
-"GLEAM V3.0", "0.25°", "", "x", "", "Monthly", "1980/01-2021/12", "[Download](https://www.gleam.eu/)", "@martens_gleam_2017"
+"GLEAM V3.0", "0.25°", "", "x", "", "Monthly", "1980/01-2021/12", "[Download](https://www.gleam.eu/)", "@martens_gleam_2017",
+"BESSv2.0", "0.05°", "", "x", "", "Monthly", "1982/01-2019/12", "[Download](https://www.environment.snu.ac.kr/bessv2)", "@li2023bessv2"
 ) |>
   kbl(align = 'lcccccccr') |>
   kable_styling("striped") |>
@@ -106,7 +107,8 @@ tibble::tribble(
 "ERA5-Land", "0.1°", "", "x", "", "Monthly", "1960/01-2022/12", "[Download](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land-monthly-means?tab=form)", "@munoz-sabater_era5-land_2021",
 "ERA5", "0.25°", "x", "x", "x", "Monthly", "1959/01-2021/12", "[Download](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels-monthly-means?tab=overview)", "@hersbach_era5_2020",
 "JRA-55", "1.25°", "", "x", "", "Monthly", "1958/01-2021/12", "[Download](https://rda.ucar.edu/datasets/ds628.1/dataaccess/)", "@kobayashi_jra-55_2015",
-"MERRA-2", "0.5° x 0.625°", "", "x", "", "Monthly", "1980/01-2023/01", "[Download](https://disc.gsfc.nasa.gov/datasets?page=1&project=MERRA-2)", "@gelaro_modern-era_2017"
+"MERRA-2", "0.5° x 0.625°", "", "x", "", "Monthly", "1980/01-2023/01", "[Download](https://disc.gsfc.nasa.gov/datasets?page=1&project=MERRA-2)", "@gelaro_modern-era_2017",
+"CAMELE", "0.25°", "", "x", "", "Monthly", "1980/01-2022/12", "[Download](https://zenodo.org/records/8047038)", "@li2023camele"
 ) |>
   kbl(align = 'lcccccccr') |>
   kable_styling("striped") |>
@@ -262,7 +264,7 @@ infoNC(gldas_clsm_esp)
 ### PET calculation
 
 First we need to download temperature data, available at: [Zenodo
-repository](https://doi.org/10.5281/zenodo.10009796):
+repository](https://doi.org/10.5281/zenodo.10019933):
 
 **NOTE:** Temperature data available at the moment is limited to
 monthly. The data sets are TerraClimate, MSWX, and CRU and for brevity
@@ -533,8 +535,7 @@ plot_map(gldas_clsm_global[[18]])
 plot_map(pet_oudin_global[[6]]) 
 ```
 
-![](plots/map_gldas_global.png){width="8.2cm"}
-![](plots/map_pet_oudin_global.png){width="8.2cm"}
+![](plots/map_gldas_global.png){width="8.2cm"}![](plots/map_pet_oudin_global.png){width="8.2cm"}
 
 ```{r map_subset, eval = FALSE}
 plot_map(gldas_clsm_subset[[6]])
@@ -544,8 +545,8 @@ plot_map(pet_oudin_subset[[6]])
 ![](plots/map_gldas_subset.png){width="8cm"}![](plots/map_pet_oudin_subset.png){width="8cm"}
 
 ```{r map_esp, eval = FALSE}
-plot_map(gldas_clsm_esp[[1]])
-plot_map(pet_oudin_esp[[1]])
+plot_map(gldas_clsm_esp[[6]])
+plot_map(pet_oudin_esp[[6]])
 ```
 
 ![](plots/map_gldas_esp.png){width="8cm"}![](plots/map_pet_oudin_esp.png){width="8cm"}
@@ -557,14 +558,15 @@ below, which takes only a `fldmean` ".csv" generated file.
 
 #### Lineplots
 
+##### Plotting globals
+
 ```{r lines, eval = FALSE}
-# Plotting globals
 p01 <- plot_line(gldas_clsm_global_ts, var = "Evapotranspiration")
 p02 <- plot_line(pet_oudin_global_ts, var = "Potential Evapotranspiration")
 ggpubr::ggarrange(p01, p02, ncol = 1)
 ```
 
-![](plots/global_ts.png){width="580"}
+![](plots/global_ts.png){width="800"}
 
 ##### Plotting subsets
 
@@ -574,9 +576,9 @@ p02 <- plot_line(pet_oudin_subset_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/subset_ts.png){width="580"}
+![](plots/subset_ts.png){width="687"}
 
-##### Plotting esp
+##### Plotting Spain
 
 ```{r lines_esp, eval = FALSE}
 p01 <- plot_line(gldas_clsm_esp_ts, var = "ET")
@@ -584,18 +586,21 @@ p02 <- plot_line(pet_oudin_esp_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/esp_ts.png){width="580"}
+![](plots/esp_ts.png){width="687"}
 
 #### Heatmap
 
 ##### Plotting globals
 
-```{r heatmap, eval = FALSE}
+```{r heatmap_gldas, eval = FALSE}
 plot_heatmap(gldas_clsm_global_ts)
-plot_heatmap(pet_oudin_global_ts)
 ```
 
 ![](plots/heatmap_gldas_global.png){width="580"}
+
+```{r heatmap_oudin, eval = FALSE}
+plot_heatmap(pet_oudin_global_ts)
+```
 
 ![](plots/heatmap_pet_oudin_global.png){width="580"}
 
@@ -609,7 +614,7 @@ ggpubr::ggarrange(p01, p02, ncol = 2, common.legend = TRUE, legend = "right")
 
 ![](plots/heatmap_subset.png){width="580"}
 
-##### Plotting esp
+##### Plotting Spain
 
 ```{r heatmap_esp, eval = FALSE}
 p01 <- plot_heatmap(gldas_clsm_esp_ts)
@@ -629,7 +634,7 @@ p02 <- plot_box(pet_oudin_global_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/box_global.png){width="580"}
+![](plots/box_global.png){width="687"}
 
 ##### Plotting subsets
 
@@ -639,9 +644,9 @@ p02 <- plot_box(pet_oudin_subset_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/box_subset.png){width="580"}
+![](plots/box_subset.png){width="687"}
 
-##### Plotting esp
+##### Plotting Spain
 
 ```{r box_esp, eval = FALSE}
 p01 <- plot_box(gldas_clsm_esp_ts, var = "ET" )
@@ -649,7 +654,7 @@ p02 <- plot_box(pet_oudin_esp_ts, var = "PET" )
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/box_esp.png){width="580"}
+![](plots/box_esp.png){width="687"}
 
 #### Density plots
 
@@ -673,7 +678,7 @@ ggpubr::ggarrange(p01, p02, ncol = 2)
 
 ![](plots/density_subset.png){width="580"}
 
-##### Plotting esp
+##### Plotting Spain
 
 ```{r density_esp, eval = FALSE}
 p01 <- plot_density(gldas_clsm_esp_ts, var = "ET")
@@ -695,7 +700,7 @@ plot_summary(gldas_clsm_global_ts, var = "Evapotranspiration")
 
 ```
 
-![](plots/summary_gldas.png)
+![](plots/summary_gldas.png){width="637"}
 
 ```{r, eval=FALSE}
 plot_summary(pet_oudin_global_ts, var = "Potential Evapotranspiration")
