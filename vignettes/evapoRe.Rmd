@@ -548,9 +548,7 @@ plot_map(gldas_clsm_esp[[1]])
 plot_map(pet_oudin_esp[[1]])
 ```
 
-![](plots/map_gldas_esp.png){width="8cm"}
-
-![](plots/map_pet_oudin_esp.png){width="8cm"}
+![](plots/map_gldas_esp.png){width="8cm"}![](plots/map_pet_oudin_esp.png){width="8cm"}
 
 ### Time Series Visuals
 
@@ -559,77 +557,131 @@ below, which takes only a `fldmean` ".csv" generated file.
 
 #### Lineplots
 
-```{r}
-
+```{r lines, eval = FALSE}
 # Plotting globals
 p01 <- plot_line(gldas_clsm_global_ts, var = "Evapotranspiration")
 p02 <- plot_line(pet_oudin_global_ts, var = "Potential Evapotranspiration")
 ggpubr::ggarrange(p01, p02, ncol = 1)
-# Plotting subsets
+```
+
+![](plots/global_ts.png){width="580"}
+
+##### Plotting subsets
+
+```{r lines_subset, eval = FALSE}
 p01 <- plot_line(gldas_clsm_subset_ts, var = "ET")
 p02 <- plot_line(pet_oudin_subset_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
-# Plotting esp
+```
+
+![](plots/subset_ts.png){width="580"}
+
+##### Plotting esp
+
+```{r lines_esp, eval = FALSE}
 p01 <- plot_line(gldas_clsm_esp_ts, var = "ET")
 p02 <- plot_line(pet_oudin_esp_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
-
 ```
+
+![](plots/esp_ts.png){width="580"}
 
 #### Heatmap
 
-```{r}
+##### Plotting globals
 
-# Plotting globals
+```{r heatmap, eval = FALSE}
 plot_heatmap(gldas_clsm_global_ts)
 plot_heatmap(pet_oudin_global_ts)
-# Plotting subsets
+```
+
+![](plots/heatmap_gldas_global.png){width="580"}
+
+![](plots/heatmap_pet_oudin_global.png){width="580"}
+
+##### Plotting subsets
+
+```{r heatmap_subset, eval = FALSE}
 p01 <- plot_heatmap(gldas_clsm_subset_ts)
 p02 <- plot_heatmap(pet_oudin_subset_ts)
 ggpubr::ggarrange(p01, p02, ncol = 2, common.legend = TRUE, legend = "right")
-# Plotting esp
+```
+
+![](plots/heatmap_subset.png){width="580"}
+
+##### Plotting esp
+
+```{r heatmap_esp, eval = FALSE}
 p01 <- plot_heatmap(gldas_clsm_esp_ts)
 p02 <- plot_heatmap(pet_oudin_esp_ts)
 ggpubr::ggarrange(p01, p02, ncol = 2, common.legend = TRUE, legend = "right")
-
 ```
+
+![](plots/heatmap_esp.png){width="580"}
 
 #### Boxplot
 
-```{r}
+##### Plotting globals
 
-# Plotting globals
+```{r box, eval = FALSE}
 p01 <- plot_box(gldas_clsm_global_ts, var = "ET")
 p02 <- plot_box(pet_oudin_global_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
-# Plotting subsets
+```
+
+![](plots/box_global.png){width="580"}
+
+##### Plotting subsets
+
+```{r box_subset, eval = FALSE}
 p01 <- plot_box(gldas_clsm_subset_ts, var = "ET")
 p02 <- plot_box(pet_oudin_subset_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
-# Plotting esp
+```
+
+![](plots/box_subset.png){width="580"}
+
+##### Plotting esp
+
+```{r box_esp, eval = FALSE}
 p01 <- plot_box(gldas_clsm_esp_ts, var = "ET" )
 p02 <- plot_box(pet_oudin_esp_ts, var = "PET" )
 ggpubr::ggarrange(p01, p02, ncol = 2)
-
 ```
+
+![](plots/box_esp.png){width="580"}
 
 #### Density plots
 
-```{r}
-# Plotting globals
+##### Plotting globals
+
+```{r density, eval = FALSE}
 p01 <- plot_density(gldas_clsm_global_ts, var = "ET")
 p02 <- plot_density(pet_oudin_global_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
-# Plotting subsets
+```
+
+![](plots/density_global.png){width="580"}
+
+##### Plotting subsets
+
+```{r density_subset, eval = FALSE}
 p01 <- plot_density(gldas_clsm_subset_ts, var = "ET")
 p02 <- plot_density(pet_oudin_subset_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
-# Plotting esp
+```
+
+![](plots/density_subset.png){width="580"}
+
+##### Plotting esp
+
+```{r density_esp, eval = FALSE}
 p01 <- plot_density(gldas_clsm_esp_ts, var = "ET")
 p02 <- plot_density(pet_oudin_esp_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
-
 ```
+
+![](plots/density_esp.png){width="580"}
 
 #### Summary
 
