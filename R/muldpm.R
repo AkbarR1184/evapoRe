@@ -1,6 +1,4 @@
-#' Multiply by days per month
-#'
-#' Function to calculate pet
+#' The function muldpm multiplies the value by days per month.
 #' 
 #' @importFrom methods as
 #' @importFrom lubridate days_in_month

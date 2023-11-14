@@ -51,7 +51,7 @@ download_t_data <- function(data_name, path = ".", domain = "raw", time_res = "m
   
   switch(data_name,
          "terraclimate" = {
-           terraclimate_base <- "https://zenodo.org/records/10019933/files/"
+           terraclimate_base <- "https://zenodo.org/records/10122830/files/"
            terraclimate_end <- "?download=1"
            
            switch(variable,
@@ -68,7 +68,7 @@ download_t_data <- function(data_name, path = ".", domain = "raw", time_res = "m
            file_name <- paste0("terraclimate_", variable, file_ext)
          },
          "cru" = {
-           cru_base <- "https://zenodo.org/records/10019933/files/"
+           cru_base <- "https://zenodo.org/records/10122830/files/"
            cru_end <- "?download=1"
            
            switch(variable,
@@ -85,7 +85,7 @@ download_t_data <- function(data_name, path = ".", domain = "raw", time_res = "m
            file_name <- paste0("cru_", variable, file_ext)
          },
          "mswx" = {
-           mswx_base <- "https://zenodo.org/records/10019933/files/"  
+           mswx_base <- "https://zenodo.org/records/10122830/files/"  
            mswx_end <- "?download=1"  
            
            switch(variable,
