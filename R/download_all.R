@@ -31,4 +31,5 @@ download_all <- function(folder_path = ".", domain = "raw", time_res = "monthly"
   download_jra55(folder_path, domain, time_res)
   download_merra2(folder_path, domain, time_res)
   download_terraclimate(folder_path, domain, time_res)
+  download_zheng(folder_path, domain, time_res)
 }

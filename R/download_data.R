@@ -40,8 +40,8 @@
 #' }
 
 download_data <- function(data_name = "all", path = ".", domain = "raw", time_res = "monthly"){
-  if (!Reduce("&", is.element(data_name, c("all","bess","camele", "era5", "era5_land", "fldas", "gldas-clsm", "gldas-noah", "gldas-vic", "gleam", "jra_55", "merra2","terraclimate")))){
-    stop("Error: Data set not available. Select from era5, era5_land, fldas, gldas-clsm, gldas-noah, gldas-vic, gleam, jra_55, merra2, terraclimate")
+  if (!Reduce("&", is.element(data_name, c("all","bess","camele", "era5", "era5_land", "fldas", "gldas-clsm", "gldas-noah", "gldas-vic", "gleam", "jra_55", "merra2","terraclimate", "zheng")))){
+    stop("Error: Data set not available. Select from era5, era5_land, fldas, gldas-clsm, gldas-noah, gldas-vic, gleam, jra_55, merra2, terraclimate", "zheng")
   }
   old_options <- options()
   options(timeout = 6000)
@@ -59,7 +59,8 @@ download_data <- function(data_name = "all", path = ".", domain = "raw", time_re
                                         "gleam" = download_gleam(path, domain, time_res),
                                         "jra55" = download_jra55(path, domain, time_res),
                                         "merra2" = download_merra2(path, domain, time_res),
-                                        "terraclimate" = download_terraclimate(path, domain, time_res)
+                                        "terraclimate" = download_terraclimate(path, domain, time_res),
+                                        "zheng" = download_zheng(path, domain, time_res)
   ))
   return(invisible())
 }
