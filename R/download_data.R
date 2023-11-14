@@ -9,15 +9,16 @@
 #' \item{"bess" for BESS,}
 #' \item{"camele" for CAMELE,}
 #' \item{"era5" for ERA5,}
-#' \item{"era5_land" for ERA5-Land,}
+#' \item{"era5-land" for ERA5-Land,}
 #' \item{"fldas" for FLDAS,} 
 #' \item{"gldas-clsm" for GLDAS CLSM,}
 #' \item{"gldas-noah" for GLDAS NOAH,}
 #' \item{"gldas-vic" for GLDAS VIC,}
 #' \item{"gleam" for GLEAM V3,}
-#' \item{"jra_55" for JRA-55,}
-#' \item{"merra2" for MERRA-2,}
+#' \item{"jra-55" for JRA-55,}
+#' \item{"merra-2" for MERRA-2,}
 #' \item{"terraclimate" for TerraClimate,}
+#' \item{"zheng" for Zheng,}
 #' }
 #' @param path a character string with the path where the database will be downloaded.
 #' @param domain a character string with the desired domain data set. Suitable options are:
@@ -40,8 +41,8 @@
 #' }
 
 download_data <- function(data_name = "all", path = ".", domain = "raw", time_res = "monthly"){
-  if (!Reduce("&", is.element(data_name, c("all","bess","camele", "era5", "era5_land", "fldas", "gldas-clsm", "gldas-noah", "gldas-vic", "gleam", "jra_55", "merra2","terraclimate", "zheng")))){
-    stop("Error: Data set not available. Select from era5, era5_land, fldas, gldas-clsm, gldas-noah, gldas-vic, gleam, jra_55, merra2, terraclimate", "zheng")
+  if (!Reduce("&", is.element(data_name, c("all","bess","camele", "era5", "era5-land", "fldas", "gldas-clsm", "gldas-noah", "gldas-vic", "gleam", "jra-55", "merra-2","terraclimate", "zheng")))){
+    stop("Error: Data set not available. Select from era5, era5-land, fldas, gldas-clsm, gldas-noah, gldas-vic, gleam, jra-55, merra-2, terraclimate", "zheng")
   }
   old_options <- options()
   options(timeout = 6000)
@@ -51,14 +52,14 @@ download_data <- function(data_name = "all", path = ".", domain = "raw", time_re
                                         "bess" = download_bess(path, domain, time_res),
                                         "camele" = download_camele(path, domain, time_res),
                                         "era5" = download_era5(path, domain, time_res),
-                                        "era5_land" = download_era5_land(path, domain, time_res),
+                                        "era5-land" = download_era5_land(path, domain, time_res),
                                         "fldas" = download_fldas(path, domain, time_res),
                                         "gldas-clsm" = download_gldas_clsm(path, domain, time_res),
                                         "gldas-noah" = download_gldas_noah(path, domain, time_res),
                                         "gldas-vic" = download_gldas_vic(path, domain, time_res),
                                         "gleam" = download_gleam(path, domain, time_res),
-                                        "jra55" = download_jra55(path, domain, time_res),
-                                        "merra2" = download_merra2(path, domain, time_res),
+                                        "jra-55" = download_jra55(path, domain, time_res),
+                                        "merra-2" = download_merra2(path, domain, time_res),
                                         "terraclimate" = download_terraclimate(path, domain, time_res),
                                         "zheng" = download_zheng(path, domain, time_res)
   ))

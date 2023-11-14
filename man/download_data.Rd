@@ -18,15 +18,16 @@ download_data(
 \item{"bess" for BESS,}
 \item{"camele" for CAMELE,}
 \item{"era5" for ERA5,}
-\item{"era5_land" for ERA5-Land,}
+\item{"era5-land" for ERA5-Land,}
 \item{"fldas" for FLDAS,} 
 \item{"gldas-clsm" for GLDAS CLSM,}
 \item{"gldas-noah" for GLDAS NOAH,}
 \item{"gldas-vic" for GLDAS VIC,}
 \item{"gleam" for GLEAM V3,}
-\item{"jra_55" for JRA-55,}
-\item{"merra2" for MERRA-2,}
+\item{"jra-55" for JRA-55,}
+\item{"merra-2" for MERRA-2,}
 \item{"terraclimate" for TerraClimate,}
+\item{"zheng" for Zheng,}
 }}
 
 \item{path}{a character string with the path where the database will be downloaded.}
