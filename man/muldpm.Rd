@@ -2,7 +2,7 @@
 % Please edit documentation in R/muldpm.R
 \name{muldpm}
 \alias{muldpm}
-\title{Multiply by days per month}
+\title{The function muldpm multiplies the value by days per month.}
 \usage{
 muldpm(x)
 }
@@ -13,7 +13,7 @@ muldpm(x)
 a RasterBrick object
 }
 \description{
-Function to calculate pet
+The function muldpm multiplies the value by days per month.
 }
 \examples{
 \dontrun{
