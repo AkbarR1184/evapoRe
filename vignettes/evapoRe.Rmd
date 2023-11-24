@@ -65,13 +65,13 @@ Like many other R packages, `evapoRe` has some system requirements:
 
 ## Data
 
-`evapoRe` database hosts 10 different ET data sets; one satellite-based,
-four reanalysis, and five hydrological model products. Their native
-specifications, as well as links to their providers, and their
-respective references are detailed in the following subsections. We have
-already homogenized, compacted to a single file, and stored them in a
-[Zenodo repository](https://doi.org/10.5281/zenodo.10011192) under the
-following naming convention:
+`evapoRe` database hosts 13 different ET data sets; three
+satellite-based, five reanalysis, and five hydrological model products.
+Their native specifications, as well as links to their providers, and
+their respective references are detailed in the following subsections.
+We have already homogenized, compacted to a single file, and stored them
+in a [Zenodo repository](https://doi.org/10.5281/zenodo.10011192) under
+the following naming convention:
 
 `<data set>_<variable>_<units>_<coverage>_<start date>_<end date>_<resolution>_<time step>.nc`
 
@@ -90,8 +90,9 @@ E.g., ERA5 [@hersbach_era5_2020] would be:
 ```{r satellite, echo=FALSE, results = 'asis'}
 tibble::tribble(
   ~"Data Set", ~"Spatial Resolution", ~Global, ~Land, ~Ocean, ~"Temporal Resolution", ~"Record Length", ~"Get Data", ~Reference, 
-"GLEAM V3.0", "0.25°", "", "x", "", "Monthly", "1980/01-2021/12", "[Download](https://www.gleam.eu/)", "@martens_gleam_2017",
-"BESSv2.0", "0.05°", "", "x", "", "Monthly", "1982/01-2019/12", "[Download](https://www.environment.snu.ac.kr/bessv2)", "@li2023bessv2"
+"GLEAM V3.7b", "0.25°", "", "x", "", "Monthly", "1980/01-2021/12", "[Download](https://www.gleam.eu/)", "@martens_gleam_2017",
+"BESS V2.0", "0.05°", "", "x", "", "Monthly", "1982/01-2019/12", "[Download](https://www.environment.snu.ac.kr/bessv2)", "@li2023bessv2",
+"ETMonitor", "1$km$", "", "x", "", "Daily", "2000/06-2019/12", "[Download](https://data.casearth.cn/en/sdo/detail/63291c7e08415d54af833fe5)", "@zheng2022ETMonitor"
 ) |>
   kbl(align = 'lcccccccr') |>
   kable_styling("striped") |>
@@ -105,7 +106,7 @@ tibble::tribble(
 tibble::tribble(
   ~"Data Set", ~"Spatial Resolution", ~Global, ~Land, ~Ocean, ~"Temporal Resolution", ~"Record Length", ~"Get Data", ~Reference,
 "ERA5-Land", "0.1°", "", "x", "", "Monthly", "1960/01-2022/12", "[Download](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land-monthly-means?tab=form)", "@munoz-sabater_era5-land_2021",
-"ERA5", "0.25°", "x", "x", "x", "Monthly", "1959/01-2021/12", "[Download](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels-monthly-means?tab=overview)", "@hersbach_era5_2020",
+"ERA5", "0.25°", "", "x", "", "Monthly", "1959/01-2021/12", "[Download](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels-monthly-means?tab=overview)", "@hersbach_era5_2020",
 "JRA-55", "1.25°", "", "x", "", "Monthly", "1958/01-2021/12", "[Download](https://rda.ucar.edu/datasets/ds628.1/dataaccess/)", "@kobayashi_jra-55_2015",
 "MERRA-2", "0.5° x 0.625°", "", "x", "", "Monthly", "1980/01-2023/01", "[Download](https://disc.gsfc.nasa.gov/datasets?page=1&project=MERRA-2)", "@gelaro_modern-era_2017",
 "CAMELE", "0.25°", "", "x", "", "Monthly", "1980/01-2022/12", "[Download](https://zenodo.org/records/8047038)", "@li2023camele"
@@ -300,7 +301,8 @@ As stated above we will work only with the 2001-2010 period. Since
 subset the data as follows:
 
 ```{r subset_mswx, eval=FALSE}
-t2m_global <- raster::brick("mswx_t2m_degC_land_197901_202308_025_monthly.nc") %>% subset_data(yrs = c(2001, 2010))
+t2m_global <- raster::brick("mswx_t2m_degC_land_197901_202308_025_monthly.nc") %>% 
+  subset_data(yrs = c(2001, 2010))
 infoNC(t2m_global)
 ```
 
