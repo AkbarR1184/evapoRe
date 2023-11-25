@@ -9,4 +9,3 @@ test_that("evapoRe works", {
   expect_equal(original_dims, dim(result),
                info = "Dimensions should remain the same before and after applying muldpm")
 })
-

@@ -45,7 +45,7 @@ data('pet_oudin_esp_ts')
 
 The `evapoRe` package developed as a complementary toolbox to the
 pRecipe package [@vargas-godoy2023precipitation], available at
-[<https://cran.r-project.org/web/packages/pRecipe/index.html>].
+[<https://CRAN.R-project.org/package=pRecipe>].
 `evapoRe` facilitates the download, exploration, visualization, and
 analysis of evapotranspiration (ET) data. Additionally, evapoRe offers
 the functionality to calculate various Potential EvapoTranspiration
@@ -551,7 +551,7 @@ head(pet_oudin_esp_ts, 12)
 Either after we have processed our data as required or right after
 downloaded, we have six different options to visualize our data for more
 information refer to [visualisation section of
-pRecipe](https://cran.r-project.org/web/packages/pRecipe/vignettes/introduction.html#visualize):
+pRecipe](https://CRAN.R-project.org/package=pRecipe):
 
 ### Maps
 
