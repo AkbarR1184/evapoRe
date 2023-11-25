@@ -15,8 +15,8 @@ pet(x, method = "od")
 \item{"ha" for Hamon (1961),}
 \item{"jh" for Jensen and Haise (1963),}
 \item{"mb" for McGuinness and Bordne (1972),}
-\item{"od" for Oudin (2005). Default,
-\item{"th" for Thornthwaite (1948).}}
+\item{"od" for Oudin (2005). Default,}
+\item{"th" for Thornthwaite (1948).}
 }}
 }
 \value{
