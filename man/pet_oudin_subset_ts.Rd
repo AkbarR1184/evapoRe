@@ -13,12 +13,12 @@ A data.table with 120 obs. of 2 variables:
 }
 \source{
 Data was calculated using the Oudin method based on raw temperature data. More details of the raw data
- can be found \href{https://journals.ametsoc.org/view/journals/bams/103/3/BAMS-D-21-0145.1.xml}{here}.
+ can be found \samp{https://journals.ametsoc.org/view/journals/bams/103/3/BAMS-D-21-0145.1.xml}{here}.
 }
 \usage{
 pet_oudin_subset_ts
 }
 \description{
-A subset of Monthly Potential Evapotranspiration data in mm calculated by Oudin method over -10-40E, 30-45N. More details of the used method can be found \href{https://www.sciencedirect.com/science/article/pii/S0022169404004056}{here}.
+A subset of Monthly Potential Evapotranspiration data in mm calculated by Oudin method over -10-40E, 30-45N. More details of the used method can be found \samp{https://www.sciencedirect.com/science/article/pii/S0022169404004056}{here}.
 }
 \keyword{datasets}
