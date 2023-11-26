@@ -45,11 +45,11 @@ data('pet_oudin_esp_ts')
 
 The `evapoRe` package developed as a complementary toolbox to the
 pRecipe package [@vargas-godoy2023precipitation], available at
-[<https://CRAN.R-project.org/package=pRecipe>].
-`evapoRe` facilitates the download, exploration, visualization, and
-analysis of evapotranspiration (ET) data. Additionally, evapoRe offers
-the functionality to calculate various Potential EvapoTranspiration
-(PET) methods.
+[<https://CRAN.R-project.org/package=pRecipe>]. `evapoRe` facilitates
+the download, exploration, visualization, and analysis of
+evapotranspiration (ET) data. Additionally, evapoRe offers the
+functionality to calculate various Potential EvapoTranspiration (PET)
+methods.
 
 ------------------------------------------------------------------------
 
@@ -563,21 +563,21 @@ plot_map(gldas_clsm_global[[18]])
 plot_map(pet_oudin_global[[6]]) 
 ```
 
-![](plots/map_gldas_global.png){width="8.2cm"}![](plots/map_pet_oudin_global.png){width="8.2cm"}
+![](plots/map_gldas_global.png){width="6cm"}![](plots/map_pet_oudin_global.png){width="6cm"}
 
 ```{r map_subset, eval = FALSE}
 plot_map(gldas_clsm_subset[[6]])
 plot_map(pet_oudin_subset[[6]])
 ```
 
-![](plots/map_gldas_subset.png){width="8cm"}![](plots/map_pet_oudin_subset.png){width="8cm"}
+![](plots/map_gldas_subset.png){width="6cm"}![](plots/map_pet_oudin_subset.png){width="6cm"}
 
 ```{r map_esp, eval = FALSE}
 plot_map(gldas_clsm_esp[[6]])
 plot_map(pet_oudin_esp[[6]])
 ```
 
-![](plots/map_gldas_esp.png){width="8cm"}![](plots/map_pet_oudin_esp.png){width="8cm"}
+![](plots/map_gldas_esp.png){width="6cm"}![](plots/map_pet_oudin_esp.png){width="6cm"}
 
 ### Time Series Visuals
 
@@ -594,7 +594,7 @@ p02 <- plot_line(pet_oudin_global_ts, var = "Potential Evapotranspiration")
 ggpubr::ggarrange(p01, p02, ncol = 1)
 ```
 
-![](plots/global_ts.png){width="800"}
+![](plots/global_ts.png){width="14cm"}
 
 ##### Plotting subsets
 
@@ -604,7 +604,7 @@ p02 <- plot_line(pet_oudin_subset_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/subset_ts.png){width="687"}
+![](plots/subset_ts.png){width="14cm"}
 
 ##### Plotting Spain
 
@@ -614,7 +614,7 @@ p02 <- plot_line(pet_oudin_esp_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/esp_ts.png){width="687"}
+![](plots/esp_ts.png){width="14cm"}
 
 #### Heatmap
 
@@ -624,13 +624,13 @@ ggpubr::ggarrange(p01, p02, ncol = 2)
 plot_heatmap(gldas_clsm_global_ts)
 ```
 
-![](plots/heatmap_gldas_global.png){width="580"}
+![](plots/heatmap_gldas_global.png){width="14cm"}
 
 ```{r heatmap_oudin, eval = FALSE}
 plot_heatmap(pet_oudin_global_ts)
 ```
 
-![](plots/heatmap_pet_oudin_global.png){width="580"}
+![](plots/heatmap_pet_oudin_global.png){width="12cm"}
 
 ##### Plotting subsets
 
@@ -640,7 +640,7 @@ p02 <- plot_heatmap(pet_oudin_subset_ts)
 ggpubr::ggarrange(p01, p02, ncol = 2, common.legend = TRUE, legend = "right")
 ```
 
-![](plots/heatmap_subset.png){width="580"}
+![](plots/heatmap_subset.png){width="14cm"}
 
 ##### Plotting Spain
 
@@ -650,7 +650,7 @@ p02 <- plot_heatmap(pet_oudin_esp_ts)
 ggpubr::ggarrange(p01, p02, ncol = 2, common.legend = TRUE, legend = "right")
 ```
 
-![](plots/heatmap_esp.png){width="580"}
+![](plots/heatmap_esp.png){width="14cm"}
 
 #### Boxplot
 
@@ -662,7 +662,7 @@ p02 <- plot_box(pet_oudin_global_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/box_global.png){width="687"}
+![](plots/box_global.png){width="14cm"}
 
 ##### Plotting subsets
 
@@ -672,7 +672,7 @@ p02 <- plot_box(pet_oudin_subset_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/box_subset.png){width="687"}
+![](plots/box_subset.png){width="14cm"}
 
 ##### Plotting Spain
 
@@ -682,7 +682,7 @@ p02 <- plot_box(pet_oudin_esp_ts, var = "PET" )
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/box_esp.png){width="687"}
+![](plots/box_esp.png){width="14cm"}
 
 #### Density plots
 
@@ -694,7 +694,7 @@ p02 <- plot_density(pet_oudin_global_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/density_global.png){width="580"}
+![](plots/density_global.png){width="14cm"}
 
 ##### Plotting subsets
 
@@ -704,7 +704,7 @@ p02 <- plot_density(pet_oudin_subset_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/density_subset.png){width="580"}
+![](plots/density_subset.png){width="14cm"}
 
 ##### Plotting Spain
 
@@ -714,7 +714,7 @@ p02 <- plot_density(pet_oudin_esp_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/density_esp.png){width="580"}
+![](plots/density_esp.png){width="14cm"}
 
 #### Summary
 
@@ -728,7 +728,7 @@ plot_summary(gldas_clsm_global_ts, var = "Evapotranspiration")
 
 ```
 
-![](plots/summary_gldas.png){width="637"}
+![](plots/summary_gldas.png){width="14cm"}
 
 ```{r, eval=FALSE}
 plot_summary(pet_oudin_global_ts, var = "Potential Evapotranspiration")
@@ -736,7 +736,7 @@ plot_summary(pet_oudin_global_ts, var = "Potential Evapotranspiration")
 #plot_summary(pet_oudin_esp_ts)
 ```
 
-![](plots/summary_pet_oudin.png){width="637"}
+![](plots/summary_pet_oudin.png){width="14cm"}
 
 # Coming Soon
 
