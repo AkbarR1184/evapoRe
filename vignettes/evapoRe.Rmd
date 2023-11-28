@@ -160,9 +160,9 @@ four arguments *data_name*, *path*, *domain*, and *time_res*.
 
 -   *data_name* is set to "all" by default, but you can specify the
     names of your data sets of interest only.
--   *path* is set to "." by default. I.e., the current working
-    directory. By replacing it for [your_project_folder], the downloaded
-    files will be stored in [your_project_folder] instead.
+-   *path* can be set to ".". I.e., the current working directory. By
+    replacing it for [your_project_folder], the downloaded files will be
+    stored in [your_project_folder] instead.
 -   *domain* is set to "raw" by default, but you can specify the domain
     of your interest only. E.g., "ocean" for ocean only data sets (For
     availability please check the [Data] section).
@@ -173,7 +173,7 @@ Let's download the GLDAS CLSM data set and inspect its content with
 `infoNC`:
 
 ```{r download, eval = FALSE}
-download_data(data_name = 'gldas-clsm')
+download_data(data_name = 'gldas-clsm', path = ".")
 gldas_clsm_global <- raster::brick('gldas-clsm_e_mm_land_200001_202211_025_monthly.nc')
 infoNC(gldas_clsm_global)
 ```
@@ -286,8 +286,9 @@ we use the `download_t_data` function, which has five arguments
 -   *variable* is the variable name in which `t2m`,`tmin`, and `tmax`
     stand for average temperature, minimum temperature, and maximum
     temperature.
--   *path* is set to "." by default. I.e., the current working
-    directory.
+-   *path* can be set to ".". I.e., the current working directory. By
+    replacing it for [your_project_folder], the downloaded files will be
+    stored in [your_project_folder] instead.
 -   *domain* is set to "raw" by default, but you can specify the domain
     of your interest only. E.g., "ocean" for ocean only data sets (For
     availability please check the [Data] section).
@@ -295,7 +296,7 @@ we use the `download_t_data` function, which has five arguments
     also download annual data with "yearly".
 
 ```{r download_mswx, eval=FALSE}
-download_t_data(data_name ="mswx", variable = "t2m")
+download_t_data(data_name ="mswx", variable = "t2m", path = ".")
 ```
 
 This will download temperature data in following naming convention e.g.,
@@ -604,7 +605,7 @@ p02 <- plot_line(pet_oudin_subset_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/subset_ts.png){width="14cm"}
+![](plots/subset_ts.png){width="16cm"}
 
 ##### Plotting Spain
 
@@ -614,7 +615,7 @@ p02 <- plot_line(pet_oudin_esp_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/esp_ts.png){width="14cm"}
+![](plots/esp_ts.png){width="16cm"}
 
 #### Heatmap
 
@@ -640,7 +641,7 @@ p02 <- plot_heatmap(pet_oudin_subset_ts)
 ggpubr::ggarrange(p01, p02, ncol = 2, common.legend = TRUE, legend = "right")
 ```
 
-![](plots/heatmap_subset.png){width="14cm"}
+![](plots/heatmap_subset.png){width="16cm"}
 
 ##### Plotting Spain
 
@@ -650,7 +651,7 @@ p02 <- plot_heatmap(pet_oudin_esp_ts)
 ggpubr::ggarrange(p01, p02, ncol = 2, common.legend = TRUE, legend = "right")
 ```
 
-![](plots/heatmap_esp.png){width="14cm"}
+![](plots/heatmap_esp.png){width="16cm"}
 
 #### Boxplot
 
@@ -662,7 +663,7 @@ p02 <- plot_box(pet_oudin_global_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/box_global.png){width="14cm"}
+![](plots/box_global.png){width="16cm"}
 
 ##### Plotting subsets
 
@@ -672,7 +673,7 @@ p02 <- plot_box(pet_oudin_subset_ts, var = "PET")
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/box_subset.png){width="14cm"}
+![](plots/box_subset.png){width="16cm"}
 
 ##### Plotting Spain
 
@@ -682,7 +683,7 @@ p02 <- plot_box(pet_oudin_esp_ts, var = "PET" )
 ggpubr::ggarrange(p01, p02, ncol = 2)
 ```
 
-![](plots/box_esp.png){width="14cm"}
+![](plots/box_esp.png){width="16cm"}
 
 #### Density plots
 
@@ -725,18 +726,12 @@ ggpubr::ggarrange(p01, p02, ncol = 2)
 plot_summary(gldas_clsm_global_ts, var = "Evapotranspiration")
 #plot_summary(gldas_clsm_subset_ts, var = "Evapotranspiration")
 #plot_summary(gldas_clsm_esp_ts, var = "Evapotranspiration")
-
-```
-
-![](plots/summary_gldas.png){width="14cm"}
-
-```{r, eval=FALSE}
-plot_summary(pet_oudin_global_ts, var = "Potential Evapotranspiration")
+#plot_summary(pet_oudin_global_ts, var = "Potential Evapotranspiration")
 #plot_summary(pet_oudin_subset_ts)
 #plot_summary(pet_oudin_esp_ts)
 ```
 
-![](plots/summary_pet_oudin.png){width="14cm"}
+![](plots/summary_gldas.png){width="14cm"}
 
 # Coming Soon
 

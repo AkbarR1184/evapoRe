@@ -13,6 +13,6 @@ hamon(x)
 a RasterBrick object
 }
 \description{
-Function to calculate pet
+Calculate pet
 }
 \keyword{internal}

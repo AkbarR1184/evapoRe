@@ -1,6 +1,6 @@
 #' PET calculation by McGuinness Bordne method
 #'
-#' Function to calculate pet
+#' Calculate pet
 #' 
 #' @import  data.table
 #' @import doParallel

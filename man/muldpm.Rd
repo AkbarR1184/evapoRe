@@ -2,7 +2,7 @@
 % Please edit documentation in R/muldpm.R
 \name{muldpm}
 \alias{muldpm}
-\title{The function muldpm multiplies the value by days per month.}
+\title{Multiply by days per month}
 \usage{
 muldpm(x)
 }
@@ -13,10 +13,10 @@ muldpm(x)
 a RasterBrick object
 }
 \description{
-The function muldpm multiplies the value by days per month.
+The function \code{muldpm} multiplies the value by days per month.
 }
 \examples{
-\dontrun{
+if (interactive()){
 tavg_brick <- raster::brick('terraclimate_tavg.nc')
 pet_od <- pet(method = "od", tavg = tavg_brick)
 pet_od <- muldpm(pet_od)

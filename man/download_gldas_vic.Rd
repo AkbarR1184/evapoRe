@@ -4,10 +4,10 @@
 \alias{download_gldas_vic}
 \title{GLDAS_VIC data downloader}
 \usage{
-download_gldas_vic(folder_path = ".", domain = "raw", time_res = "monthly")
+download_gldas_vic(path = "", domain = "raw", time_res = "monthly")
 }
 \arguments{
-\item{folder_path}{a character string with the path where the data will be downloaded.}
+\item{path}{a character string with the path where the data will be downloaded.}
 
 \item{domain}{a character string with the desired domain data set. Suitable options are:
 \itemize{
@@ -27,6 +27,6 @@ download_gldas_vic(folder_path = ".", domain = "raw", time_res = "monthly")
 No return value, called to download the data set.
 }
 \description{
-Function for downloading GLDAS VIC evapotranspiration data.
+Downloading GLDAS VIC evapotranspiration data
 }
 \keyword{internal}

@@ -1,6 +1,6 @@
 #' Temperature Data Downloader
 #'
-#' Function for downloading Temperature data from different datasets.
+#' Downloading Temperature data from different datasets
 #'
 #' @importFrom utils download.file
 #' @param data_name a character string indicating the dataset to download. Suitable options are:
@@ -33,10 +33,10 @@
 #' @return No return value, called to download the required data sets.
 #' @export
 #' @examples
-#' \donttest{
+#' if (interactive()){
 #' download_t_data("cru", tempdir())
 #' }
-download_t_data <- function(data_name, path = ".", domain = "raw", time_res = "monthly", variable = "all") {
+download_t_data <- function(data_name, path = "", domain = "raw", time_res = "monthly", variable = "all") {
   if (domain == "raw" | domain == "land") {
     domain <- "land"
   } else if (domain == "global") {

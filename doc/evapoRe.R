@@ -66,7 +66,7 @@ tibble::tribble(
 
 
 ## ----download, eval = FALSE--------------------------------------------------------
-## download_data(data_name = 'gldas-clsm')
+## download_data(data_name = 'gldas-clsm', path = ".")
 ## gldas_clsm_global <- raster::brick('gldas-clsm_e_mm_land_200001_202211_025_monthly.nc')
 ## infoNC(gldas_clsm_global)
 
@@ -82,7 +82,7 @@ tibble::tribble(
 
 
 ## ----download_mswx, eval=FALSE-----------------------------------------------------
-## download_t_data(data_name ="mswx", variable = "t2m")
+## download_t_data(data_name ="mswx", variable = "t2m", path = ".")
 
 
 ## ----subset_mswx, eval=FALSE-------------------------------------------------------
@@ -229,11 +229,7 @@ tibble::tribble(
 ## plot_summary(gldas_clsm_global_ts, var = "Evapotranspiration")
 ## #plot_summary(gldas_clsm_subset_ts, var = "Evapotranspiration")
 ## #plot_summary(gldas_clsm_esp_ts, var = "Evapotranspiration")
-## 
-
-
-## ----eval=FALSE--------------------------------------------------------------------
-## plot_summary(pet_oudin_global_ts, var = "Potential Evapotranspiration")
+## #plot_summary(pet_oudin_global_ts, var = "Potential Evapotranspiration")
 ## #plot_summary(pet_oudin_subset_ts)
 ## #plot_summary(pet_oudin_esp_ts)
 

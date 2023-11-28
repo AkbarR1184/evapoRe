@@ -1,4 +1,6 @@
-#' The function muldpm multiplies the value by days per month.
+#' Multiply by days per month
+#'
+#' The function \code{muldpm} multiplies the value by days per month.
 #' 
 #' @importFrom methods as
 #' @importFrom lubridate days_in_month
@@ -7,7 +9,7 @@
 #' @return a RasterBrick object
 #' @export
 #' @examples
-#' \dontrun{
+#' if (interactive()){
 #' tavg_brick <- raster::brick('terraclimate_tavg.nc')
 #' pet_od <- pet(method = "od", tavg = tavg_brick)
 #' pet_od <- muldpm(pet_od)

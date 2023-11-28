@@ -26,8 +26,8 @@ a RasterBrick object with potential evapotranspiration in [mm/day].
 The function \code{pet} estimates PET by different methods
 }
 \examples{
-\dontrun{
-#Calculate PET by Hargreaves-Samani method 
+if (interactive()){
+#Calculate PET by Oudin 
 tavg <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
 pet_oudin <- pet(tavg, method = "od")
 pet_oudin <- muldpm(pet_oudin)

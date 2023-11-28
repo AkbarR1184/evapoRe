@@ -13,6 +13,6 @@ blaney_criddle(x)
 a RasterBrick object
 }
 \description{
-Function to calculate pet
+Calculate pet
 }
 \keyword{internal}

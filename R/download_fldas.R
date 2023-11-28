@@ -1,9 +1,9 @@
 #' FLDAS data downloader
 #'
-#' Function for downloading FLDAS evapotranspiration data.
+#' Downloading FLDAS evapotranspiration data
 #'
 #' @importFrom utils download.file
-#' @param folder_path a character string with the path where the data will be downloaded.
+#' @param path a character string with the path where the data will be downloaded.
 #' @param domain a character string with the desired domain data set. Suitable options are:
 #' \itemize{
 #' \item{"raw" for default available spatial coverage,}
@@ -19,7 +19,7 @@
 #' @return No return value, called to download the data set.
 #' @keywords internal
 
-download_fldas <- function(folder_path = ".", domain = "raw", time_res = "monthly"){
+download_fldas <- function(path = "", domain = "raw", time_res = "monthly"){
   old_options <- options()
   options(timeout = 6000)
   on.exit(options(old_options))
@@ -32,6 +32,6 @@ download_fldas <- function(folder_path = ".", domain = "raw", time_res = "monthl
   zenodo_end <- "?download=1"
   file_name <- paste0("fldas_e_mm_", domain, "_198201_202309_025_", time_res, ".nc")
   file_url <- paste0(zenodo_base, file_name, zenodo_end)
-  file_destination <- paste(folder_path, file_name, sep = "/")
+  file_destination <- paste(path, file_name, sep = "/")
   try(download.file(file_url, file_destination, mode = "wb"), silent = TRUE)
 }

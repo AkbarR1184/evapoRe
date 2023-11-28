@@ -1,8 +1,8 @@
 #' All data downloader
 #'
-#' Function for downloading all data.
+#' Downloading all datasets
 #'
-#' @param folder_path a character string with the path where the data will be downloaded.
+#' @param path a character string with the path where the data will be downloaded.
 #' @param domain a character string with the desired domain data set. Suitable options are:
 #' \itemize{
 #' \item{"raw" for default available spatial coverage,}
@@ -18,18 +18,18 @@
 #' @return No return value, called to download the data set.
 #' @keywords internal
 
-download_all <- function(folder_path = ".", domain = "raw", time_res = "monthly"){
-  download_bess(folder_path, domain, time_res)
-  download_camele(folder_path, domain, time_res)
-  download_era5_land(folder_path, domain, time_res)
-  download_era5(folder_path, domain, time_res)
-  download_fldas(folder_path, domain, time_res)
-  download_gldas_clsm(folder_path, domain, time_res)
-  download_gldas_noah(folder_path, domain, time_res)
-  download_gldas_vic(folder_path, domain, time_res)
-  download_gleam(folder_path, domain, time_res)
-  download_jra55(folder_path, domain, time_res)
-  download_merra2(folder_path, domain, time_res)
-  download_terraclimate(folder_path, domain, time_res)
-  download_zheng(folder_path, domain, time_res)
+download_all <- function(path = "", domain = "raw", time_res = "monthly"){
+  download_bess(path, domain, time_res)
+  download_camele(path, domain, time_res)
+  download_era5_land(path, domain, time_res)
+  download_era5(path, domain, time_res)
+  download_fldas(path, domain, time_res)
+  download_gldas_clsm(path, domain, time_res)
+  download_gldas_noah(path, domain, time_res)
+  download_gldas_vic(path, domain, time_res)
+  download_gleam(path, domain, time_res)
+  download_jra55(path, domain, time_res)
+  download_merra2(path, domain, time_res)
+  download_terraclimate(path, domain, time_res)
+  download_zheng(path, domain, time_res)
 }

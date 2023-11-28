@@ -6,7 +6,7 @@
 \usage{
 download_data(
   data_name = "all",
-  path = ".",
+  path = "",
   domain = "raw",
   time_res = "monthly"
 )
@@ -53,7 +53,7 @@ No return value, called to download the required data sets.
 The function \code{download_data} downloads the selected data product.
 }
 \examples{
-\donttest{
+if (interactive()){
 download_data("gldas-vic", tempdir())
 }
 }

@@ -6,7 +6,7 @@
 \usage{
 download_t_data(
   data_name,
-  path = ".",
+  path = "",
   domain = "raw",
   time_res = "monthly",
   variable = "all"
@@ -49,10 +49,10 @@ Use "all" to download all available variables for the dataset.}
 No return value, called to download the required data sets.
 }
 \description{
-Function for downloading Temperature data from different datasets.
+Downloading Temperature data from different datasets
 }
 \examples{
-\donttest{
+if (interactive()){
 download_t_data("cru", tempdir())
 }
 }

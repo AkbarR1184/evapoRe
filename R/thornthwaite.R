@@ -1,6 +1,6 @@
 #' PET calculation by Thornthwaite method
 #'
-#' Function to calculate pet
+#' Calculate pet
 #' 
 #' @import  data.table
 #' @import doParallel

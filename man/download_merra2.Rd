@@ -4,10 +4,10 @@
 \alias{download_merra2}
 \title{MERRA-2 data downloader}
 \usage{
-download_merra2(folder_path = ".", domain = "raw", time_res = "monthly")
+download_merra2(path = "", domain = "raw", time_res = "monthly")
 }
 \arguments{
-\item{folder_path}{a character string with the path where the data will be downloaded.}
+\item{path}{a character string with the path where the data will be downloaded.}
 
 \item{domain}{a character string with the desired domain data set. Suitable options are:
 \itemize{
@@ -27,6 +27,6 @@ download_merra2(folder_path = ".", domain = "raw", time_res = "monthly")
 No return value, called to download the data set.
 }
 \description{
-Function for downloading MERRA-2 evapotranspiration data.
+Downloading MERRA-2 evapotranspiration data
 }
 \keyword{internal}

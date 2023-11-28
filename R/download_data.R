@@ -36,11 +36,11 @@
 #' @return No return value, called to download the required data sets.
 #' @export
 #' @examples
-#' \donttest{
+#' if (interactive()){
 #' download_data("gldas-vic", tempdir())
 #' }
 
-download_data <- function(data_name = "all", path = ".", domain = "raw", time_res = "monthly"){
+download_data <- function(data_name = "all", path = "", domain = "raw", time_res = "monthly"){
   if (!Reduce("&", is.element(data_name, c("all","bess","camele", "era5", "era5-land", "fldas", "gldas-clsm", "gldas-noah", "gldas-vic", "gleam", "jra-55", "merra-2","terraclimate", "zheng")))){
     stop("Error: Data set not available. Select from era5, era5-land, fldas, gldas-clsm, gldas-noah, gldas-vic, gleam, jra-55, merra-2, terraclimate", "zheng")
   }
