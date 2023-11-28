@@ -36,7 +36,7 @@
 #' @return No return value, called to download the required data sets.
 #' @export
 #' @examples
-#' if (interactive()){
+#' \donttest{
 #' download_data("gldas-vic", tempdir())
 #' }
 

@@ -16,7 +16,7 @@ a RasterBrick object
 The function \code{muldpm} multiplies the value by days per month.
 }
 \examples{
-if (interactive()){
+\donttest{
 tavg_brick <- raster::brick('terraclimate_tavg.nc')
 pet_od <- pet(method = "od", tavg = tavg_brick)
 pet_od <- muldpm(pet_od)

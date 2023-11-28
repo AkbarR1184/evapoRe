@@ -33,7 +33,7 @@
 #' @return No return value, called to download the required data sets.
 #' @export
 #' @examples
-#' if (interactive()){
+#' \donttest{
 #' download_t_data("cru", tempdir())
 #' }
 download_t_data <- function(data_name, path = "", domain = "raw", time_res = "monthly", variable = "all") {

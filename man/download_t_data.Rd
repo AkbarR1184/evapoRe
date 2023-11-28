@@ -52,7 +52,7 @@ No return value, called to download the required data sets.
 Downloading Temperature data from different datasets
 }
 \examples{
-if (interactive()){
+\donttest{
 download_t_data("cru", tempdir())
 }
 }

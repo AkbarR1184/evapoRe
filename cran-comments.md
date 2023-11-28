@@ -39,3 +39,22 @@ Please ensure that your functions do not write by default or in your examples/vi
 Done. Fixed and now all functions do not write by default to the user file space.
 
 
+## This is a resubmission, after archiving on 2023-11-28
+
+Comments by Benjamin Altmann on 2023-11-28
+
+**Issue:**
+Only functions which are supposed to run interactively (e.g. shiny) should be wrapped in if(interactive()).
+Please put functions which download data and/or take longer than 5 sec to run in \donttest{}.
+All other examples can be unwrapped.
+
+If there are references describing the methods in your package, please add these in the description field of your DESCRIPTION file in the form authors (year) <doi:...> authors (year) <arXiv:...> authors (year, ISBN:...) or if those are not available: <https:...> with no space after 'doi:', 'arXiv:', 'https:' and angle brackets for auto-linking. (If you want to add a title as well please put it in
+quotes: "Title")
+
+Please fix and resubmit.
+
+Best,
+Benjamin Altmann
+
+**Answer:**
+Description file now updated. Also, examples updated with donttest{}.

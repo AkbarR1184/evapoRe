@@ -9,7 +9,7 @@
 #' @return a RasterBrick object
 #' @export
 #' @examples
-#' if (interactive()){
+#' \donttest{
 #' tavg_brick <- raster::brick('terraclimate_tavg.nc')
 #' pet_od <- pet(method = "od", tavg = tavg_brick)
 #' pet_od <- muldpm(pet_od)
