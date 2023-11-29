@@ -58,3 +58,22 @@ Benjamin Altmann
 
 **Answer:**
 Description file now updated. Also, examples updated with donttest{}.
+
+## This is a resubmission, after archiving on 2023-11-29
+## Comments by Victoria Wimmer on 2023-11-29
+**Issue:**
+Please make sure that you reset user's options correctly  within functions with an *immediate* call of on.exit() that the settings are reset when the function is exited.
+For example, in R/download_era5.R you have:
+       old_options <- options()         # code line 23
+       options(timeout = 6000)           # code line 24
+       on.exit(options(old_options))        # code line 25
+But what you need is:
+           old_options <- options()         # code line 23
+           on.exit(options(old_options))        # code line 24
+           options(timeout = 6000)           # code line 25
+Similar in other files.
+
+Please fix and resubmit.
+**Answer:**
+
+Fixed for all data downloaders. Also previous issue raised by Victoria Wimmer checked and fixed.

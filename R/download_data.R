@@ -45,8 +45,8 @@ download_data <- function(data_name = "all", path = "", domain = "raw", time_res
     stop("Error: Data set not available. Select from era5, era5-land, fldas, gldas-clsm, gldas-noah, gldas-vic, gleam, jra-55, merra-2, terraclimate", "zheng")
   }
   old_options <- options()
-  options(timeout = 6000)
   on.exit(options(old_options))
+  options(timeout = 6000)
   lapply(data_name, function(dataset) switch(dataset,
                                         "all"  = download_all(path, domain, time_res),
                                         "bess" = download_bess(path, domain, time_res),

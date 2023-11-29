@@ -21,8 +21,8 @@
 
 download_terraclimate <- function(path = "", domain = "raw", time_res = "monthly"){
   old_options <- options()
-  options(timeout = 6000)
   on.exit(options(old_options))
+  options(timeout = 6000)
   if (domain == "raw" | domain == "land"){
     domain <- "land"
   } else {

@@ -46,8 +46,8 @@ download_t_data <- function(data_name, path = "", domain = "raw", time_res = "mo
   }
   
   old_options <- options()
-  options(timeout = 6000)
   on.exit(options(old_options))
+  options(timeout = 6000)
   
   switch(data_name,
          "terraclimate" = {
