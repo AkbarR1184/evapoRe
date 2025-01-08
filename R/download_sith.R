@@ -1,6 +1,6 @@
-#' MERRA-2 data downloader
+#' SITH-V2 data downloader
 #'
-#' Downloading MERRA-2 evapotranspiration data
+#' Downloading SITH-V2 evapotranspiration data
 #'
 #' @importFrom utils download.file
 #' @param path a character string with the path where the data will be downloaded.
@@ -25,7 +25,7 @@
 #' @return No return value, called to download the data set.
 #' @keywords internal
 
-download_merra2 <- function(path = "", domain = "raw", time_res = "monthly", variable = "e"){
+download_sith <- function(path = "", domain = "raw", time_res = "monthly", variable = "e"){
   old_options <- options()
   on.exit(options(old_options))
   options(timeout = 6000)
@@ -43,12 +43,10 @@ download_merra2 <- function(path = "", domain = "raw", time_res = "monthly", var
   zenodo_base <- "https://zenodo.org/records/14501279/files/"
   zenodo_end <- "?download=1"
   
-  
-  file_name <- paste0("merra2_", variable, "_mm_", domain, "_198001_202301_025_", time_res, ".nc")
+  file_name <- paste0("sith-v2_", variable, "_mm_", domain, "_198201_202012_2020_025_", time_res, ".nc")
   file_url <- paste0(zenodo_base, file_name, zenodo_end)
   
   file_destination <- paste(path, file_name, sep = "/")
-  
   
   try(download.file(file_url, file_destination, mode = "wb"), silent = TRUE)
 }
