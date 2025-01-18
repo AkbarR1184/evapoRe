@@ -40,7 +40,7 @@ download_jra55 <- function(path = "", domain = "raw", time_res = "monthly", vari
     stop("Unsupported variable specified. Use 'e' for actual evapotranspiration or 'pet' for potential evapotranspiration.")
   }
   
-  zenodo_base <- "https://zenodo.org/records/14501279/files/"
+  zenodo_base <- "https://zenodo.org/records/14622177/files/"
   zenodo_end <- "?download=1"
   
   

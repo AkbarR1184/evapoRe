@@ -51,7 +51,7 @@ download_gldas_clsm <- function(path = "", domain = "raw", time_res = "monthly",
     stop("Unsupported variable specified. Use 'e' for actual evapotranspiration or 'pet' for potential evapotranspiration.")
   }
   
-  zenodo_base <- "https://zenodo.org/records/14501279/files/"
+  zenodo_base <- "https://zenodo.org/records/14622177/files/"
   zenodo_end <- "?download=1"
   if (version == "v2-0") {
     file_name <- paste0("gldas-clsm-", version, "_", variable, "_mm_", domain, "_194801_201412_025_", time_res, ".nc")

@@ -40,7 +40,7 @@ download_fldas <- function(path = "", domain = "raw", time_res = "monthly", vari
     stop("Unsupported variable specified. Use 'e' for actual evapotranspiration or 'pet' for potential evapotranspiration.")
   }
   
-  zenodo_base <- "https://zenodo.org/records/14501279/files/"
+  zenodo_base <- "https://zenodo.org/records/14622177/files/"
   zenodo_end <- "?download=1"
   file_name <- paste0("fldas_", variable, "_mm_", domain, "_198201_202212_025_", time_res, ".nc")
   file_url <- paste0(zenodo_base, file_name, zenodo_end)
