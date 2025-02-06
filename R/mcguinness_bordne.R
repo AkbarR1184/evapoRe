@@ -27,7 +27,8 @@ setGeneric("mcguinness_bordne", function(x) standardGeneric("mcguinness_bordne")
 setMethod("mcguinness_bordne", "Raster",
           function(x){
             no_cores <- detectCores() - 1
-            if (no_cores < 1 | is.na(no_cores))(no_cores <- 1)
+            if (no_cores < 1 | is.na(no_cores))
+              (no_cores <- 1)
             registerDoParallel(cores = no_cores)
             tavg <- x
             re <- esr(x)

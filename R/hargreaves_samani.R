@@ -27,7 +27,9 @@ setGeneric("hargreaves_samani", function(x, y = NULL, z = NULL) {
 
 setMethod("hargreaves_samani", signature(x = "Raster", y = "Raster", z = "Raster"),
           function(x, y, z) {
-            no_cores <- max(1, floor(detectCores() * 0.75))
+            no_cores <- detectCores() - 1
+            if (no_cores < 1 | is.na(no_cores))
+               (no_cores <- 1)
             registerDoParallel(cores = no_cores)
             tavg <- x
             tmax <- y
@@ -74,7 +76,7 @@ setMethod("hargreaves_samani", signature(x = "data.table", y = "missing", z = "m
             esr <- pet_params_calc(x)
             x[, pet_hs := 0.0023 * esr[.SD, on = .(lat, date), ext_rad * nday] *
                 sqrt(abs(tmax - tmin)) * (tavg + 17.8) / (2.501 - 0.002361 * tavg)]
-            x[, pet_hs := fifelse(pet_hs > 0, pet_hs, 0)]
+            x[, pet_hs := fifelse(pet_hs > 0, pet_hs, NA)]
             x <- x[, .(lon, lat, date, value = pet_hs)]
             return(x)
           })
@@ -84,7 +86,8 @@ setMethod("hargreaves_samani", signature(x = "data.table", y = "missing", z = "m
 
 setMethod("hargreaves_samani", signature(x = "character", y = "character", z = "character"),
           function(x, y, z) {
-            no_cores <- max(1, floor(detectCores() * 0.75))
+            no_cores <- detectCores() - 1
+            if (no_cores < 1 | is.na(no_cores))(no_cores <- 1)
             registerDoParallel(cores = no_cores)
             tavg <- brick(x)
             tmax <- brick(y)

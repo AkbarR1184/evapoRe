@@ -27,7 +27,8 @@ setGeneric("oudin", function(x) standardGeneric("oudin"))
 setMethod("oudin", "Raster",
           function(x){
             no_cores <- detectCores() - 1
-            if (no_cores < 1 | is.na(no_cores))(no_cores <- 1)
+            if (no_cores < 1 | is.na(no_cores))
+              (no_cores <- 1)
             registerDoParallel(cores = no_cores)
             tavg <- x
             re <- esr(x)
@@ -68,7 +69,7 @@ setMethod("oudin", "data.table",
           function(x) {
             dummie_params <- pet_params_calc(x)
             x[, value := fifelse(value > -5,
-                                 dummie_params[.SD, ext_rad * nday, on = .(lat, date)] 
+                                 dummie_params[.SD, ext_rad * nday, on = .(lat, date)]
                                  * (value + 5) / ((2.501 - 0.002361 * value) * 100),
                                  NA)]
             
@@ -81,7 +82,8 @@ setMethod("oudin", "data.table",
 setMethod("oudin", "character",
           function(x){
             no_cores <- detectCores() - 1
-            if (no_cores < 1 | is.na(no_cores))(no_cores <- 1)
+            if (no_cores < 1 | is.na(no_cores))
+              (no_cores <- 1)
             registerDoParallel(cores = no_cores)
             dummie_brick <- brick(x)
             tavg <- dummie_brick

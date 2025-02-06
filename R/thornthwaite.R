@@ -26,7 +26,8 @@ setGeneric("thornthwaite", function(x) standardGeneric("thornthwaite"))
 setMethod("thornthwaite", "Raster",
           function(x){
             no_cores <- detectCores() - 1
-            if (no_cores < 1 | is.na(no_cores))(no_cores <- 1)
+            if (no_cores < 1 | is.na(no_cores))
+               (no_cores <- 1)
             registerDoParallel(cores = no_cores)
             tavg <- x
             hi <- heat_index(x)

@@ -20,6 +20,7 @@
 #' @param y Raster* object or filename; minimum temperature data (required for Raster and character inputs)
 #' @return Raster* object; data.table
 #' @keywords internal
+
 setGeneric("baier_robertson", function(x, y = NULL) {
   standardGeneric("baier_robertson")
 })
@@ -28,8 +29,12 @@ setGeneric("baier_robertson", function(x, y = NULL) {
 
 setMethod("baier_robertson", signature(x = "Raster", y = "Raster"),
           function(x, y) {
-            no_cores <- max(1, floor(detectCores() * 0.75))
+            no_cores <- detectCores() - 1
+            if (no_cores < 1 | is.na(no_cores))
+               (no_cores <- 1)
             registerDoParallel(cores = no_cores)
+            tmax <- x
+            tmin <- y
             re <- esr(x)
             t_dates <- getZ(x)
             re_dates <- getZ(re)
@@ -48,8 +53,8 @@ setMethod("baier_robertson", signature(x = "Raster", y = "Raster"),
             dummie_pet <- foreach(index = 1:length(t_idx)) %dopar% {
               t_layer <- t_idx[index]
               re_layer <- re_idx[index]
-              dummie_tmax <- x[[t_layer]]
-              dummie_tmin <- y[[t_layer]]
+              dummie_tmax <- tmax[[t_layer]]
+              dummie_tmin <- tmin[[t_layer]]
               dummie_re <- re[[re_layer]]
               dummie_o <- (0.157 * dummie_tmax) + (0.158 * (dummie_tmax - dummie_tmin)) + (0.109 * dummie_re) - 5.39
               dummie_o <- calc(dummie_o, fun = function(val) {
@@ -69,11 +74,11 @@ setMethod("baier_robertson", signature(x = "Raster", y = "Raster"),
 setMethod("baier_robertson", signature(x = "data.table", y = "missing"),
           function(x) {
             esr <- pet_params_calc(x)
-            x[, pet_br := (0.157 * tmax) + (0.158 * (tmax - tmin)) + 
-             (0.109 * esr[.SD, on = .(lat, date), ext_rad * nday]) - 5.39]
-              x[, pet_br := fifelse(pet_br > 0, pet_br, 0)]
-              x <- x[, .(lon, lat, date, value = pet_br)]
-              return(x)
+            x[, pet_br := (0.157 * tmax) + (0.158 * (tmax - tmin)) +
+                (0.109 * esr[.SD, on = .(lat, date), ext_rad * nday]) - 5.39]
+            x[, pet_br := fifelse(pet_br > 0, pet_br, 0)]
+            x <- x[, .(lon, lat, date, value = pet_br)]
+            return(x)
           })
 
 #' @rdname baier_robertson
@@ -81,7 +86,9 @@ setMethod("baier_robertson", signature(x = "data.table", y = "missing"),
 
 setMethod("baier_robertson", signature(x = "character", y = "character"),
           function(x, y) {
-            no_cores <- max(1, floor(detectCores() * 0.75))
+            no_cores <- detectCores() - 1
+            if (no_cores < 1 | is.na(no_cores))
+               (no_cores <- 1)
             registerDoParallel(cores = no_cores)
             tmax <- brick(x)
             tmin <- brick(y)

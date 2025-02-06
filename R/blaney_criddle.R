@@ -27,7 +27,8 @@ setGeneric("blaney_criddle", function(x) standardGeneric("blaney_criddle"))
 setMethod("blaney_criddle", "Raster",
           function(x){
             no_cores <- detectCores() - 1
-            if (no_cores < 1 | is.na(no_cores))(no_cores <- 1)
+            if (no_cores < 1 | is.na(no_cores))
+               (no_cores <- 1)
             registerDoParallel(cores = no_cores)
             tavg <- x
             dl <- day_length(x)
@@ -66,7 +67,6 @@ setMethod("blaney_criddle", "Raster",
 setMethod("blaney_criddle", "data.table",
           function(x) {
             dummie_params <- pet_params_calc(x)
-            
             x[, value := 0.825 * (100 * 24 * dummie_params[.SD, on = .(lat, date), omega*nday]) * 
                 (0.46 * value + 8.13) / (pi * 365 * 12)]
             x[, value := fifelse(value >= 0, value, NA)]
@@ -80,7 +80,8 @@ setMethod("blaney_criddle", "data.table",
 setMethod("blaney_criddle", "character",
           function(x){
             no_cores <- detectCores() - 1
-            if (no_cores < 1 | is.na(no_cores))(no_cores <- 1)
+            if (no_cores < 1 | is.na(no_cores))
+               (no_cores <- 1)
             registerDoParallel(cores = no_cores)
             dummie_brick <- brick(x)
             tavg <- dummie_brick
