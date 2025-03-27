@@ -2,17 +2,31 @@
 % Please edit documentation in R/hamon.R
 \name{hamon}
 \alias{hamon}
+\alias{hamon,Raster-method}
+\alias{hamon,data.table-method}
+\alias{hamon,character-method}
 \title{PET calculation by Hamon method}
 \usage{
 hamon(x)
+
+\S4method{hamon}{Raster}(x)
+
+\S4method{hamon}{data.table}(x)
+
+\S4method{hamon}{character}(x)
 }
 \arguments{
-\item{x}{a RasterBrick object having average temperature}
+\item{x}{Raster* object; data.table (see details); filename (character; see details)}
 }
 \value{
-a RasterBrick object
+Raster* object; data.table
 }
 \description{
-Calculate pet
+The function \code{hamon} computes Potential Evapotranspiration (PET) by Hamon method.
+}
+\details{
+If `x` is a data.table, its columns should be named: "lon", "lat", "date", and "value"
+
+If `x` is a filename, it should point to a *.nc file.
 }
 \keyword{internal}

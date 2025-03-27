@@ -69,7 +69,7 @@ setMethod("hamon", "data.table",
           function(x) {
             dummie_params <- pet_params_calc(x)
             
-            x[, value := 0.1651 * 216.7 * (2 * dummie_params[.SD, on = .(lat, date), omega*nday] / pi) * 
+            x[, value := 0.1651 * 216.7 * (2 * dummie_params[.SD, on = .(lat, date), omega] / pi) *
                 (6.108 * exp(17.27 * value / (value + 237.3)) / (value + 273.3))]
             x[, value := fifelse(value > 0, value, NA)]
             

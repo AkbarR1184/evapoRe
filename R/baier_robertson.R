@@ -75,7 +75,7 @@ setMethod("baier_robertson", signature(x = "data.table", y = "missing"),
           function(x) {
             esr <- pet_params_calc(x)
             x[, pet_br := (0.157 * tmax) + (0.158 * (tmax - tmin)) +
-                (0.109 * esr[.SD, on = .(lat, date), ext_rad * nday]) - 5.39]
+                (0.109 * esr[.SD, on = .(lat, date), ext_rad]) - 5.39]
             x[, pet_br := fifelse(pet_br > 0, pet_br, 0)]
             x <- x[, .(lon, lat, date, value = pet_br)]
             return(x)

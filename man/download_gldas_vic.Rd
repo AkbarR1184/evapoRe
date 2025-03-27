@@ -4,7 +4,13 @@
 \alias{download_gldas_vic}
 \title{GLDAS_VIC data downloader}
 \usage{
-download_gldas_vic(path = "", domain = "raw", time_res = "monthly")
+download_gldas_vic(
+  path = "",
+  domain = "raw",
+  time_res = "monthly",
+  variable = "e",
+  version = ""
+)
 }
 \arguments{
 \item{path}{a character string with the path where the data will be downloaded.}
@@ -20,7 +26,21 @@ download_gldas_vic(path = "", domain = "raw", time_res = "monthly")
 \item{time_res}{a character string with the desired time resolution. Suitable options are:
 \itemize{
 \item{"monthly",}
-\item{"yearly".}
+\item{"yearly",}
+\item{"daily"}
+}}
+
+\item{variable}{a character string for the variable. Suitable options are:
+\itemize{
+\item{"e" for actual evapotranspiration,}
+\item{"pet" for potential evapotranspiration.}
+}}
+
+\item{version}{an optional character string for the version. Suitable options are:
+\itemize{
+\item{"v2-0" for version 2.0,}
+\item{"v2-1" for version 2.1,}
+\item{"" for default version v2-0.}
 }}
 }
 \value{

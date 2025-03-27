@@ -2,17 +2,31 @@
 % Please edit documentation in R/mcguinness_bordne.R
 \name{mcguinness_bordne}
 \alias{mcguinness_bordne}
+\alias{mcguinness_bordne,Raster-method}
+\alias{mcguinness_bordne,data.table-method}
+\alias{mcguinness_bordne,character-method}
 \title{PET calculation by McGuinness Bordne method}
 \usage{
 mcguinness_bordne(x)
+
+\S4method{mcguinness_bordne}{Raster}(x)
+
+\S4method{mcguinness_bordne}{data.table}(x)
+
+\S4method{mcguinness_bordne}{character}(x)
 }
 \arguments{
-\item{x}{a RasterBrick object having average temperature}
+\item{x}{Raster* object; data.table (see details); filename (character; see details)}
 }
 \value{
-a RasterBrick object
+Raster* object; data.table
 }
 \description{
-Calculate pet
+The function \code{mcguinness_bordne} computes Potential Evapotranspiration (PET) by McGuinness Bordne method.
+}
+\details{
+If `x` is a data.table, its columns should be named: "lon", "lat", "date", and "value"
+
+If `x` is a filename, it should point to a *.nc file.
 }
 \keyword{internal}

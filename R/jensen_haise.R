@@ -70,7 +70,7 @@ setMethod("jensen_haise", "data.table",
             dummie_params <- pet_params_calc(x)
             x[, value := fifelse(
               value > 0, 
-              dummie_params[.SD, ext_rad * nday, on = .(lat, date)]
+              dummie_params[.SD, ext_rad, on = .(lat, date)]
               * (value) / ((2.501 - 0.002361 * value) * 40), 
               NA
             )]

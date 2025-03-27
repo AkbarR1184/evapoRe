@@ -2,17 +2,31 @@
 % Please edit documentation in R/thornthwaite.R
 \name{thornthwaite}
 \alias{thornthwaite}
+\alias{thornthwaite,Raster-method}
+\alias{thornthwaite,data.table-method}
+\alias{thornthwaite,character-method}
 \title{PET calculation by Thornthwaite method}
 \usage{
 thornthwaite(x)
+
+\S4method{thornthwaite}{Raster}(x)
+
+\S4method{thornthwaite}{data.table}(x)
+
+\S4method{thornthwaite}{character}(x)
 }
 \arguments{
-\item{x}{a RasterBrick object having average temperature}
+\item{x}{Raster* object; data.table (see details); filename (character; see details)}
 }
 \value{
-a RasterBrick object
+Raster* object; data.table
 }
 \description{
-Calculate pet
+The function \code{thornthwaite} computes Potential Evapotranspiration (PET) by Thornthwaite  method.
+}
+\details{
+If `x` is a data.table, its columns should be named: "lon", "lat", "date", and "value"
+
+If `x` is a filename, it should point to a *.nc file.
 }
 \keyword{internal}

@@ -4,7 +4,7 @@
 \alias{download_all}
 \title{All data downloader}
 \usage{
-download_all(path = "", domain = "raw", time_res = "monthly")
+download_all(path = "", domain = "raw", time_res = "monthly", variable = "e")
 }
 \arguments{
 \item{path}{a character string with the path where the data will be downloaded.}
@@ -20,7 +20,14 @@ download_all(path = "", domain = "raw", time_res = "monthly")
 \item{time_res}{a character string with the desired time resolution. Suitable options are:
 \itemize{
 \item{"monthly",}
-\item{"yearly".}
+\item{"yearly",}
+\item{"daily".}
+}}
+
+\item{variable}{a character string for the variable. Suitable options are:
+\itemize{
+\item{"e" for actual evapotranspiration,}
+\item{"pet" for potential evapotranspiration.}
 }}
 }
 \value{

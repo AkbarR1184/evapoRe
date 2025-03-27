@@ -67,7 +67,7 @@ setMethod("blaney_criddle", "Raster",
 setMethod("blaney_criddle", "data.table",
           function(x) {
             dummie_params <- pet_params_calc(x)
-            x[, value := 0.825 * (100 * 24 * dummie_params[.SD, on = .(lat, date), omega*nday]) * 
+            x[, value := 0.825 * (100 * 24 * dummie_params[.SD, on = .(lat, date), omega]) * 
                 (0.46 * value + 8.13) / (pi * 365 * 12)]
             x[, value := fifelse(value >= 0, value, NA)]
             

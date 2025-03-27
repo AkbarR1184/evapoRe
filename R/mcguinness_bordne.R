@@ -70,7 +70,7 @@ setMethod("mcguinness_bordne", "data.table",
             dummie_params <- pet_params_calc(x)
             x[, value := fifelse(
               value > -5, 
-              dummie_params[.SD, ext_rad * nday, on = .(lat, date)] * (value + 5) / ((2.501 - 0.002361 * value) * 68), 
+              dummie_params[.SD, ext_rad, on = .(lat, date)] * (value + 5) / ((2.501 - 0.002361 * value) * 68), 
               NA
             )]
             return(x)

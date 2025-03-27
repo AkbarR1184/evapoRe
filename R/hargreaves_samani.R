@@ -74,7 +74,7 @@ setMethod("hargreaves_samani", signature(x = "Raster", y = "Raster", z = "Raster
 setMethod("hargreaves_samani", signature(x = "data.table", y = "missing", z = "missing"),
           function(x) {
             esr <- pet_params_calc(x)
-            x[, pet_hs := 0.0023 * esr[.SD, on = .(lat, date), ext_rad * nday] *
+            x[, pet_hs := 0.0023 * esr[.SD, on = .(lat, date), ext_rad] *
                 sqrt(abs(tmax - tmin)) * (tavg + 17.8) / (2.501 - 0.002361 * tavg)]
             x[, pet_hs := fifelse(pet_hs > 0, pet_hs, NA)]
             x <- x[, .(lon, lat, date, value = pet_hs)]

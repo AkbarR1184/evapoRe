@@ -4,7 +4,13 @@
 \alias{download_gleam}
 \title{GLEAM data downloader}
 \usage{
-download_gleam(path = "", domain = "raw", time_res = "monthly")
+download_gleam(
+  path = "",
+  domain = "raw",
+  time_res = "monthly",
+  variable = "e",
+  version = ""
+)
 }
 \arguments{
 \item{path}{a character string with the path where the data will be downloaded.}
@@ -20,7 +26,21 @@ download_gleam(path = "", domain = "raw", time_res = "monthly")
 \item{time_res}{a character string with the desired time resolution. Suitable options are:
 \itemize{
 \item{"monthly",}
-\item{"yearly".}
+\item{"yearly",}
+\item{"daily".}
+}}
+
+\item{variable}{a character string for the variable. Suitable options are:
+\itemize{
+\item{"e" for actual evapotranspiration,}
+\item{"pet" for potential evapotranspiration.}
+}}
+
+\item{version}{an optional character string for the version. Suitable options are:
+\itemize{
+\item{"v3-7a" for version 3.7a,}
+\item{"v4-1a" for version 4.1a,}
+\item{"" for default version v3-7a.}
 }}
 }
 \value{

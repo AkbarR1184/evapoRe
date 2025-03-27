@@ -2,17 +2,30 @@
 % Please edit documentation in R/esr.R
 \name{esr}
 \alias{esr}
+\alias{esr,Raster-method}
+\alias{esr,data.table-method}
+\alias{esr,character-method}
 \title{Extraterrestrial Solar Radiation (ESR)}
 \usage{
 esr(x)
+
+\S4method{esr}{Raster}(x)
+
+\S4method{esr}{data.table}(x)
+
+\S4method{esr}{character}(x)
 }
 \arguments{
-\item{x}{a character string with the path to the data file.}
+\item{x}{Raster* object; data.table (see details); filename (character; see details)}
 }
 \value{
-data.table
+Raster* object; data.table
 }
 \description{
-Calculate ESR for a given raster template
+#' The function \code{esr} Calculate ESR for a given data formats.
+}
+\details{
+If `x` is a data.table, its columns should be named: "lon", "lat", "date", and "value"
+If `x` is a filename, it should point to a *.nc file.
 }
 \keyword{internal}

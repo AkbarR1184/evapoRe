@@ -8,7 +8,8 @@ download_data(
   data_name = "all",
   path = "",
   domain = "raw",
-  time_res = "monthly"
+  time_res = "monthly",
+  variable = "e"
 )
 }
 \arguments{
@@ -20,14 +21,20 @@ download_data(
 \item{"era5" for ERA5,}
 \item{"era5-land" for ERA5-Land,}
 \item{"fldas" for FLDAS,} 
-\item{"gldas-clsm" for GLDAS CLSM,}
-\item{"gldas-noah" for GLDAS NOAH,}
-\item{"gldas-vic" for GLDAS VIC,}
-\item{"gleam" for GLEAM V3,}
+\item{"gldas-clsm-v2-0" for GLDAS CLSM version 2.0,}
+\item{"gldas-clsm-v2-1" for GLDAS CLSM version 2.1,}
+\item{"gldas-noah-v2-0" for GLDAS NOAH version 2.0,}
+\item{"gldas-noah-v2-1" for GLDAS NOAH version 2.1,} 
+\item{"gldas-vic-v2-0" for GLDAS VIC version 2.0,}
+\item{"gldas-vic-v2-1" for GLDAS VIC version 2.1,}
+\item{"gleam-v3-7a" for GLEAM version 3.7a,}
+\item{"gleam-v4-1a" for GLEAM version 4.1a,}
 \item{"jra-55" for JRA-55,}
 \item{"merra-2" for MERRA-2,}
 \item{"terraclimate" for TerraClimate,}
-\item{"zheng" for Zheng,}
+\item{"etmonitor" for ETMonitor,}
+\item{"etsynthesis" for SynthesizedET,}
+\item{"sith" for Simple Terrestrial Hydrosphere model, version 2.}
 }}
 
 \item{path}{a character string with the path where the database will be downloaded.}
@@ -42,9 +49,12 @@ download_data(
 
 \item{time_res}{a character string with the desired time resolution. Suitable options are:
 \itemize{
+\item{"daily",}
 \item{"monthly",}
 \item{"yearly".}
 }}
+
+\item{variable}{a character string specifying the variable to download (default = "e").}
 }
 \value{
 No return value, called to download the required data sets.
@@ -54,6 +64,6 @@ The function \code{download_data} downloads the selected data product.
 }
 \examples{
 \donttest{
-download_data("gldas-vic", tempdir())
+download_data("gldas-vic-v2-1", tempdir())
 }
 }

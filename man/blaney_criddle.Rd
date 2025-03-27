@@ -2,17 +2,31 @@
 % Please edit documentation in R/blaney_criddle.R
 \name{blaney_criddle}
 \alias{blaney_criddle}
+\alias{blaney_criddle,Raster-method}
+\alias{blaney_criddle,data.table-method}
+\alias{blaney_criddle,character-method}
 \title{PET calculation by Blaney Criddle method}
 \usage{
 blaney_criddle(x)
+
+\S4method{blaney_criddle}{Raster}(x)
+
+\S4method{blaney_criddle}{data.table}(x)
+
+\S4method{blaney_criddle}{character}(x)
 }
 \arguments{
-\item{x}{a RasterBrick object having average temperature}
+\item{x}{Raster* object; data.table (see details); filename (character; see details)}
 }
 \value{
-a RasterBrick object
+Raster* object; data.table
 }
 \description{
-Calculate pet
+The function \code{blaney_criddle} computes Potential Evapotranspiration (PET) by blaney_criddle method.
+}
+\details{
+If `x` is a data.table, its columns should be named: "lon", "lat", "date", and "value"
+
+If `x` is a filename, it should point to a *.nc file.
 }
 \keyword{internal}
