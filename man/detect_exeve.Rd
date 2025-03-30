@@ -13,8 +13,7 @@ detect_exeve(x, EXTREMES_THRES = 0.95, LOW_THRES = 0.8)
 \item{EXTREMES_THRES}{Numeric. Quantile threshold used to define
 extreme evaporation events. Default is 0.95.}
 
-\item{LOW_THRES}{Numeric. Lower quantile threshold indicating above-average
-evaporation. Default is 0.80.}
+\item{LOW_THRES}{Numeric. Lower quantile threshold. Default is 0.80.}
 }
 \value{
 A \code{data.table} with original columns and added columns:
@@ -27,7 +26,7 @@ A \code{data.table} with original columns and added columns:
 }
 \description{
 The function \code{detect_exeve} identifies extreme evaporation events based
-on pentad-standardized anomalies and quantile-based thresholds.
+on standardized evaporation and extreme thresholds.
 }
 \examples{
 \donttest{

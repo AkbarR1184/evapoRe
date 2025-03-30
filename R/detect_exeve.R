@@ -1,14 +1,13 @@
 #' Detect Extreme Evaporation Events (ExEvE)
 #'
 #' The function \code{detect_exeve} identifies extreme evaporation events based
-#' on pentad-standardized anomalies and quantile-based thresholds.
+#' on standardized evaporation and extreme thresholds.
 #'
 #' @param x A \code{data.table} containing columns: \code{lon}, \code{lat},
 #' \code{date}, and \code{value}, representing daily evaporation values.
 #' @param EXTREMES_THRES Numeric. Quantile threshold used to define
 #' extreme evaporation events. Default is 0.95.
-#' @param LOW_THRES Numeric. Lower quantile threshold indicating above-average
-#' evaporation. Default is 0.80.
+#' @param LOW_THRES Numeric. Lower quantile threshold. Default is 0.80.
 #'
 #' @return A \code{data.table} with original columns and added columns:
 #' \itemize{
