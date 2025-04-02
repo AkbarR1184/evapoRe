@@ -104,9 +104,9 @@ setMethod("penman_monteith",
           signature(tavg = "character", tmin = "character", tmax = "character",
                     rn = "character", u = "character", tdew = "character"), 
           function(tavg, tmin, tmax, rn, u, tdew, elevation = NULL, pres = NULL, x = NULL) {
-            dummie_tavg <- brick(tavg)
-            dummie_tmin <- brick(tmin)
-            dummie_tmax <- brick(tmax)
+            dummie_ta <- brick(tavg)
+            dummie_tn <- brick(tmin)
+            dummie_tx <- brick(tmax)
             dummie_rn <- brick(rn)
             dummie_u <- brick(u)
             dummie_tdew <- brick(tdew)
@@ -114,9 +114,9 @@ setMethod("penman_monteith",
             dummie_pres <- if (is.character(pres)) brick(pres) else pres
             
             penman_monteith(
-              tavg = dummie_tavg,
-              tmin = dummie_tmin,
-              tmax = dummie_tmax,
+              tavg = dummie_ta,
+              tmin = dummie_tn,
+              tmax = dummie_tx,
               rn = dummie_rn,
               u = dummie_u,
               tdew = dummie_tdew,

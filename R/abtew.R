@@ -44,9 +44,9 @@ setMethod("abtew",
             registerDoParallel(cores = no_cores)
             
             dummie_pet <- foreach(layer_index = 1:nlayers(tavg)) %dopar% {
-              dummie_t <- tavg[[layer_index]]
+              dummie_ta <- tavg[[layer_index]]
               dummie_rs <- rs[[layer_index]]
-              lambda <- 2.501 - 0.002361 * dummie_t
+              lambda <- 2.501 - 0.002361 * dummie_ta
               dummie_o <- (0.53 * dummie_rs) / lambda
               calc(dummie_o, function(x) { x[x < 0] <- NA; x })
             }
@@ -60,11 +60,11 @@ setMethod("abtew",
 setMethod("abtew",
           signature(tavg = "character", rs = "character"),
           function(tavg, rs, x = NULL) {
-            dummie_tavg <- brick(tavg)
+            dummie_ta <- brick(tavg)
             dummie_rs <- brick(rs)
             
             abtew(
-              tavg = dummie_tavg,
+              tavg = dummie_ta,
               rs = dummie_rs
             )
           })

@@ -75,13 +75,13 @@ setMethod("priestley_taylor",
 setMethod("priestley_taylor", 
           signature(tavg = "character", rn = "character"), 
           function(tavg, rn, elevation = NULL, pres = NULL, x = NULL) {
-            dummie_tavg <- brick(tavg)
+            dummie_ta <- brick(tavg)
             dummie_rn <- brick(rn)
             dummie_elev <- if (is.character(elevation)) brick(elevation) else elevation
             dummie_pres <- if (is.character(pres)) brick(pres) else pres
             
             priestley_taylor(
-              tavg = dummie_tavg,
+              tavg = dummie_ta,
               rn = dummie_rn,
               elevation = dummie_elev,
               pres = dummie_pres
