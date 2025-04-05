@@ -3,30 +3,29 @@
 \name{mcguinness_bordne}
 \alias{mcguinness_bordne}
 \alias{mcguinness_bordne,Raster-method}
-\alias{mcguinness_bordne,data.table-method}
 \alias{mcguinness_bordne,character-method}
-\title{PET calculation by McGuinness Bordne method}
+\alias{mcguinness_bordne,data.table-method}
+\title{Calculate Potential Evapotranspiration (PET) using McGuinness-Bordne method}
 \usage{
 mcguinness_bordne(x)
 
 \S4method{mcguinness_bordne}{Raster}(x)
 
-\S4method{mcguinness_bordne}{data.table}(x)
-
 \S4method{mcguinness_bordne}{character}(x)
+
+\S4method{mcguinness_bordne}{data.table}(x)
 }
 \arguments{
-\item{x}{Raster* object; data.table (see details); filename (character; see details)}
+\item{x}{Raster* object, character file path, or data.table (see details)}
 }
 \value{
-Raster* object; data.table
+RasterBrick or data.table of PET values (mm/day)
 }
 \description{
-The function \code{mcguinness_bordne} computes Potential Evapotranspiration (PET) by McGuinness Bordne method.
+The function \code{mcguinness_bordne} computes PET using the McGuinness and Bordne method.
 }
 \details{
-If `x` is a data.table, its columns should be named: "lon", "lat", "date", and "value"
-
-If `x` is a filename, it should point to a *.nc file.
+For Raster input, provide a raster object or file path for average temperature.
+For `data.table` input, provide a table with columns: "lon", "lat", "date", and "value".
 }
 \keyword{internal}

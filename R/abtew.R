@@ -31,8 +31,8 @@ setMethod("abtew",
           function(x) {
             x[, lambda := 2.501 - 0.002361 * tavg]
             x[, pet := (0.53 * rs) / lambda]
-            x[, value := fifelse(pet < 0, NA_real_, pet)]
-            return(x[, .(lon, lat, date, value)])
+            x[, pet := fifelse(pet < 0, NA_real_, pet)]
+            return(x[, .(lon, lat, date, value=pet)])
           })
 
 #' @rdname abtew
@@ -42,15 +42,14 @@ setMethod("abtew",
             no_cores <- detectCores() - 1
             if (no_cores < 1 || is.na(no_cores)) no_cores <- 1
             registerDoParallel(cores = no_cores)
-            
             dummie_pet <- foreach(layer_index = 1:nlayers(tavg)) %dopar% {
               dummie_ta <- tavg[[layer_index]]
               dummie_rs <- rs[[layer_index]]
               lambda <- 2.501 - 0.002361 * dummie_ta
               dummie_o <- (0.53 * dummie_rs) / lambda
-              calc(dummie_o, function(x) { x[x < 0] <- NA; x })
+              dummie_o <- calc(dummie_o, function(x) { x[x < 0] <- NA; x })
+              return(dummie_o)
             }
-            
             dummie_pet <- brick(dummie_pet)
             dummie_pet <- setZ(dummie_pet, getZ(tavg))
             return(dummie_pet)
@@ -62,7 +61,6 @@ setMethod("abtew",
           function(tavg, rs, x = NULL) {
             dummie_ta <- brick(tavg)
             dummie_rs <- brick(rs)
-            
             abtew(
               tavg = dummie_ta,
               rs = dummie_rs

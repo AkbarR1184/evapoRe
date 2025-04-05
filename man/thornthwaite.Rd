@@ -3,30 +3,29 @@
 \name{thornthwaite}
 \alias{thornthwaite}
 \alias{thornthwaite,Raster-method}
-\alias{thornthwaite,data.table-method}
 \alias{thornthwaite,character-method}
-\title{PET calculation by Thornthwaite method}
+\alias{thornthwaite,data.table-method}
+\title{Calculate Potential Evapotranspiration (PET) using Thornthwaite method}
 \usage{
 thornthwaite(x)
 
 \S4method{thornthwaite}{Raster}(x)
 
-\S4method{thornthwaite}{data.table}(x)
-
 \S4method{thornthwaite}{character}(x)
+
+\S4method{thornthwaite}{data.table}(x)
 }
 \arguments{
-\item{x}{Raster* object; data.table (see details); filename (character; see details)}
+\item{x}{Raster* object, character file path, or data.table (see details)}
 }
 \value{
-Raster* object; data.table
+RasterBrick or data.table of PET values (mm/day)
 }
 \description{
-The function \code{thornthwaite} computes Potential Evapotranspiration (PET) by Thornthwaite  method.
+The function \code{thornthwaite} computes PET using the Thornthwaite method.
 }
 \details{
-If `x` is a data.table, its columns should be named: "lon", "lat", "date", and "value"
-
-If `x` is a filename, it should point to a *.nc file.
+For Raster input, provide a raster object or file path for average temperature.
+For `data.table` input, provide a table with columns: "lon", "lat", "date", and "value".
 }
 \keyword{internal}

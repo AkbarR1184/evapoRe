@@ -12,13 +12,11 @@
 #' @importFrom parallel detectCores
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach foreach %dopar%
-#'
 #' @param tavg Raster* object or file path; average temperature (°C)
 #' @param rn Raster* object or file path; net radiation (MJ m-2 day-1)
 #' @param elevation Raster* object or file path; elevation (m). Optional if `pres` is provided.
 #' @param pres Optional. Raster* object or file path; atmospheric pressure (kPa)
 #' @param x A `data.table` with columns: "lon", "lat", "date", "tavg", "rn", and either "elevation" or "pres".
-#'
 #' @return RasterBrick or data.table of PET values (mm/day)
 #' @keywords internal
 
@@ -38,8 +36,8 @@ setMethod("priestley_taylor",
             x[, delta := 2503.058 * exp(17.27 * tavg / (tavg + 237.3)) / 
                 ((tavg + 237.3)^2)]
             x[, pet := (1.26 * rn * delta) / (lambda * (delta + gamma))]
-            x[, value := fifelse(pet < 0, NA_real_, pet)]
-            return(x[, .(lon, lat, date, value)])
+            x[, pet := fifelse(pet < 0, NA_real_, pet)]
+            return(x[, .(lon, lat, date, value=pet)])
           })
 
 #' @rdname priestley_taylor
@@ -49,7 +47,6 @@ setMethod("priestley_taylor",
             no_cores <- detectCores() - 1
             if (no_cores < 1 || is.na(no_cores)) no_cores <- 1
             registerDoParallel(cores = no_cores)
-            
             dummie_pet <- foreach(layer_index = 1:nlayers(tavg)) %dopar% {
               dummie_ta <- tavg[[layer_index]]
               dummie_rn <- rn[[layer_index]]
@@ -62,10 +59,10 @@ setMethod("priestley_taylor",
               gamma <- (1.013e-3 * dummie_pres) / (0.622 * lambda)
               delta <- 2503.058 * exp(17.27 * dummie_ta / (dummie_ta + 237.3)) / 
                 ((dummie_ta + 237.3)^2)
-              dummie_o <- (1.26 * dummie_rn * delta) / (lambda * (delta + gamma))
-              calc(dummie_o, function(x) { x[x < 0] <- NA; x })
+              dummie_pt <- (1.26 * dummie_rn * delta) / (lambda * (delta + gamma))
+              dummie_pt <- calc(dummie_pt, function(x) { x[x < 0] <- NA; x })
+              return(dummie_pt)
             }
-            
             dummie_pet <- brick(dummie_pet)
             dummie_pet <- setZ(dummie_pet, getZ(tavg))
             return(dummie_pet)
@@ -79,7 +76,6 @@ setMethod("priestley_taylor",
             dummie_rn <- brick(rn)
             dummie_elev <- if (is.character(elevation)) brick(elevation) else elevation
             dummie_pres <- if (is.character(pres)) brick(pres) else pres
-            
             priestley_taylor(
               tavg = dummie_ta,
               rn = dummie_rn,

@@ -3,34 +3,36 @@
 \name{hargreaves_samani}
 \alias{hargreaves_samani}
 \alias{hargreaves_samani,Raster,Raster,Raster-method}
-\alias{hargreaves_samani,data.table,missing,missing-method}
 \alias{hargreaves_samani,character,character,character-method}
-\title{PET calculation by Hargreaves and Samani method}
+\alias{hargreaves_samani,missing,missing,missing-method}
+\title{Calculate Potential Evapotranspiration (PET) using Hargreaves-Samani method}
 \usage{
-hargreaves_samani(x, y = NULL, z = NULL)
+hargreaves_samani(tavg, tmax, tmin, x = NULL)
 
-\S4method{hargreaves_samani}{Raster,Raster,Raster}(x, y = NULL, z = NULL)
+\S4method{hargreaves_samani}{Raster,Raster,Raster}(tavg, tmax, tmin, x = NULL)
 
-\S4method{hargreaves_samani}{data.table,missing,missing}(x)
+\S4method{hargreaves_samani}{character,character,character}(tavg, tmax, tmin, x = NULL)
 
-\S4method{hargreaves_samani}{character,character,character}(x, y = NULL, z = NULL)
+\S4method{hargreaves_samani}{missing,missing,missing}(x)
 }
 \arguments{
-\item{x}{Raster* object; data.table (see details); filename (character; see details)}
+\item{tavg}{Raster* object or file path; average temperature (°C)}
 
-\item{y}{Raster* object or filename; maximum temperature data (required for Raster and character inputs)}
+\item{tmax}{Raster* object or file path; maximum temperature (°C)}
 
-\item{z}{Raster* object or filename; minimum temperature data (required for Raster and character inputs)}
+\item{tmin}{Raster* object or file path; minimum temperature (°C)}
+
+\item{x}{A `data.table` with columns: "lon", "lat", "date", "tavg", "tmin", "tmax".}
 }
 \value{
-Raster* object; data.table
+RasterBrick or data.table of PET values (mm/day)
 }
 \description{
-The function \code{hargreaves_samani} computes Potential Evapotranspiration (PET) by Hargreaves and Samani method.
+The function \code{hargreaves_samani} computes PET using the Hargreaves and Samani method.
 }
 \details{
-If `x` is a data.table, its columns should be named: "lon", "lat", "date", "tavg", "tmin", and "tmax".
-
-If `x`, `y`,`z` is a filename, it should point to a *.nc file.
+For Raster inputs, provide raster objects or file paths for average (`tavg`),
+maximum (`tmax`), and minimum (`tmin`) temperature. For `data.table` input,
+provide a table with columns: "lon", "lat", "date", "tavg", "tmin", and "tmax".
 }
 \keyword{internal}

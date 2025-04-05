@@ -3,30 +3,29 @@
 \name{blaney_criddle}
 \alias{blaney_criddle}
 \alias{blaney_criddle,Raster-method}
-\alias{blaney_criddle,data.table-method}
 \alias{blaney_criddle,character-method}
-\title{PET calculation by Blaney Criddle method}
+\alias{blaney_criddle,data.table-method}
+\title{Calculate Potential Evapotranspiration (PET) using Blaney-Criddle method}
 \usage{
 blaney_criddle(x)
 
 \S4method{blaney_criddle}{Raster}(x)
 
-\S4method{blaney_criddle}{data.table}(x)
-
 \S4method{blaney_criddle}{character}(x)
+
+\S4method{blaney_criddle}{data.table}(x)
 }
 \arguments{
-\item{x}{Raster* object; data.table (see details); filename (character; see details)}
+\item{x}{Raster* object, character file path, or data.table (see details)}
 }
 \value{
-Raster* object; data.table
+RasterBrick or data.table of PET values (mm/day)
 }
 \description{
-The function \code{blaney_criddle} computes Potential Evapotranspiration (PET) by blaney_criddle method.
+The function \code{blaney_criddle} computes PET using the Blaney-Criddle method.
 }
 \details{
-If `x` is a data.table, its columns should be named: "lon", "lat", "date", and "value"
-
-If `x` is a filename, it should point to a *.nc file.
+For Raster input, provide a raster object or file path for average temperature.
+For `data.table` input, provide a table with columns: "lon", "lat", "date", and "value".
 }
 \keyword{internal}

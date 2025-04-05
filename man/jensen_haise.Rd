@@ -3,30 +3,29 @@
 \name{jensen_haise}
 \alias{jensen_haise}
 \alias{jensen_haise,Raster-method}
-\alias{jensen_haise,data.table-method}
 \alias{jensen_haise,character-method}
-\title{PET calculation by Jensen Haise method}
+\alias{jensen_haise,data.table-method}
+\title{Calculate Potential Evapotranspiration (PET) using Jensen-Haise method}
 \usage{
 jensen_haise(x)
 
 \S4method{jensen_haise}{Raster}(x)
 
-\S4method{jensen_haise}{data.table}(x)
-
 \S4method{jensen_haise}{character}(x)
+
+\S4method{jensen_haise}{data.table}(x)
 }
 \arguments{
-\item{x}{Raster* object; data.table (see details); filename (character; see details)}
+\item{x}{Raster* object, character file path, or data.table (see details)}
 }
 \value{
-Raster* object; data.table
+RasterBrick or data.table of PET values (mm/day)
 }
 \description{
-The function \code{jensen_haise} computes Potential Evapotranspiration (PET) by Jensen Haise method.
+The function \code{jensen_haise} computes PET using the Jensen-Haise method.
 }
 \details{
-If `x` is a data.table, its columns should be named: "lon", "lat", "date", and "value".
-
-If `x` is a filename, it should point to a *.nc file.
+For Raster input, provide a raster object or file path for average temperature.
+For `data.table` input, provide a table with columns: "lon", "lat", "date", and "value".
 }
 \keyword{internal}

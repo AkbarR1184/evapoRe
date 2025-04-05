@@ -5,7 +5,7 @@
 \alias{oudin,Raster-method}
 \alias{oudin,data.table-method}
 \alias{oudin,character-method}
-\title{PET calculation by Oudin method}
+\title{Calculate Potential Evapotranspiration (PET) using Oudin method}
 \usage{
 oudin(x)
 
@@ -16,17 +16,16 @@ oudin(x)
 \S4method{oudin}{character}(x)
 }
 \arguments{
-\item{x}{Raster* object; data.table (see details); filename (character; see details)}
+\item{x}{Raster* object, character file path, or data.table (see details)}
 }
 \value{
-Raster* object; data.table
+RasterBrick or data.table of PET values (mm/day)
 }
 \description{
-The function \code{oudin} computes Potential Evapotranspiration (PET) by Oudin method
+The function \code{oudin} computes PET using the Oudin method.
 }
 \details{
-If `x` is a data.table, its columns should be named: "lon", "lat", "date", and "value"
-
-If `x` is a filename, it should point to a *.nc file.
+For Raster inputs, provide a raster object or file path for average temperature.
+For `data.table` input, provide a table with columns: "lon", "lat", "date", and "value".
 }
 \keyword{internal}

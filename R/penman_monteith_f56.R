@@ -1,6 +1,6 @@
 #' Calculate Potential Evapotranspiration (PET) using FAO Penman-Monteith
 #'
-#' The function \code{penman_monteith} computes PET by FAO Penman-Monteith method.
+#' The function \code{penman_monteith_f56} computes PET by FAO Penman-Monteith method.
 #'
 #' @details
 #' For Raster inputs, provide raster objects or file paths for `tavg`, `tmin`, 
@@ -28,13 +28,13 @@
 #' @return RasterBrick or data.table of PET values (mm/day)
 #' @keywords internal
 
-setGeneric("penman_monteith", function(tavg, tmin, tmax, rn, u, tdew, 
-                                    elevation = NULL, pres = NULL, x = NULL) {
-  standardGeneric("penman_monteith")
+setGeneric("penman_monteith_f56", function(tavg, tmin, tmax, rn, u, tdew, 
+                                       elevation = NULL, pres = NULL, x = NULL) {
+  standardGeneric("penman_monteith_f56")
 })
 
-#' @rdname penman_monteith
-setMethod("penman_monteith", 
+#' @rdname penman_monteith_f56
+setMethod("penman_monteith_f56", 
           signature(tavg = "missing", tmin = "missing", tmax = "missing", 
                     rn = "missing", u = "missing", tdew = "missing", 
                     elevation = "missing", pres = "missing"), 
@@ -54,19 +54,18 @@ setMethod("penman_monteith",
             x[, pet := (0.408 * delta * rn + gamma * (900 / (tavg + 273)) * 
                           u * (es - ea)) / 
                 (delta + gamma * (1 + 0.34 * u))]
-            x[, value := fifelse(pet < 0, NA_real_, pet)]
-            return(x[, .(lon, lat, date, value)])
+            x[, pet := fifelse(pet < 0, NA_real_, pet)]
+            return(x[, .(lon, lat, date, value=pet)])
           })
 
-#' @rdname penman_monteith
-setMethod("penman_monteith", 
+#' @rdname penman_monteith_f56
+setMethod("penman_monteith_f56", 
           signature(tavg = "Raster", tmin = "Raster", tmax = "Raster",
                     rn = "Raster", u = "Raster", tdew = "Raster"), 
           function(tavg, tmin, tmax, rn, u, tdew, elevation = NULL, pres = NULL, x = NULL) {
             no_cores <- detectCores() - 1
             if (no_cores < 1 || is.na(no_cores)) no_cores <- 1
             registerDoParallel(cores = no_cores)
-            
             dummie_pet <- foreach(layer_index = 1:nlayers(tavg)) %dopar% {
               dummie_ta <- tavg[[layer_index]]
               dummie_tx <- tmax[[layer_index]]
@@ -86,12 +85,12 @@ setMethod("penman_monteith",
                 ((dummie_ta + 237.3)^2)
               es <- 0.6108 * ((exp(17.27 * dummie_tx / (dummie_tx + 237.3)) + 
                                  exp(17.27 * dummie_tn / (dummie_tn + 237.3))) / 2)
-              
-              dummie_o <- (0.408 * delta * dummie_rn + gamma * 
+              dummie_pm <- (0.408 * delta * dummie_rn + gamma * 
                               (900 / (dummie_ta + 273)) * dummie_u * (es - ea)) /
                 (delta + gamma * (1 + 0.34 * dummie_u))
               
-              calc(dummie_o, function(x) { x[x < 0] <- NA; x })
+              dummie_pm <- calc(dummie_pm, function(x) { x[x < 0] <- NA; x })
+              return(dummie_pm)
             }
             
             dummie_pet <- brick(dummie_pet)
@@ -99,8 +98,8 @@ setMethod("penman_monteith",
             return(dummie_pet)
           })
 
-#' @rdname penman_monteith
-setMethod("penman_monteith", 
+#' @rdname penman_monteith_f56
+setMethod("penman_monteith_f56", 
           signature(tavg = "character", tmin = "character", tmax = "character",
                     rn = "character", u = "character", tdew = "character"), 
           function(tavg, tmin, tmax, rn, u, tdew, elevation = NULL, pres = NULL, x = NULL) {
@@ -113,7 +112,7 @@ setMethod("penman_monteith",
             dummie_elev <- if (is.character(elevation)) brick(elevation) else elevation
             dummie_pres <- if (is.character(pres)) brick(pres) else pres
             
-            penman_monteith(
+            penman_monteith_f56(
               tavg = dummie_ta,
               tmin = dummie_tn,
               tmax = dummie_tx,

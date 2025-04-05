@@ -1,126 +1,75 @@
-#' PET calculation by Baier and Robertson method
+#' Calculate Potential Evapotranspiration (PET) using Baier-Robertson method
 #'
-#' The function \code{baier_robertson} computes Potential Evapotranspiration (PET) by Baier and Robertson method.
+#' The function \code{baier_robertson} computes PET using the Baier and Robertson method.
 #'
 #' @details
-#' If `x` is a data.table, its columns should be named: "lon", "lat", "date", "tmin", and "tmax".
-#'
-#' If `x`, `y`, is a filename, it should point to a *.nc file.
-
-#' 
-#' @import  data.table
-#' @import doParallel
-#' @import foreach
-#' @import parallel
-#' @importFrom methods as
-#' @importFrom lubridate day days_in_month leap_year
-#' @importFrom raster brick calc getZ init nlayers reclassify setZ
-#' @param x Raster* object; data.table (see details); filename (character; see details)
-
-#' @param y Raster* object or filename; minimum temperature data (required for Raster and character inputs)
-#' @return Raster* object; data.table
+#' For Raster inputs, provide raster objects or file paths for maximum (`tmax`)
+#'  and minimum (`tmin`) temperature.For `data.table` input, provide a table with 
+#'  columns: "lon", "lat", "date", "tmax", and "tmin".
+#' @import data.table
+#' @importFrom raster brick calc getZ setZ nlayers
+#' @importFrom parallel detectCores
+#' @importFrom doParallel registerDoParallel
+#' @importFrom foreach foreach %dopar%
+#' @importFrom lubridate day leap_year month
+#' @param tmax Raster* object or file path; maximum temperature (°C)
+#' @param tmin Raster* object or file path; minimum temperature (°C)
+#' @param x A `data.table` with columns: "lon", "lat", "date", "tmax", "tmin".
+#' @return RasterBrick or data.table of PET values (mm/day)
 #' @keywords internal
 
-setGeneric("baier_robertson", function(x, y = NULL) {
+setGeneric("baier_robertson", function(tmax, tmin, x = NULL) {
   standardGeneric("baier_robertson")
 })
-#' @rdname baier_robertson
-#' @method baier_robertson Raster
 
-setMethod("baier_robertson", signature(x = "Raster", y = "Raster"),
-          function(x, y) {
+#' @rdname baier_robertson
+setMethod("baier_robertson",
+          signature(tmax = "Raster", tmin = "Raster"),
+          function(tmax, tmin, x = NULL) {
             no_cores <- detectCores() - 1
-            if (no_cores < 1 | is.na(no_cores))
-               (no_cores <- 1)
+            if (no_cores < 1 || is.na(no_cores)) no_cores <- 1
             registerDoParallel(cores = no_cores)
-            tmax <- x
-            tmin <- y
-            re <- esr(x)
-            t_dates <- getZ(x)
-            re_dates <- getZ(re)
-            t_dates_table <- as.data.table(t_dates) %>%
-              .[, leap := leap_year(t_dates)] %>%
-              .[, mo := month(t_dates)] %>%
-              .[, dd := day(t_dates)]
-            re_dates_table <- as.data.table(re_dates) %>%
-              .[, leap := leap_year(re_dates)] %>%
-              .[, mo := month(re_dates)] %>%
-              .[, dd := day(re_dates)]
-            dummie_dates_table <- merge(t_dates_table, re_dates_table, by = c('leap', 'mo', 'dd'))
-            setorder(dummie_dates_table, 't_dates')
-            t_idx <- match(dummie_dates_table$t_dates, t_dates)
-            re_idx <- match(dummie_dates_table$re_dates, re_dates)
-            dummie_pet <- foreach(index = 1:length(t_idx)) %dopar% {
-              t_layer <- t_idx[index]
-              re_layer <- re_idx[index]
-              dummie_tmax <- tmax[[t_layer]]
-              dummie_tmin <- tmin[[t_layer]]
-              dummie_re <- re[[re_layer]]
-              dummie_o <- (0.157 * dummie_tmax) + (0.158 * (dummie_tmax - dummie_tmin)) + (0.109 * dummie_re) - 5.39
-              dummie_o <- calc(dummie_o, fun = function(val) {
-                val[val < 0] <- NA
-                return(val)
-              })
-              return(dummie_o)
-            }
-            dummie_pet <- brick(dummie_pet)
-            dummie_pet <- setZ(dummie_pet, t_dates)
-            return(dummie_pet)
-          })
-
-#' @rdname baier_robertson
-#' @method baier_robertson data.table
-
-setMethod("baier_robertson", signature(x = "data.table", y = "missing"),
-          function(x) {
-            esr <- pet_params_calc(x)
-            x[, pet_br := (0.157 * tmax) + (0.158 * (tmax - tmin)) +
-                (0.109 * esr[.SD, on = .(lat, date), ext_rad]) - 5.39]
-            x[, pet_br := fifelse(pet_br > 0, pet_br, 0)]
-            x <- x[, .(lon, lat, date, value = pet_br)]
-            return(x)
-          })
-
-#' @rdname baier_robertson
-#' @method baier_robertson character
-
-setMethod("baier_robertson", signature(x = "character", y = "character"),
-          function(x, y) {
-            no_cores <- detectCores() - 1
-            if (no_cores < 1 | is.na(no_cores))
-               (no_cores <- 1)
-            registerDoParallel(cores = no_cores)
-            tmax <- brick(x)
-            tmin <- brick(y)
             re <- esr(tmax)
             t_dates <- getZ(tmax)
             re_dates <- getZ(re)
-            t_dates_table <- as.data.table(t_dates) %>%
-              .[, leap := leap_year(t_dates)] %>%
-              .[, mo := month(t_dates)] %>%
-              .[, dd := day(t_dates)]
-            re_dates_table <- as.data.table(re_dates) %>%
-              .[, leap := leap_year(re_dates)] %>%
-              .[, mo := month(re_dates)] %>%
-              .[, dd := day(re_dates)]
-            dummie_dates_table <- merge(t_dates_table, re_dates_table, by = c('leap', 'mo', 'dd'))
-            setorder(dummie_dates_table, 't_dates')
+            t_dates_table <- data.table(t_dates)[, `:=`(leap = leap_year(t_dates),
+                                                        mo = month(t_dates),
+                                                        dd = day(t_dates))]
+            re_dates_table <- data.table(re_dates)[, `:=`(leap = leap_year(re_dates),
+                                                          mo = month(re_dates),
+                                                          dd = day(re_dates))]
+            dummie_dates_table <- merge(t_dates_table, re_dates_table, by = c("leap", "mo", "dd"))
+            setorder(dummie_dates_table, t_dates)
             t_idx <- match(dummie_dates_table$t_dates, t_dates)
             re_idx <- match(dummie_dates_table$re_dates, re_dates)
-            dummie_pet <- foreach(index = 1:length(t_idx)) %dopar% {
-              t_layer <- t_idx[index]
-              re_layer <- re_idx[index]
-              dummie_tmax <- tmax[[t_layer]]
-              dummie_tmin <- tmin[[t_layer]]
-              dummie_re <- re[[re_layer]]
-              dummie_o <- (0.157 * dummie_tmax) + (0.158 * (dummie_tmax - dummie_tmin)) + (0.109 * dummie_re) - 5.39
-              dummie_o <- calc(dummie_o, fun = function(val) {
-                val[val < 0] <- NA
-                return(val)
-              })
-              return(dummie_o)
+            dummie_pet <- foreach(index = seq_along(t_idx)) %dopar% {
+              dummie_tx <- tmax[[t_idx[index]]]
+              dummie_tn <- tmin[[t_idx[index]]]
+              dummie_re <- re[[re_idx[index]]]
+              dummie_br <- (0.157 * dummie_tx) + (0.158 * (dummie_tx - dummie_tn)) + (0.109 * dummie_re) - 5.39
+              dummie_br <- calc(dummie_br, function(x) { x[x < 0] <- NA; x })
+              return(dummie_br)
             }
             dummie_pet <- brick(dummie_pet)
             dummie_pet <- setZ(dummie_pet, t_dates)
             return(dummie_pet)
+          })
+
+#' @rdname baier_robertson
+setMethod("baier_robertson",
+          signature(tmax = "character", tmin = "character"),
+          function(tmax, tmin, x = NULL) {
+            baier_robertson(tmax = brick(tmax),
+                            tmin = brick(tmin))
+          })
+
+#' @rdname baier_robertson
+setMethod("baier_robertson",
+          signature(tmax = "missing", tmin = "missing"),
+          function(x) {
+            dummie_params <- pet_params_calc(x)
+            x[, pet := (0.157 * tmax) + (0.158 * (tmax - tmin)) +
+                (0.109 * dummie_params[.SD, ext_rad, on = .(lat, date)]) - 5.39]
+            x[, pet := fifelse(pet < 0, 0, pet)]
+            return(x[, .(lon, lat, date, value = pet)])
           })

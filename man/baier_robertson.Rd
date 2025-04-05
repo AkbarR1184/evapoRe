@@ -3,32 +3,34 @@
 \name{baier_robertson}
 \alias{baier_robertson}
 \alias{baier_robertson,Raster,Raster-method}
-\alias{baier_robertson,data.table,missing-method}
 \alias{baier_robertson,character,character-method}
-\title{PET calculation by Baier and Robertson method}
+\alias{baier_robertson,missing,missing-method}
+\title{Calculate Potential Evapotranspiration (PET) using Baier-Robertson method}
 \usage{
-baier_robertson(x, y = NULL)
+baier_robertson(tmax, tmin, x = NULL)
 
-\S4method{baier_robertson}{Raster,Raster}(x, y = NULL)
+\S4method{baier_robertson}{Raster,Raster}(tmax, tmin, x = NULL)
 
-\S4method{baier_robertson}{data.table,missing}(x)
+\S4method{baier_robertson}{character,character}(tmax, tmin, x = NULL)
 
-\S4method{baier_robertson}{character,character}(x, y = NULL)
+\S4method{baier_robertson}{missing,missing}(x)
 }
 \arguments{
-\item{x}{Raster* object; data.table (see details); filename (character; see details)}
+\item{tmax}{Raster* object or file path; maximum temperature (°C)}
 
-\item{y}{Raster* object or filename; minimum temperature data (required for Raster and character inputs)}
+\item{tmin}{Raster* object or file path; minimum temperature (°C)}
+
+\item{x}{A `data.table` with columns: "lon", "lat", "date", "tmax", "tmin".}
 }
 \value{
-Raster* object; data.table
+RasterBrick or data.table of PET values (mm/day)
 }
 \description{
-The function \code{baier_robertson} computes Potential Evapotranspiration (PET) by Baier and Robertson method.
+The function \code{baier_robertson} computes PET using the Baier and Robertson method.
 }
 \details{
-If `x` is a data.table, its columns should be named: "lon", "lat", "date", "tmin", and "tmax".
-
-If `x`, `y`, is a filename, it should point to a *.nc file.
+For Raster inputs, provide raster objects or file paths for maximum (`tmax`)
+ and minimum (`tmin`) temperature.For `data.table` input, provide a table with 
+ columns: "lon", "lat", "date", "tmax", and "tmin".
 }
 \keyword{internal}
