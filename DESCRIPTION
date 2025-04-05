@@ -19,8 +19,8 @@ Description: An R-based application for exploratory data analysis of global Evap
   Also, the package offers calculation methods for estimating potential ET (PET), including temperature-based approaches described in : Oudin et al., (2005) <doi:10.1016/j.jhydrol.2004.08.026>.
   'evapoRe' supports hydrological modeling, climate studies, agricultural research, and other data-driven fields by facilitating access to ET data and offering powerful analysis capabilities.
   Users can seamlessly integrate the package into their research applications and explore diverse ET data at different resolutions.
-Depends: R (>= 4.0.0), pRecipe
-Imports: methods, parallel, utils, data.table, doParallel, foreach, lubridate, raster
+Depends: R (>= 4.0.0)
+Imports: methods, parallel, utils, data.table, doParallel, foreach, lubridate, raster,twc
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
