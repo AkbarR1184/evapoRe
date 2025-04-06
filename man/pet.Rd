@@ -49,14 +49,16 @@ required inputs, use:
 \examples{
 \donttest{
 # Default method (Oudin)
-pet(x = my_data)
+View required variables
+pet_method_requirements("oudin")
+tavg <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
+pet_oudin <- pet(tavg, method = "od")
+pet_oudin <- muldpm(pet_oudin)
 
-# FAO-56 method with raster inputs
-pet(method = "penman_monteith_f56",
+FAO-56 method with raster inputs
+pet(method = "pm_fao56",
     tavg = "tavg.nc", tmin = "tmin.nc", tmax = "tmax.nc",
     rn = "rn.nc", u = "u.nc", tdew = "tdew.nc", elevation = "elev.nc")
 
-# View required variables
-pet_method_requirements("turc")
 }
 }
