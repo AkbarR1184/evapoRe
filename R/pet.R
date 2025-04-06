@@ -1,46 +1,72 @@
 #' Potential Evapotranspiration
 #'
-#' The function \code{pet} estimates PET by different methods
-#' 
-#' @param x a datatable with lon, lat, date, tavg, tmax, and tmin data, 
-#' a Raster object containing tavg, or a file path to a .nc file containing tavg data.
-#' @param y a Raster object or file path to a .nc file containing tmax data (optional, required for certain methods).
-#' @param z a Raster object or file path to a .nc file containing tmin data (optional, required for certain methods).
-#' @param method a character string indicating the method to be used. Available options are:
+#' The function \code{pet} estimates PET using various methods.
+#'
+#' @param x A data.table containing columns \code{lon}, \code{lat}, \code{date},
+#' and the required meteorological variables for the selected method. For raster
+#' or NetCDF input, provide named arguments like \code{tavg}, \code{tmin},
+#' \code{tmax}, etc., depending on the method.
+#'
+#' @param method A character string indicating the method to be used. Available
+#' options are:
 #' \itemize{
-#' \item{"bc" for Blaney and Criddle (1950),}
-#' \item{"br" for Baier and Robertson  (1965),}
-#' \item{"ha" for Hamon (1961),}
-#' \item{"hs" for Hargreaves and Samani (1985),}
-#' \item{"jh" for Jensen and Haise (1963),}
-#' \item{"mb" for McGuinness and Bordne (1972),}
-#' \item{"od" for Oudin (2005). Default,}
-#' \item{"th" for Thornthwaite (1948).}
+#'   \item{"abtew" for Abtew (1996),}
+#'   \item{"baier_robertson" for Baier and Robertson (1965),}
+#'   \item{"blaney_criddle" for Blaney and Criddle (1950),}
+#'   \item{"hamon" for Hamon (1961),}
+#'   \item{"hargreaves_samani" for Hargreaves and Samani (1985),}
+#'   \item{"jensen_haise" for Jensen and Haise (1963),}
+#'   \item{"mcguinness_bordne" for McGuinness and Bordne (1972),}
+#'   \item{"oudin" for Oudin (2005). Default,}
+#'   \item{"penman_monteith_f56" for FAO Penman-Monteith (FAO-56),}
+#'   \item{"priestly_taylor" for Priestly and Taylor (1972),}
+#'   \item{"thornthwaite" for Thornthwaite (1948),}
+#'   \item{"turc" for Turc (1961).}
 #' }
-#' @return A Raster object containing potential evapotranspiration in [mm/day], 
-#' and a data.table object with potential evapotranspiration in [mm/month].
+#'
+#' @param ... Additional arguments passed to the selected method (e.g., 
+#' raster objects or file paths such as \code{tavg}, \code{rs}, \code{rh}, etc.)
+#'
+#' @details
+#' Required input variables depend on the selected method. To check the list of
+#' required inputs, use:
+#'
+#' \code{pet_method_requirements()} — to list all methods and their required inputs  
+#' \code{pet_method_requirements("turc")} — to list inputs required for a specific method
+#'
+#' @return A Raster object in mm/day or a data.table with columns \code{lon},
+#' \code{lat}, \code{date}, and \code{value} (PET in mm/day), depending on input type.
+#'
 #' @export
-#' @examples 
+#'
+#' @examples
 #' \donttest{
-#' #Calculate PET by Oudin 
-#' tavg <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
-#' pet_oudin <- pet(tavg, method = "od")
-#' pet_oudin <- muldpm(pet_oudin)
+#' # Default method (Oudin)
+#' pet(x = my_data)
+#'
+#' # FAO-56 method with raster inputs
+#' pet(method = "penman_monteith_f56",
+#'     tavg = "tavg.nc", tmin = "tmin.nc", tmax = "tmax.nc",
+#'     rn = "rn.nc", u = "u.nc", tdew = "tdew.nc", elevation = "elev.nc")
+#'
+#' # View required variables
+#' pet_method_requirements("turc")
 #' }
 
-pet <- function(x, y = NULL, z = NULL, method = "od") {
-  pet_mon <- switch(method,
-                    "bc" = blaney_criddle(x),
-                    "br" = baier_robertson(x,y),
-                    "ha" = hamon(x),
-                    "hs" = hargreaves_samani(x, y, z),
-                    "jh" = jensen_haise(x),
-                    "mb" = mcguinness_bordne(x),
-                    "od" = oudin(x),
-                    "th" = thornthwaite(x)
+pet <- function(method = "oudin", ...) {
+  switch(method,
+         "abtew" = abtew(...),
+         "baier_robertson" = baier_robertson(...),
+         "blaney_criddle" = blaney_criddle(...),
+         "hamon" = hamon(...),
+         "hargreaves_samani" = hargreaves_samani(...),
+         "jensen_haise" = jensen_haise(...),
+         "mcguinness_bordne" = mcguinness_bordne(...),
+         "oudin" = oudin(...),
+         "penman_monteith_f56" = penman_monteith_f56(...),
+         "priestly_taylor" = priestly_taylor(...),
+         "thornthwaite" = thornthwaite(...),
+         "turc" = turc(...),
+         stop("Invalid method.")
   )
-  
-  return(pet_mon)
 }
-
-
