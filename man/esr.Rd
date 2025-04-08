@@ -3,29 +3,26 @@
 \name{esr}
 \alias{esr}
 \alias{esr,Raster-method}
-\alias{esr,data.table-method}
 \alias{esr,character-method}
-\title{Extraterrestrial Solar Radiation (ESR)}
+\title{Calculate Extraterrestrial Solar Radiation (ESR)}
 \usage{
 esr(x)
 
 \S4method{esr}{Raster}(x)
 
-\S4method{esr}{data.table}(x)
-
 \S4method{esr}{character}(x)
 }
 \arguments{
-\item{x}{Raster* object; data.table (see details); filename (character; see details)}
+\item{x}{A `Raster*` object or a file path (`character`) to a raster file.}
 }
 \value{
-Raster* object; data.table
+A `RasterBrick` of daily extraterrestrial solar radiation (MJ m-2 day-1).
 }
 \description{
-#' The function \code{esr} Calculate ESR for a given data formats.
+Computes extraterrestrial solar radiation (MJ m-2 day-1) based on latitude and day of the year.
 }
 \details{
-If `x` is a data.table, its columns should be named: "lon", "lat", "date", and "value"
-If `x` is a filename, it should point to a *.nc file.
+For raster inputs, provide a `Raster*` object or file path (`character`)
+The function estimates extraterrestrial radiation.
 }
 \keyword{internal}

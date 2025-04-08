@@ -1,15 +1,13 @@
-#' Calculate Wind Speed at 2m (u2)
+#' Calculate Wind Speed at 2 Meters (u2)
 #'
-#' Computes wind speed at 2 meters (u2) based on measured wind speed \code{u} at 
-#' a certain height \code{z_u}. If \code{z_u} is already 2, the function 
-#' returns the input as-is.
+#' Computes wind speed at 2 meters (u2) based on wind speed measured at a different height (`z_u`).
 #'
 #' @details
-#' For raster inputs, provide either a \code{Raster*} object or a file path 
-#' (character) to a raster file that contains wind speed values at height 
-#' \code{z_u}. For \code{data.table} input, provide a single \code{data.table} with 
-#' columns: \code{"lon"}, \code{"lat"}, \code{"date"}, and \code{"value"}. The 
-#' \code{"value"} column should contain wind speeds at height \code{z_u}. 
+#' For raster inputs, provide a `Raster*` object or file path (`character`) for wind speed at height `z_u`. 
+#' For `data.table` input, provide a single `data.table` with columns: `"lon"`, `"lat"`, `"date"`, and `"value"`, 
+#' where `"value"` contains wind speeds at height `z_u`.
+#'
+#' If `z_u` is 2, the function returns the input unchanged.
 #'
 #' @import data.table
 #' @importFrom raster brick getZ setZ nlayers
@@ -17,75 +15,82 @@
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach foreach %dopar%
 #'
-#' @param u A \code{Raster*} object, a file path (character) to a raster file, 
-#'   or a \code{data.table} with columns \code{"lon"}, \code{"lat"}, \code{"date"}, 
-#'   and \code{"value"}. See \strong{Details}.
-#' @param z_u \code{numeric}. The measurement height (meters) of the provided wind 
-#'   speed, typically 10. Defaults to 10.
+#' @param x A `Raster*` object, a file path (`character`) to a raster file, or a `data.table` containing wind speed data.
+#' @param z_u Measurement height (m) of the provided wind speed. Default is 10.
 #'
-#' @return Depending on the input:
+#' @return Wind speed adjusted to 2 meters, returned as:
 #' \itemize{
-#'   \item If \code{u} is a \code{Raster*}, returns a \code{RasterBrick} of wind 
-#'         speeds adjusted to 2 meters.
-#'   \item If \code{u} is a character (file path), returns a \code{RasterBrick} 
-#'         after reading the file and adjusting speeds to 2 meters.
-#'   \item If \code{u} is a \code{data.table}, returns a \code{data.table} with an 
-#'         updated \code{"value"} column representing wind speeds at 2 meters.
+#'   \item A `RasterBrick`, if input is a raster object or file path.
+#'   \item A `data.table` with updated `"value"` column, if input is a `data.table`.
 #' }
-#' 
-#' @keywords internal
 #'
-setGeneric("calc_u2", function(u, z_u = 10) {
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' # Raster input
+#' dummie_u <- brick("path/to/wind_speed.nc")
+#' u2_raster <- calc_u2(dummie_u, z_u = 10)
+#'
+#' # File path input
+#' u2_from_file <- calc_u2("path/to/wind_speed.nc", z_u = 10)
+#'
+#' # data.table input
+#' dt <- data.table(
+#'   lon = c(10.0, 10.5),
+#'   lat = c(45.0, 45.5),
+#'   date = as.Date(c("2001-06-01", "2001-06-02")),
+#'   value = c(3.5, 4.1)
+#' )
+#' u2_dt <- calc_u2(dt, z_u = 10)
+#' }
+
+setGeneric("calc_u2", function(x, z_u = 10) {
   standardGeneric("calc_u2")
 })
+
 #' @rdname calc_u2
 setMethod("calc_u2", 
-          signature(u = "Raster"), 
-          function(u, z_u = 10) {
+          signature(x = "Raster"), 
+          function(x, z_u = 10) {
             if (z_u == 2) {
-              return(u)
+              return(x)
             }
+            
             no_cores <- detectCores() - 1
             if (is.na(no_cores) || no_cores < 1) no_cores <- 1
             registerDoParallel(cores = no_cores)
-            u_dates <- getZ(u)
-            dummie <- foreach(idx = 1:nlayers(u)) %dopar% {
-              u_layer <- u[[idx]] * (4.87 / log(67.8 * z_u - 5.42))
-              return(u_layer)
-            }
-            u2_brick <- brick(dummie)
-            if (!is.null(u_dates)) {
-              u2_brick <- setZ(u2_brick, u_dates)
+            
+            dummie_u2 <- foreach(layer_index = 1:nlayers(x)) %dopar% {
+              dummie_layer <- x[[layer_index]] * (4.87 / log(67.8 * z_u - 5.42))
+              return(dummie_layer)
             }
             
-            return(u2_brick)
+            dummie_u2 <- brick(dummie_u2)
+            dummie_u2 <- setZ(dummie_u2, getZ(x))
+            return(dummie_u2)
           }
 )
+
 #' @rdname calc_u2
 setMethod("calc_u2", 
-          signature(u = "character"), 
-          function(u, z_u = 10) {
-            if (!file.exists(u)) {
-              stop("File not found: ", u)
-            }
-            u_raster <- brick(u)
-            calc_u2(u_raster, z_u = z_u)
+          signature(x = "character"), 
+          function(x, z_u = 10) {
+            dummie_x <- brick(x)
+            dummie_u2 <- calc_u2(dummie_x, z_u = z_u)
+            return(dummie_u2)
           }
 )
+
 #' @rdname calc_u2
 setMethod("calc_u2", 
-          signature(u = "data.table"), 
-          function(u, z_u = 10) {
+          signature(x = "data.table"), 
+          function(x, z_u = 10) {
             if (z_u == 2) {
-              return(u)
+              return(x)
             }
-            required_cols <- c("lon", "lat", "date", "value")
-            missing_cols <- setdiff(required_cols, names(u))
-            if (length(missing_cols) > 0) {
-              stop("Missing column(s): ", paste(missing_cols, collapse = ", "))
-            }
-            u[, value := value * (4.87 / log(67.8 * z_u - 5.42))]
             
-            return(u)
+            x[, value := value * (4.87 / log(67.8 * z_u - 5.42))]
+            return(x)
           }
 )

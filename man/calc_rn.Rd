@@ -16,21 +16,21 @@ calc_rn(tmax, tmin, rs, elevation, albedo = 0.23, x = NULL)
 \S4method{calc_rn}{character,character,character,character,ANY}(tmax, tmin, rs, elevation, albedo = 0.23, x = NULL)
 }
 \arguments{
-\item{tmax}{Raster* object or file path for maximum temperature.}
+\item{tmax}{Raster* object or file path for maximum temperature (°C)}
 
-\item{tmin}{Raster* object or file path for minimum temperature.}
+\item{tmin}{Raster* object or file path for minimum temperature (°C)}
 
-\item{rs}{Raster* object or file path for solar radiation.}
+\item{rs}{Raster* object or file path for solar radiation (MJ m-2 day-1)}
 
-\item{elevation}{Raster* object or file path for elevation.}
+\item{elevation}{Raster* object or file path for elevation (m)}
 
-\item{albedo}{Numeric value, Raster* object, or file path for albedo 
-(optional, default = 0.23).}
+\item{albedo}{Numeric, Raster*, or file path for albedo (optional, default = 0.23)}
 
-\item{x}{A `data.table` with required columns.}
+\item{x}{A `data.table` with columns: "lon", "lat", "date", "rs", "tmax", 
+"tmin", "elevation", and optionally "albedo"}
 }
 \value{
-Raster* object or `data.table` with net radiation values.
+RasterBrick or data.table of net radiation values (MJ m-2 day-1)
 }
 \description{
 Computes net radiation (Rn) based on solar radiation, temperature, and elevation.
@@ -41,4 +41,25 @@ For raster inputs, provide individual raster objects or file paths for `tmax`,
 provide a single `data.table` with columns: "lon", "lat", "date", "rs", "tmax", 
 "tmin", "elevation", and optionally "albedo".
 }
-\keyword{internal}
+\examples{
+\dontrun{
+# Example for Raster* input
+tmax <- brick("path/to/tmax.nc")
+tmin <- brick("path/to/tmin.nc")
+rs   <- brick("path/to/solar_radiation.nc")
+elev <- brick("path/to/elevation.tif")
+rn <- calc_rn(tmax = tmax, tmin = tmin, rs = rs, elevation = elev)
+
+# Example for data.table input
+dt <- data.table(
+  lon = c(10.0, 10.5),
+  lat = c(45.0, 45.5),
+  date = as.Date(c("2001-06-01", "2001-06-01")),
+  tmax = c(28.3, 27.6),
+  tmin = c(14.1, 13.5),
+  rs = c(22.5, 21.9),
+  elevation = c(400, 420)
+)
+rn_dt <- calc_rn(x = dt)
+}
+}

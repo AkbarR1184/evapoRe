@@ -49,10 +49,10 @@
 #' pet_oudin <- muldpm(pet_oudin)
 #' 
 #' FAO-56 method with raster inputs
-#' pet(method = "pm_fao56",
+#' pet_pm <- pet(method = "pm_fao56",
 #'     tavg = "tavg.nc", tmin = "tmin.nc", tmax = "tmax.nc",
 #'     rn = "rn.nc", u = "u.nc", tdew = "tdew.nc", elevation = "elev.nc")
-#'
+#' pet_pm <- muldpm(pet_pm)
 #' }
 
 pet <- function(method = "oudin", ...) {

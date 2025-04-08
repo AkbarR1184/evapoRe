@@ -12,12 +12,10 @@
 #' @importFrom parallel detectCores
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach foreach %dopar%
-#'
 #' @param tavg Raster* object or file path; average temperature (°C)
 #' @param rs Raster* object or file path; shortwave radiation (MJ m-2 day-1)
 #' @param rh Raster* object or file path; relative humidity (%)
 #' @param x A `data.table` with columns: "lon", "lat", "date", "tavg", "rs", "rh"
-#'
 #' @return RasterBrick or data.table of PET values (mm/day)
 #' @keywords internal
 
@@ -42,7 +40,6 @@ setMethod("turc",
             no_cores <- detectCores() - 1
             if (no_cores < 1 || is.na(no_cores)) no_cores <- 1
             registerDoParallel(cores = no_cores)
-            
             dummie_pet <- foreach(layer_index = 1:nlayers(tavg)) %dopar% {
               dummie_ta <- tavg[[layer_index]]
               dummie_rs <- rs[[layer_index]]
@@ -51,12 +48,10 @@ setMethod("turc",
               dummie_c <- calc(dummie_rh, fun = function(x) {
                 ifelse(x >= 50, 1, 1 + ((50 - x) / 70))
               })
-              
               dummie_o <- 0.31 * dummie_c * (dummie_rs + 2.094) * (dummie_ta / (dummie_ta + 15))
               dummie_o <- calc(dummie_o, function(x) { x[x < 0] <- NA; x })
               return(dummie_o)
             }
-            
             dummie_pet <- brick(dummie_pet)
             dummie_pet <- setZ(dummie_pet, getZ(tavg))
             return(dummie_pet)
@@ -69,7 +64,6 @@ setMethod("turc",
             dummie_ta <- brick(tavg)
             dummie_rs <- brick(rs)
             dummie_rh <- brick(rh)
-            
             turc(
               tavg = dummie_ta,
               rs = dummie_rs,

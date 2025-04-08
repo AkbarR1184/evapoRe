@@ -74,9 +74,9 @@ setMethod("hargreaves_samani",
 setMethod("hargreaves_samani",
           signature(tavg = "missing", tmax = "missing", tmin = "missing"),
           function(x) {
-            esr <- pet_params_calc(x)
+            dummie_params <- pet_params_calc(x)
             x[, lambda := 2.501 - 0.002361 * tavg]
-            x[, pet := 0.0023 * esr[.SD, on = .(lat, date), ext_rad] *
+            x[, pet := 0.0023 * dummie_params[.SD, on = .(lat, date), ext_rad] *
                 sqrt(abs(tmax - tmin)) * (tavg + 17.8) / lambda]
             x[, pet := fifelse(pet < 0, NA_real_, pet)]
             return(x[, .(lon, lat, date, value = pet)])

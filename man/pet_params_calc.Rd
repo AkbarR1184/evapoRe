@@ -14,6 +14,6 @@ data.table
 }
 \description{
 Calculate parameters related to PET, including `esr_date`, `omega`, `ext_rad`,
-`delta`,`lat_rad`, `dr`, and `nday`  (number of days in month).
+`delta`,`lat_rad`, and, `dr`
 }
 \keyword{internal}

@@ -12,9 +12,7 @@
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach foreach %dopar%
 #' @importFrom lubridate day leap_year month
-#'
 #' @param x Raster* object, character file path, or data.table (see details)
-#'
 #' @return RasterBrick or data.table of PET values (mm/day)
 #' @keywords internal
 

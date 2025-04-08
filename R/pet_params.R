@@ -1,7 +1,7 @@
 #' Potential Evapotranspiration (PET) Parameters
 #'
 #' Calculate parameters related to PET, including `esr_date`, `omega`, `ext_rad`,
-#' `delta`,`lat_rad`, `dr`, and `nday`  (number of days in month).
+#' `delta`,`lat_rad`, and, `dr`
 #'
 #' @import data.table
 #' @importFrom methods as
@@ -35,6 +35,5 @@ pet_params_calc <- function(x) {
   pet_params[, ext_rad := (24.0 * 60.0 / pi) * 0.0820 * dr * (
     omega * sin(lat_rad) * sin(delta) + cos(lat_rad) * cos(delta) * sin(omega)
   )]
-  pet_params[, nday := days_in_month(date)]
   return(pet_params)
 }

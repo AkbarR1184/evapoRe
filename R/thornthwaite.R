@@ -74,6 +74,7 @@ setMethod("thornthwaite", "data.table",
             x[, setdiff(names(x), c("lon", "lat", "date", "value", "ann_heat")) := NULL]
             x[, k := 0.49239 + (1.792 * ann_heat * 1e-2) - (0.771 * (ann_heat^2) * 1e-4) + (675 * (ann_heat^3) * 1e-9)]
             x[, value := (16 * 24 * dummie_params[.SD, on = .(lat, date), omega]) / (pi * 360) * (10 * value / ann_heat)^k]
+            x[, value := fifelse(value < 0, NA_real_, value)]
             x[, setdiff(names(x), c("lon", "lat", "date", "value")) := NULL]
             return(x)
           })

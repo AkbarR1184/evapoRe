@@ -111,7 +111,6 @@ setMethod("penman_monteith_f56",
             dummie_tdew <- brick(tdew)
             dummie_elev <- if (is.character(elevation)) brick(elevation) else elevation
             dummie_pres <- if (is.character(pres)) brick(pres) else pres
-            
             penman_monteith_f56(
               tavg = dummie_ta,
               tmin = dummie_tn,

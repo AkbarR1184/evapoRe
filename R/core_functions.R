@@ -1,7 +1,6 @@
 #' @export
 #' @import twc
 twc::crop_data
-
 #' @export
 twc::fldmean
 

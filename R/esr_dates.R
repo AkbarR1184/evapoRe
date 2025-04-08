@@ -3,7 +3,6 @@
 #' Fix dates for best ESR estimates
 #'
 #' @import  data.table
-#' @import pRecipe
 #' @importFrom methods as
 #' @importFrom raster getZ
 #' @param x a character string with the path to the data file.
