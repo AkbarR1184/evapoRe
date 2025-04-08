@@ -5,7 +5,7 @@
 \alias{turc,missing,missing,missing-method}
 \alias{turc,Raster,Raster,Raster-method}
 \alias{turc,character,character,character-method}
-\title{Calculate Potential Evapotranspiration (PET) using Turc Method}
+\title{Calculate Potential Evapotranspiration (PET) using the Turc Method}
 \usage{
 turc(tavg, rs, rh, x = NULL)
 
@@ -18,21 +18,29 @@ turc(tavg, rs, rh, x = NULL)
 \arguments{
 \item{tavg}{Raster* object or file path; average temperature (°C)}
 
-\item{rs}{Raster* object or file path; shortwave radiation (MJ m-2 day-1)}
+\item{rs}{Raster* object or file path; shortwave radiation (MJ m⁻² day⁻¹)}
 
 \item{rh}{Raster* object or file path; relative humidity (%)}
 
-\item{x}{A `data.table` with columns: "lon", "lat", "date", "tavg", "rs", "rh"}
+\item{x}{Optional. A `data.table` with columns: "lon", "lat", "date", "tavg", "rs", "rh"}
 }
 \value{
-RasterBrick or data.table of PET values (mm/day)
+A `RasterBrick` or `data.table` with calculated PET values (mm/day).
 }
 \description{
-The function \code{turc} computes PET by Turc method.
+The function \code{turc} implements the Turc method to estimate PET based on daily mean temperature (`tavg`),
+shortwave radiation (`rs`), and relative humidity (`rh`).
 }
 \details{
-For Raster inputs, provide raster objects or file paths for `tavg`, `rs`, and `rh`.
-For `data.table` input, provide a single `data.table` with columns: 
-"lon", "lat", "date", "tavg", "rs", and "rh".
+Computes PET using the Turc empirical formula, which uses temperature, radiation, and humidity.
+
+
+This function supports three input types:
+\itemize{
+  \item Raster inputs: provide `Raster*` objects for `tavg`, `rs`, and `rh`.
+  \item File paths: provide character paths to NetCDF or raster files.
+  \item data.table input: provide a `data.table` named `x` with columns \code{lon}, 
+  \code{lat}, \code{date}, \code{tavg}, \code{rs}, \code{rh}.
+}
 }
 \keyword{internal}
