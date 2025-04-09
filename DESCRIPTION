@@ -25,9 +25,11 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/AkbarR1184/evapoRe
-SystemRequirements: PROJ (>= 6, https://proj.org/download.html), 
-  GDAL (>= 3, https://gdal.org/download.html),
-  NetCDF(>= 4, https://www.unidata.ucar.edu/software/netcdf/).
+BugReports: https://github.com/AkbarR1184/evapoRe/issues
+SystemRequirements: 
+    PROJ (>= 6, https://proj.org/download.html), 
+    GDAL (>= 3, https://gdal.org/download.html),
+    NetCDF (>= 4, https://www.unidata.ucar.edu/software/netcdf/).
 RoxygenNote: 7.3.2
 Suggests:
     rmarkdown,

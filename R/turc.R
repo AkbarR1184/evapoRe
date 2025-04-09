@@ -17,7 +17,6 @@
 #' @param rs Raster* object or file path; shortwave radiation (MJ m-2 day-1)
 #' @param rh Raster* object or file path; relative humidity (%)
 #' @param x A `data.table` with columns: "lon", "lat", "date", "tavg", "rs", and "rh".
-#'
 #' @return RasterBrick or data.table of PET values (mm/day)
 #' @keywords internal
 

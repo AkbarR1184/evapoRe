@@ -48,17 +48,20 @@ required inputs, use:
 }
 \examples{
 \donttest{
-# Default method (Oudin)
-View required variables
+# View required variables for the default method (Oudin)
 pet_method_requirements("oudin")
+
+# Load temperature raster for Oudin method
 tavg <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
-pet_oudin <- pet(tavg, method = "od")
+pet_oudin <- pet(tavg, method = "oudin")
 pet_oudin <- muldpm(pet_oudin)
 
-FAO-56 method with raster inputs
-pet_pm <- pet(method = "pm_fao56",
-    tavg = "tavg.nc", tmin = "tmin.nc", tmax = "tmax.nc",
-    rn = "rn.nc", u = "u.nc", tdew = "tdew.nc", elevation = "elev.nc")
-pet_pm <- muldpm(pet_pm)
+# Hargreaves-Samani method with temperature rasters
+pet_method_requirements("hargreaves_samani")
+tavg <- raster::brick("terraclimate_t2m_degC_land_195801_202212_025_monthly.nc")
+tmax <- raster::brick("terraclimate_tmax_degC_land_195801_202212_025_monthly.nc")
+tmin <- raster::brick("terraclimate_tmin_degC_land_195801_202212_025_monthly.nc")
+pet_hs <- pet(method = "hargreaves_samani", tavg = tavg, tmin = tmin, tmax = tmax)
+pet_hs <- muldpm(pet_hs)
 }
 }
