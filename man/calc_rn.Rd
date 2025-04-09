@@ -42,7 +42,7 @@ provide a single `data.table` with columns: "lon", "lat", "date", "rs", "tmax",
 "tmin", "elevation", and optionally "albedo".
 }
 \examples{
-\dontrun{
+\donttest{
 # Example for Raster* input
 tmax <- brick("path/to/tmax.nc")
 tmin <- brick("path/to/tmin.nc")

@@ -59,19 +59,24 @@
 #' }
 
 pet <- function(method = "oudin", ...) {
-  switch(method,
-         "abtew" = abtew(...),
-         "baier_robertson" = baier_robertson(...),
-         "blaney_criddle" = blaney_criddle(...),
-         "hamon" = hamon(...),
-         "hargreaves_samani" = hargreaves_samani(...),
-         "jensen_haise" = jensen_haise(...),
-         "mcguinness_bordne" = mcguinness_bordne(...),
-         "oudin" = oudin(...),
-         "pm_fao56" = penman_monteith_f56(...),
-         "priestly_taylor" = priestly_taylor(...),
-         "thornthwaite" = thornthwaite(...),
-         "turc" = turc(...),
-         stop("Invalid method.")
+  switch(
+    method,
+    "abtew" = abtew(...),
+    "baier_robertson" = baier_robertson(...),
+    "blaney_criddle" = blaney_criddle(...),
+    "hamon" = hamon(...),
+    "hargreaves_samani" = hargreaves_samani(...),
+    "jensen_haise" = jensen_haise(...),
+    "mcguinness_bordne" = mcguinness_bordne(...),
+    "oudin" = oudin(...),
+    "pm_fao56" = penman_monteith_f56(...),
+    "priestly_taylor" = priestly_taylor(...),
+    "thornthwaite" = thornthwaite(...),
+    "turc" = turc(...),
+    stop(
+      "Invalid method. Valid options are: 'abtew', 'baier_robertson', 'blaney_criddle', 
+      'hamon', 'hargreaves_samani', 'jensen_haise', 'mcguinness_bordne', 'oudin', 'pm_fao56',
+      'priestly_taylor', 'thornthwaite', 'turc'."
+    )
   )
 }

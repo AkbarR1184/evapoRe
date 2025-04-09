@@ -14,15 +14,9 @@
 #' @export
 #'
 #' @examples
-#' # View all PET method requirements
+#' \donttest{
+#' View all PET method requirements
 #' pet_method_requirements()
-#'
-#' # View requirements for a specific method
-#' pet_method_requirements("turc")
-#'
-#' # Handle invalid method name
-#' \dontrun{
-#' pet_method_requirements("invalid_method")
 #' }
 
 pet_method_requirements <- function(x = NULL) {

@@ -38,7 +38,7 @@ where `"value"` contains wind speeds at height `z_u`.
 If `z_u` is 2, the function returns the input unchanged.
 }
 \examples{
-\dontrun{
+\donttest{
 # Raster input
 dummie_u <- brick("path/to/wind_speed.nc")
 u2_raster <- calc_u2(dummie_u, z_u = 10)

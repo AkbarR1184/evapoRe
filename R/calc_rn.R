@@ -27,7 +27,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Example for Raster* input
 #' tmax <- brick("path/to/tmax.nc")
 #' tmin <- brick("path/to/tmin.nc")

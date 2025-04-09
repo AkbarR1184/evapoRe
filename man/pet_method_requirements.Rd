@@ -21,14 +21,8 @@ This function returns the required input variables for a given PET method,
 or all methods if none is specified.
 }
 \examples{
-# View all PET method requirements
+\donttest{
+View all PET method requirements
 pet_method_requirements()
-
-# View requirements for a specific method
-pet_method_requirements("turc")
-
-# Handle invalid method name
-\dontrun{
-pet_method_requirements("invalid_method")
 }
 }
