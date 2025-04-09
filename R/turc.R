@@ -1,26 +1,11 @@
 #' Calculate Potential Evapotranspiration (PET) using the Turc Method
 #'
-#' Computes PET using the Turc empirical formula, which uses temperature, radiation, and humidity.
-#'
-#' @description
-#' The function \code{turc} implements the Turc method to estimate PET based on daily mean temperature (`tavg`),
-#' shortwave radiation (`rs`), and relative humidity (`rh`).
+#' The function \code{turc} Computes PET using the Turc formula.
 #'
 #' @details
-#' This function supports three input types:
-#' \itemize{
-#'   \item Raster inputs: provide `Raster*` objects for `tavg`, `rs`, and `rh`.
-#'   \item File paths: provide character paths to NetCDF or raster files.
-#'   \item data.table input: provide a `data.table` named `x` with columns \code{lon}, 
-#'   \code{lat}, \code{date}, \code{tavg}, \code{rs}, \code{rh}.
-#' }
-#'
-#' @param tavg Raster* object or file path; average temperature (°C)
-#' @param rs Raster* object or file path; shortwave radiation (MJ m⁻² day⁻¹)
-#' @param rh Raster* object or file path; relative humidity (%)
-#' @param x Optional. A `data.table` with columns: "lon", "lat", "date", "tavg", "rs", "rh"
-#'
-#' @return A `RasterBrick` or `data.table` with calculated PET values (mm/day).
+#' For Raster inputs, provide raster objects or file paths for `tavg`, `rs`, 
+#' and `rh`. For data.table input, provide a single `data.table` with columns: "lon", "lat", "date", 
+#' "tavg", "rs", and "rh".
 #'
 #' @import data.table
 #' @importFrom raster brick calc getZ setZ nlayers
@@ -28,7 +13,12 @@
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach foreach %dopar%
 #'
-#' @rdname turc
+#' @param tavg Raster* object or file path; average temperature (°C)
+#' @param rs Raster* object or file path; shortwave radiation (MJ m-2 day-1)
+#' @param rh Raster* object or file path; relative humidity (%)
+#' @param x A `data.table` with columns: "lon", "lat", "date", "tavg", "rs", and "rh".
+#'
+#' @return RasterBrick or data.table of PET values (mm/day)
 #' @keywords internal
 
 setGeneric("turc", function(tavg, rs, rh, x = NULL) {

@@ -1,6 +1,6 @@
 Package: evapoRe
 Title: Evapotranspiration R Recipes
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: 
   c(person(given = "Akbar", family = "Rahmati Ziveh",
            email = "rahmati_ziveh@fzp.czu.cz", role = c("aut", "cre"),
