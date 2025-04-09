@@ -29,7 +29,7 @@
 #' @examples
 #' \donttest{
 #' # Raster input
-#' dummie_u <- brick("path/to/wind_speed.nc")
+#' dummie_u <- raster::brick("path/to/wind_speed.nc")
 #' u2_raster <- calc_u2(dummie_u, z_u = 10)
 #'
 #' # File path input

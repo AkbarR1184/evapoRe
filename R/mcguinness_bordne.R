@@ -4,7 +4,7 @@
 #'
 #' @details
 #' For Raster input, provide a raster object or file path for average temperature.
-#' For `data.table` input, provide a table with columns: "lon", "lat", "date", and "value".
+#' For `data.table` input, provide a table with columns: "lon", "lat", "date", and "tavg".
 #'
 #' @import data.table
 #' @importFrom raster brick calc getZ setZ nlayers
@@ -63,7 +63,7 @@ setMethod("mcguinness_bordne", "data.table",
             dummie_params <- pet_params_calc(x)
             x[, lambda := 2.501 - 0.002361 * tavg]
             x[, pet := dummie_params[.SD, ext_rad, on = .(lat, date)]
-              * (value + 5) / (lambda * 68)]
+              * (tavg + 5) / (lambda * 68)]
             x[, pet := fifelse(pet < 0, NA_real_, pet)]
             return(x[, .(lon, lat, date, value = pet)])
           })

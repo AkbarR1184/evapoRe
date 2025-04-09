@@ -4,7 +4,7 @@
 #'
 #' @details
 #' For Raster input, provide a raster object or file path for average temperature.
-#' For `data.table` input, provide a table with columns: "lon", "lat", "date", and "value".
+#' For `data.table` input, provide a table with columns: "lon", "lat", "date", and "tavg".
 #' @import data.table
 #' @importFrom raster brick calc getZ setZ nlayers
 #' @importFrom parallel detectCores
@@ -69,12 +69,11 @@ setMethod("thornthwaite", "character",
 setMethod("thornthwaite", "data.table",
           function(x) {
             dummie_params <- pet_params_calc(x)
-            x[, mon_heat := (value / 5)^1.514]
+            x[, mon_heat := (tavg / 5)^1.514]
             x[, ann_heat := sum(mon_heat, na.rm = TRUE), by = .(lon, lat, year(date))]
-            x[, setdiff(names(x), c("lon", "lat", "date", "value", "ann_heat")) := NULL]
+            x[, setdiff(names(x), c("lon", "lat", "date", "tavg", "ann_heat")) := NULL]
             x[, k := 0.49239 + (1.792 * ann_heat * 1e-2) - (0.771 * (ann_heat^2) * 1e-4) + (675 * (ann_heat^3) * 1e-9)]
-            x[, value := (16 * 24 * dummie_params[.SD, on = .(lat, date), omega]) / (pi * 360) * (10 * value / ann_heat)^k]
-            x[, value := fifelse(value < 0, NA_real_, value)]
-            x[, setdiff(names(x), c("lon", "lat", "date", "value")) := NULL]
-            return(x)
+            x[, pet := (16 * 24 * dummie_params[.SD, on = .(lat, date), omega]) / (pi * 360) * (10 * tavg / ann_heat)^k]
+            x[, pet := fifelse(pet < 0, NA_real_, pet)]
+            return(x[, .(lon, lat, date, value = pet)])
           })

@@ -2,7 +2,7 @@
 #'
 #' The function \code{detect_exeve} identifies extreme evaporation events based
 #' on standardized evaporation and extreme thresholds.
-#'
+#' @importFrom stats quantile sd
 #' @param x A \code{data.table} containing columns: \code{lon}, \code{lat},
 #' \code{date}, and \code{value}, representing daily evaporation values.
 #' @param EXTREMES_THRES Numeric. Quantile threshold used to define

@@ -26,7 +26,6 @@ setMethod("esr", "Raster", function(x) {
   no_cores <- detectCores() - 1
   if (no_cores < 1 || is.na(no_cores)) no_cores <- 1
   registerDoParallel(cores = no_cores)
-  
   old_dates <- getZ(x)
   new_dates <- esr_dates(x)
   dummie_raster <- setZ(x, new_dates)

@@ -1,6 +1,7 @@
 #' Calculate Potential Evapotranspiration (PET) using the Turc Method
 #'
 #' The function \code{turc} Computes PET using the Turc formula.
+
 #'
 #' @details
 #' For Raster inputs, provide raster objects or file paths for `tavg`, `rs`, 
@@ -15,8 +16,9 @@
 #'
 #' @param tavg Raster* object or file path; average temperature (°C)
 #' @param rs Raster* object or file path; shortwave radiation (MJ m-2 day-1)
-#' @param rh Raster* object or file path; relative humidity (%)
-#' @param x A `data.table` with columns: "lon", "lat", "date", "tavg", "rs", and "rh".
+#' @param rh Raster* object or file path; relative humidity (percent)
+#' @param x A `data.table` with columns: "lon", "lat", "date", "tavg", "rs", and "rh"
+#' 
 #' @return RasterBrick or data.table of PET values (mm/day)
 #' @keywords internal
 
@@ -45,7 +47,6 @@ setMethod("turc",
               dummie_ta <- tavg[[layer_index]]
               dummie_rs <- rs[[layer_index]]
               dummie_rh <- rh[[layer_index]]
-              
               dummie_c <- calc(dummie_rh, fun = function(x) {
                 ifelse(x >= 50, 1, 1 + ((50 - x) / 70))
               })

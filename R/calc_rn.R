@@ -28,11 +28,11 @@
 #'
 #' @examples
 #' \donttest{
-#' # Example for Raster* input
-#' tmax <- brick("path/to/tmax.nc")
-#' tmin <- brick("path/to/tmin.nc")
-#' rs   <- brick("path/to/solar_radiation.nc")
-#' elev <- brick("path/to/elevation.tif")
+#' # Example for raster input
+#' tmax <- raster::brick("tmax.nc")
+#' tmin <- raster::brick("tmin.nc")
+#' rs   <- raster::brick("solar_radiation.nc")
+#' elev <- raster::brick("elevation.nc")
 #' rn <- calc_rn(tmax = tmax, tmin = tmin, rs = rs, elevation = elev)
 #'
 #' # Example for data.table input

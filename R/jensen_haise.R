@@ -4,7 +4,7 @@
 #'
 #' @details
 #' For Raster input, provide a raster object or file path for average temperature.
-#' For `data.table` input, provide a table with columns: "lon", "lat", "date", and "value".
+#' For `data.table` input, provide a table with columns: "lon", "lat", "date", and "tavg".
 #'
 #' @import data.table
 #' @importFrom raster brick calc getZ setZ nlayers
@@ -65,9 +65,9 @@ setMethod("jensen_haise", "data.table",
             dummie_params <- pet_params_calc(x)
             x[, lambda := 2.501 - 0.002361 * tavg]
             x[, pet := fifelse(
-              value >= 0,
+              tavg >= 0,
               dummie_params[.SD, ext_rad, on = .(lat, date)] 
-              * value / (lambda * 40),NA)]
+              * tavg / (lambda * 40),NA)]
             x[, pet := fifelse(pet < 0, NA_real_, pet)]
             return(x[, .(lon, lat, date, value = pet)])
           })

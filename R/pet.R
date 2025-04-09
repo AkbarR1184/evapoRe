@@ -2,60 +2,56 @@
 #'
 #' The function \code{pet} estimates PET using various methods.
 #'
-#' @param x A data.table containing columns \code{lon}, \code{lat}, \code{date},
-#' and the required meteorological variables for the selected method. For raster
-#' or NetCDF input, provide named arguments like \code{tavg}, \code{tmin},
-#' \code{tmax}, etc., depending on the method.
-#'
-#' @param method A character string indicating the method to be used. Available
-#' options are:
+#' @param method Character string indicating the PET estimation method. Available options include:
 #' \itemize{
-#'   \item{"abtew" for Abtew (1996),}
-#'   \item{"baier_robertson" for Baier and Robertson (1965),}
-#'   \item{"blaney_criddle" for Blaney and Criddle (1950),}
-#'   \item{"hamon" for Hamon (1961),}
-#'   \item{"hargreaves_samani" for Hargreaves and Samani (1985),}
-#'   \item{"jensen_haise" for Jensen and Haise (1963),}
-#'   \item{"mcguinness_bordne" for McGuinness and Bordne (1972),}
-#'   \item{"oudin" for Oudin (2005). Default,}
-#'   \item{"penman_monteith_f56" for FAO Penman-Monteith (FAO-56),}
-#'   \item{"priestly_taylor" for Priestly and Taylor (1972),}
-#'   \item{"thornthwaite" for Thornthwaite (1948),}
-#'   \item{"turc" for Turc (1961).}
+#'   \item \code{"abtew"} — Abtew (1996)
+#'   \item \code{"baier_robertson"} — Baier and Robertson (1965)
+#'   \item \code{"blaney_criddle"} — Blaney and Criddle (1950)
+#'   \item \code{"hamon"} — Hamon (1961)
+#'   \item \code{"hargreaves_samani"} — Hargreaves and Samani (1985)
+#'   \item \code{"jensen_haise"} — Jensen and Haise (1963)
+#'   \item \code{"mcguinness_bordne"} — McGuinness and Bordne (1972)
+#'   \item \code{"oudin"} — Oudin (2005). \strong{Default}
+#'   \item \code{"penman_monteith_f56"} — FAO Penman-Monteith (FAO-56)
+#'   \item \code{"priestly_taylor"} — Priestly and Taylor (1972)
+#'   \item \code{"thornthwaite"} — Thornthwaite (1948)
+#'   \item \code{"turc"} — Turc (1961)
 #' }
 #'
-#' @param ... Additional arguments passed to the selected method (e.g., 
-#' raster objects or file paths such as \code{tavg}, \code{rs}, \code{rh}, etc.)
+#' @param ... Inputs passed to the selected method. These can be:
+#' \itemize{
+#'   \item A single Raster* object, file path, or data.table — for methods requiring one variable (e.g., \code{oudin});
+#'   \item Named arguments (e.g., \code{tavg = ...}, \code{tmax = ...}) — for multi-variable methods;
+#'   \item A data.table with all required variables — passed as \code{x = your_data}.
+#' }
 #'
 #' @details
-#' Required input variables depend on the selected method. To check the list of
-#' required inputs, use:
+#' For single-input methods (e.g., Oudin), you can pass the input directly.  
+#' For multi-input methods (e.g., Penman-Monteith), use named arguments or a data.table.  
+#' Use \code{pet_method_requirements()} to check required variables.
 #'
-#' \code{pet_method_requirements()} — to list all methods and their required inputs  
-#' \code{pet_method_requirements("turc")} — to list inputs required for a specific method
-#'
-#' @return A Raster object in mm/day or a data.table with columns \code{lon},
-#' \code{lat}, \code{date}, and \code{value} (PET in mm/day), depending on input type.
+#' @return A `Raster*` object in mm/day (if raster-based inputs) or a `data.table`
+#' with columns \code{lon}, \code{lat}, \code{date}, and \code{value} (PET in mm/day).
 #'
 #' @export
 #'
 #' @examples
 #' \donttest{
-#' # View required variables for the default method (Oudin)
-#' pet_method_requirements("oudin")
+#' # Oudin method with NetCDF path
+#' pet_od <- pet(method="oudin", "tavg.nc")
 #'
-#' # Load temperature raster for Oudin method
-#' tavg <- raster::brick("terraclimate_tavg_land_19580101_20221231_025_monthly.nc")
-#' pet_oudin <- pet(tavg, method = "oudin")
-#' pet_oudin <- muldpm(pet_oudin)
+#' # Oudin method with raster
+#' tavg <- raster::brick("tavg.nc")
+#' pet_od <- pet("oudin", tavg)
 #'
-#' # Hargreaves-Samani method with temperature rasters
-#' pet_method_requirements("hargreaves_samani")
-#' tavg <- raster::brick("terraclimate_t2m_degC_land_195801_202212_025_monthly.nc")
-#' tmax <- raster::brick("terraclimate_tmax_degC_land_195801_202212_025_monthly.nc")
-#' tmin <- raster::brick("terraclimate_tmin_degC_land_195801_202212_025_monthly.nc")
-#' pet_hs <- pet(method = "hargreaves_samani", tavg = tavg, tmin = tmin, tmax = tmax)
-#' pet_hs <- muldpm(pet_hs)
+#' # Oudin method with data.table
+#' pet_od <- pet(method="oudin", x = your_data)
+#'
+#' # Hargreaves-Samani method with multiple inputs
+#' tavg <- raster::brick("tavg.nc")
+#' tmax <- raster::brick("tmax.nc")
+#' tmin <- raster::brick("tmin.nc")
+#' pet_hs <- pet(method="hargreaves_samani", tavg = tavg, tmin = tmin, tmax = tmax)
 #' }
 
 pet <- function(method = "oudin", ...) {

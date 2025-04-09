@@ -22,7 +22,7 @@ or all methods if none is specified.
 }
 \examples{
 \donttest{
-View all PET method requirements
+# PET method requirements
 pet_method_requirements()
 }
 }

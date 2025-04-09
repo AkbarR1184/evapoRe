@@ -20,9 +20,9 @@ turc(tavg, rs, rh, x = NULL)
 
 \item{rs}{Raster* object or file path; shortwave radiation (MJ m-2 day-1)}
 
-\item{rh}{Raster* object or file path; relative humidity (%)}
+\item{rh}{Raster* object or file path; relative humidity (percent)}
 
-\item{x}{A `data.table` with columns: "lon", "lat", "date", "tavg", "rs", and "rh".}
+\item{x}{A `data.table` with columns: "lon", "lat", "date", "tavg", "rs", and "rh"}
 }
 \value{
 RasterBrick or data.table of PET values (mm/day)

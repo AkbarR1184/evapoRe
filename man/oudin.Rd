@@ -26,6 +26,6 @@ The function \code{oudin} computes PET using the Oudin method.
 }
 \details{
 For Raster inputs, provide a raster object or file path for average temperature.
-For `data.table` input, provide a table with columns: "lon", "lat", "date", and "value".
+For `data.table` input, provide a table with columns: "lon", "lat", "date", and "tavg".
 }
 \keyword{internal}

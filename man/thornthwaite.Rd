@@ -26,6 +26,6 @@ The function \code{thornthwaite} computes PET using the Thornthwaite method.
 }
 \details{
 For Raster input, provide a raster object or file path for average temperature.
-For `data.table` input, provide a table with columns: "lon", "lat", "date", and "value".
+For `data.table` input, provide a table with columns: "lon", "lat", "date", and "tavg".
 }
 \keyword{internal}
