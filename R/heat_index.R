@@ -2,7 +2,7 @@
 #'
 #' Calculate Annual Heat Index
 #'
-#' @import  data.table
+#' @rawNamespace import(data.table, except = c("month", "yday", "year"))
 #' @importFrom methods as
 #' @importFrom lubridate day leap_year ymd
 #' @importFrom raster getZ setZ stackApply

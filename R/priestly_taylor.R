@@ -7,7 +7,7 @@
 #' `data.table` with columns: "lon", "lat", "date", "tavg", "rn", and either 
 #' "elevation" or "pres".
 #'
-#' @import data.table
+#' @rawNamespace import(data.table, except = c("month", "yday", "year"))
 #' @importFrom raster brick calc getZ setZ nlayers
 #' @importFrom parallel detectCores
 #' @importFrom doParallel registerDoParallel

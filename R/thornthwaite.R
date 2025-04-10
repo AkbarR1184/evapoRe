@@ -5,7 +5,7 @@
 #' @details
 #' For Raster input, provide a raster object or file path for average temperature.
 #' For `data.table` input, provide a table with columns: "lon", "lat", "date", and "tavg".
-#' @import data.table
+#' @rawNamespace import(data.table, except = c("month", "yday", "year"))
 #' @importFrom raster brick calc getZ setZ nlayers
 #' @importFrom parallel detectCores
 #' @importFrom doParallel registerDoParallel

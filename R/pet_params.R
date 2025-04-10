@@ -3,7 +3,7 @@
 #' Calculate parameters related to PET, including `esr_date`, `omega`, `ext_rad`,
 #' `delta`,`lat_rad`, and, `dr`
 #'
-#' @import data.table
+#' @rawNamespace import(data.table, except = c("month", "yday", "year"))
 #' @importFrom methods as
 #' @importFrom lubridate days_in_month
 #' @param x  a data.table, its columns should be named: "lon", "lat", "date", and "value".

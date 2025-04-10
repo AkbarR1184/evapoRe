@@ -2,7 +2,7 @@
 #'
 #' Calculate Day Length for a given raster template
 #'
-#' @import  data.table
+#' @rawNamespace import(data.table, except = c("month", "yday", "year"))
 #' @import doParallel
 #' @import foreach
 #' @import parallel

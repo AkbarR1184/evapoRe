@@ -7,7 +7,7 @@
 #' maximum (`tmax`), and minimum (`tmin`) temperature. For `data.table` input,
 #' provide a table with columns: "lon", "lat", "date", "tavg", "tmin", and "tmax".
 #'
-#' @import data.table
+#' @rawNamespace import(data.table, except = c("month", "yday", "year"))
 #' @importFrom raster brick calc getZ setZ nlayers
 #' @importFrom parallel detectCores
 #' @importFrom doParallel registerDoParallel

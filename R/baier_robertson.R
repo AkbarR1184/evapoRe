@@ -6,7 +6,7 @@
 #' For Raster inputs, provide raster objects or file paths for maximum (`tmax`)
 #'  and minimum (`tmin`) temperature.For `data.table` input, provide a table with 
 #'  columns: "lon", "lat", "date", "tmax", and "tmin".
-#' @import data.table
+#' @rawNamespace import(data.table, except = c("month", "yday", "year"))
 #' @importFrom raster brick calc getZ setZ nlayers
 #' @importFrom parallel detectCores
 #' @importFrom doParallel registerDoParallel

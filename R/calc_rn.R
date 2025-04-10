@@ -8,7 +8,7 @@
 #' provide a single `data.table` with columns: "lon", "lat", "date", "rs", "tmax", 
 #' "tmin", "elevation", and optionally "albedo".
 #'
-#' @import data.table
+#' @rawNamespace import(data.table, except = c("month", "yday", "year"))
 #' @importFrom raster brick calc getZ setZ nlayers
 #' @importFrom lubridate leap_year month day
 #' @importFrom parallel detectCores
@@ -29,10 +29,10 @@
 #' @examples
 #' \donttest{
 #' # Example for raster input
-#' tmax <- raster::brick("tmax.nc")
-#' tmin <- raster::brick("tmin.nc")
-#' rs   <- raster::brick("solar_radiation.nc")
-#' elev <- raster::brick("elevation.nc")
+# tmax <- raster::brick(paste0(tempdir(),"/tmax.nc"))
+# tmin <- raster::brick(paste0(tempdir(),"/tmin.nc"))
+# rs   <- raster::brick(paste0(tempdir(),"/rs.nc"))
+# elev <- raster::brick(paste0(tempdir(),"/elevation.nc"))
 #' rn <- calc_rn(tmax = tmax, tmin = tmin, rs = rs, elevation = elev)
 #'
 #' # Example for data.table input

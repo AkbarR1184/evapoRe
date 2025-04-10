@@ -44,10 +44,6 @@ provide a single `data.table` with columns: "lon", "lat", "date", "rs", "tmax",
 \examples{
 \donttest{
 # Example for raster input
-tmax <- raster::brick("tmax.nc")
-tmin <- raster::brick("tmin.nc")
-rs   <- raster::brick("solar_radiation.nc")
-elev <- raster::brick("elevation.nc")
 rn <- calc_rn(tmax = tmax, tmin = tmin, rs = rs, elevation = elev)
 
 # Example for data.table input

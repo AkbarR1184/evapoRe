@@ -9,7 +9,7 @@
 #'
 #' If `z_u` is 2, the function returns the input unchanged.
 #'
-#' @import data.table
+#' @rawNamespace import(data.table, except = c("month", "yday", "year"))
 #' @importFrom raster brick getZ setZ nlayers
 #' @importFrom parallel detectCores
 #' @importFrom doParallel registerDoParallel

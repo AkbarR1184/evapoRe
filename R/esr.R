@@ -6,7 +6,7 @@
 #' For raster inputs, provide a `Raster*` object or file path (`character`)
 #' The function estimates extraterrestrial radiation.
 #'
-#' @import data.table
+#' @rawNamespace import(data.table, except = c("month", "yday", "year"))
 #' @import doParallel
 #' @import foreach
 #' @import parallel
