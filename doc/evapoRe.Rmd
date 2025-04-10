@@ -59,7 +59,7 @@ Like many other R packages, `evapoRe` has some system requirements:
 
 -   [PROJ](https://proj.org/download.html)
 -   Geospatial Data Abstraction Library
-    [(GDAL)](https://gdal.org/download.html)
+    [(GDAL)](https://gdal.org/en/stable/download.html)
 -   Network Common Data Form
     [(NetCDF)](https://www.unidata.ucar.edu/software/netcdf/)
 
@@ -105,8 +105,8 @@ tibble::tribble(
 ```{r reanalysis, echo=FALSE, echo=FALSE, results = 'asis'}
 tibble::tribble(
   ~"Data Set", ~"Spatial Resolution", ~Global, ~Land, ~Ocean, ~"Temporal Resolution", ~"Record Length", ~"Get Data", ~Reference,
-"ERA5-Land", "0.1°", "", "x", "", "Monthly", "1960/01-2022/12", "[Download](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land-monthly-means?tab=form)", "@munoz-sabater_era5-land_2021",
-"ERA5", "0.25°", "", "x", "", "Monthly", "1959/01-2021/12", "[Download](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels-monthly-means?tab=overview)", "@hersbach_era5_2020",
+"ERA5-Land", "0.1°", "", "x", "", "Monthly", "1960/01-2022/12", "[Download](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land-monthly-means?tab=overview)", "@munoz-sabater_era5-land_2021",
+"ERA5", "0.25°", "", "x", "", "Monthly", "1959/01-2021/12", "[Download](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels-monthly-means?tab=overview)", "@hersbach_era5_2020",
 "JRA-55", "1.25°", "", "x", "", "Monthly", "1958/01-2021/12", "[Download](https://rda.ucar.edu/datasets/ds628.1/dataaccess/)", "@kobayashi_jra-55_2015",
 "MERRA-2", "0.5° x 0.625°", "", "x", "", "Monthly", "1980/01-2023/01", "[Download](https://disc.gsfc.nasa.gov/datasets?page=1&project=MERRA-2)", "@gelaro_modern-era_2017",
 "CAMELE", "0.25°", "", "x", "", "Monthly", "1980/01-2022/12", "[Download](https://zenodo.org/records/8047038)", "@li2023camele"
