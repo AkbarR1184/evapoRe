@@ -19,8 +19,12 @@
 #' @export
 #' @examples
 #' \donttest{
-#' evap <- readRDS("czechia_evap_gleam.rds")
-#' events <- detect_exeve(evap)
+#' # Example using an RDS file (only run if file exists)
+#' evap_path <- file.path(tempdir(), "czechia_evap_gleam.rds")
+#' if (file.exists(evap_path)) {
+#'   evap <- readRDS(evap_path)
+#'   events <- detect_exeve(evap)
+#' }
 #' }
 
 detect_exeve <- function(x, EXTREMES_THRES = 0.95, LOW_THRES = 0.80) {

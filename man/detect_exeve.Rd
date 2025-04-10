@@ -30,7 +30,11 @@ on standardized evaporation and extreme thresholds.
 }
 \examples{
 \donttest{
-evap <- readRDS("czechia_evap_gleam.rds")
-events <- detect_exeve(evap)
+# Example using an RDS file (only run if file exists)
+evap_path <- file.path(tempdir(), "czechia_evap_gleam.rds")
+if (file.exists(evap_path)) {
+  evap <- readRDS(evap_path)
+  events <- detect_exeve(evap)
+}
 }
 }

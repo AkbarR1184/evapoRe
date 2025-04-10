@@ -45,19 +45,44 @@ Use \code{pet_method_requirements()} to check required variables.
 \examples{
 \donttest{
 # Oudin method with NetCDF path
-pet_od <- pet(method="oudin", "tavg.nc")
+tavg_path <- file.path(tempdir(), "tavg.nc")
+if (file.exists(tavg_path)) {
+  pet_od <- pet(method = "oudin", x = tavg_path)
+  pet_od <- muldpm(pet_od)
+}
 
 # Oudin method with raster
-tavg <- raster::brick("tavg.nc")
-pet_od <- pet("oudin", tavg)
+if (requireNamespace("raster", quietly = TRUE)) {
+  if (file.exists(tavg_path)) {
+    tavg <- raster::brick(tavg_path)
+    pet_od <- pet("oudin", tavg)
+    pet_od <- muldpm(pet_od)
+  }
+}
 
 # Oudin method with data.table
-pet_od <- pet(method="oudin", x = your_data)
+if (requireNamespace("data.table", quietly = TRUE)) {
+  dt <- data.table::data.table(
+    lon = c(10.0, 10.5),
+    lat = c(45.0, 45.5),
+    date = as.Date(c("2001-06-01", "2001-06-02")),
+    tavg = c(18.5, 19.2)
+  )
+  pet_od <- pet(method = "oudin", x = dt)
+  pet_od <- muldpm(pet_od)
+}
 
-# Hargreaves-Samani method with multiple inputs
-tavg <- raster::brick("tavg.nc")
-tmax <- raster::brick("tmax.nc")
-tmin <- raster::brick("tmin.nc")
-pet_hs <- pet(method="hargreaves_samani", tavg = tavg, tmin = tmin, tmax = tmax)
+# Hargreaves-Samani method with multiple raster inputs
+tmax_path <- file.path(tempdir(), "tmax.nc")
+tmin_path <- file.path(tempdir(), "tmin.nc")
+if (requireNamespace("raster", quietly = TRUE)) {
+  if (file.exists(tavg_path) && file.exists(tmax_path) && file.exists(tmin_path)) {
+    tavg <- raster::brick(tavg_path)
+    tmax <- raster::brick(tmax_path)
+    tmin <- raster::brick(tmin_path)
+    pet_hs <- pet(method = "hargreaves_samani", tavg = tavg, tmin = tmin, tmax = tmax)
+    pet_hs <- muldpm(pet_hs)
+  }
+}
 }
 }

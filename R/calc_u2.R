@@ -29,20 +29,31 @@
 #' @examples
 #' \donttest{
 #' # Raster input
-#' dummie_u <- raster::brick("path/to/wind_speed.nc")
-#' u2_raster <- calc_u2(dummie_u, z_u = 10)
+#' if (requireNamespace("raster", quietly = TRUE)) {
+#'   wind_path <- file.path(tempdir(), "wind_speed.nc")
+#'
+#'   if (file.exists(wind_path)) {
+#'     dummie_u <- raster::brick(wind_path)
+#'     u2_raster <- calc_u2(dummie_u, z_u = 10)
+#'   }
+#' }
 #'
 #' # File path input
-#' u2_from_file <- calc_u2("path/to/wind_speed.nc", z_u = 10)
+#' wind_path <- file.path(tempdir(), "wind_speed.nc")
+#' if (file.exists(wind_path)) {
+#'   u2_from_file <- calc_u2(wind_path, z_u = 10)
+#' }
 #'
 #' # data.table input
-#' dt <- data.table(
-#'   lon = c(10.0, 10.5),
-#'   lat = c(45.0, 45.5),
-#'   date = as.Date(c("2001-06-01", "2001-06-02")),
-#'   value = c(3.5, 4.1)
-#' )
-#' u2_dt <- calc_u2(dt, z_u = 10)
+#' if (requireNamespace("data.table", quietly = TRUE)) {
+#'   dt <- data.table::data.table(
+#'     lon = c(10.0, 10.5),
+#'     lat = c(45.0, 45.5),
+#'     date = as.Date(c("2001-06-01", "2001-06-02")),
+#'     value = c(3.5, 4.1)
+#'   )
+#'   u2_dt <- calc_u2(dt, z_u = 10)
+#' }
 #' }
 
 setGeneric("calc_u2", function(x, z_u = 10) {

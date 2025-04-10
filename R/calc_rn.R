@@ -28,24 +28,37 @@
 #'
 #' @examples
 #' \donttest{
-#' # Example for raster input
-# tmax <- raster::brick(paste0(tempdir(),"/tmax.nc"))
-# tmin <- raster::brick(paste0(tempdir(),"/tmin.nc"))
-# rs   <- raster::brick(paste0(tempdir(),"/rs.nc"))
-# elev <- raster::brick(paste0(tempdir(),"/elevation.nc"))
-#' rn <- calc_rn(tmax = tmax, tmin = tmin, rs = rs, elevation = elev)
+#' # Example using Raster* input
+#' if (requireNamespace("raster", quietly = TRUE)) {
+#'   tmax_path <- file.path(tempdir(), "tmax.nc")
+#'   tmin_path <- file.path(tempdir(), "tmin.nc")
+#'   rs_path   <- file.path(tempdir(), "rs.nc")
+#'   elev_path <- file.path(tempdir(), "elevation.nc")
 #'
-#' # Example for data.table input
-#' dt <- data.table(
-#'   lon = c(10.0, 10.5),
-#'   lat = c(45.0, 45.5),
-#'   date = as.Date(c("2001-06-01", "2001-06-01")),
-#'   tmax = c(28.3, 27.6),
-#'   tmin = c(14.1, 13.5),
-#'   rs = c(22.5, 21.9),
-#'   elevation = c(400, 420)
-#' )
-#' rn_dt <- calc_rn(x = dt)
+#'   if (file.exists(tmax_path) && file.exists(tmin_path) &&
+#'       file.exists(rs_path) && file.exists(elev_path)) {
+#'     tmax <- raster::brick(tmax_path)
+#'     tmin <- raster::brick(tmin_path)
+#'     rs   <- raster::brick(rs_path)
+#'     elev <- raster::brick(elev_path)
+#'
+#'     rn <- calc_rn(tmax = tmax, tmin = tmin, rs = rs, elevation = elev)
+#'   }
+#' }
+#'
+#' # Example using data.table input
+#' if (requireNamespace("data.table", quietly = TRUE)) {
+#'   dt <- data.table::data.table(
+#'     lon = c(10.0, 10.5),
+#'     lat = c(45.0, 45.5),
+#'     date = as.Date(c("2001-06-01", "2001-06-01")),
+#'     tmax = c(28.3, 27.6),
+#'     tmin = c(14.1, 13.5),
+#'     rs = c(22.5, 21.9),
+#'     elevation = c(400, 420)
+#'   )
+#'   rn_dt <- calc_rn(x = dt)
+#' }
 #' }
 
 setGeneric("calc_rn", function(tmax, tmin, rs, elevation, albedo = 0.23, x = NULL) {
