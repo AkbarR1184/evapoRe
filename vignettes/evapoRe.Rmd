@@ -59,7 +59,7 @@ Like many other R packages, `evapoRe` has some system requirements:
 
 -   [PROJ](https://proj.org/download.html)
 -   Geospatial Data Abstraction Library
-    [(GDAL)](https://gdal.org/download.html)
+    [(GDAL)](https://gdal.org/en/stable/download.html)
 -   Network Common Data Form
     [(NetCDF)](https://www.unidata.ucar.edu/software/netcdf/)
 
