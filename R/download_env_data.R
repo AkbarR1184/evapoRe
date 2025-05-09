@@ -14,18 +14,18 @@
 #' \item{"terraclimate",}
 #' \item{"all".}
 #' }
-#' @param variable Character; variable name or "all". Variables:
+#' @param variable Character; variable name or "all". options are:
 #' \itemize{
-#' \item{"t2m": 2-meter air temperature (°C),}
-#' \item{"tmin": minimum daily temperature (°C),}
-#' \item{"tmax": maximum daily temperature (°C),}
-#' \item{"ssrd": surface shortwave downward radiation (MJ/m²),}
-#' \item{"nr": net radiation (MJ/m²),}
-#' \item{"tdew": dew point temperature (°C),}
-#' \item{"r": relative humidity (%),}
-#' \item{"fal": surface albedo (fraction),}
-#' \item{"sp": surface pressure (kPa),}
-#' \item{"u10": 10-meter wind speed (m/s).}
+#' \item{t2m}{2-meter air temperature (°C)}
+#' \item{tmin}{minimum daily temperature (°C)}
+#' \item{tmax}{maximum daily temperature (°C)}
+#' \item{ssrd}{surface shortwave downward radiation (MJ/m²)}
+#' \item{nr}{net radiation (MJ/m²)}
+#' \item{tdew}{dew point temperature (°C)}
+#' \item{r}{relative humidity (%)}
+#' \item{fal}{surface albedo (fraction)}
+#' \item{sp}{surface pressure (kPa)}
+#' \item{u10}{10-meter wind speed (m/s)}
 #' }
 #' Note: Available variables depend on the selected dataset.
 #' @param domain Character; spatial domain. Options: "raw", "land".
@@ -95,10 +95,18 @@ download_env_data <- function(path = "",
       file_name <- switch(ds,
                           "cru" = paste0("cru_", var, "_degC_land_190101_202212_025_", time_res, ".nc"),
                           "era5-land" = paste0("era5-land_", var, "_land_195001_2023_12_025_", time_res, ".nc"),
-                          "mswx-past" = paste0("mswx-past_", var, "_land_197901_202412_025_", time_res, ".nc"),
                           "fluxcom" = paste0("fluxcom_", var, "_land_200101_201312_025_", time_res, ".nc"),
-                          "terraclimate" = paste0("terraclimate_", var, "_degC_land_195801_202212_025_",
-                                                  time_res, ".nc"),
+                          "terraclimate" = paste0("terraclimate_", var, "_degC_land_195801_202212_025_", time_res, ".nc"),
+                          "mswx-past" = switch(var,
+                                               "r" = "mswx-past_r_pct_land_197901_202308_025_monthly.nc",
+                                               "sp" = "mswx-past_sp_kpa_land_197901_202412_025_monthly.nc",
+                                               "ssrd" = "mswx-past_ssrd_mjm-2_land_197902_202308_025.nc",
+                                               "t2m" = "mswx-past_t2m_degC_land_197901_202308_025_monthly.nc",
+                                               "tmin" = "mswx-past_tmin_degC_land_197901_202308_025_monthly.nc",
+                                               "tmax" = "mswx-past_tmax_degC_land_197901_202308_025_monthly.nc",
+                                               "u10" = "mswx-past_u10_ms-1_land_197901_202412_025_monthly.nc",
+                                               stop("Unsupported variable for mswx-past.")
+                          ),
                           stop("No filename pattern defined for dataset.")
       )
       
