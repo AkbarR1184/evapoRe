@@ -13,7 +13,7 @@
 #'   \item \code{"mcguinness_bordne"} — McGuinness and Bordne (1972)
 #'   \item \code{"oudin"} — Oudin (2005). \strong{Default}
 #'   \item \code{"penman_monteith_f56"} — FAO Penman-Monteith (FAO-56)
-#'   \item \code{"priestly_taylor"} — Priestly and Taylor (1972)
+#'   \item \code{"priestley_taylor"} — Priestley and Taylor (1972)
 #'   \item \code{"thornthwaite"} — Thornthwaite (1948)
 #'   \item \code{"turc"} — Turc (1961)
 #' }
@@ -91,13 +91,13 @@ pet <- function(method = "oudin", ...) {
     "mcguinness_bordne" = mcguinness_bordne(...),
     "oudin" = oudin(...),
     "pm_fao56" = penman_monteith_f56(...),
-    "priestly_taylor" = priestly_taylor(...),
+    "priestley_taylor" = priestley_taylor(...),
     "thornthwaite" = thornthwaite(...),
     "turc" = turc(...),
     stop(
       "Invalid method. Valid options are: 'abtew', 'baier_robertson', 'blaney_criddle', 
       'hamon', 'hargreaves_samani', 'jensen_haise', 'mcguinness_bordne', 'oudin', 'pm_fao56',
-      'priestly_taylor', 'thornthwaite', 'turc'."
+      'priestley_taylor', 'thornthwaite', 'turc'."
     )
   )
 }

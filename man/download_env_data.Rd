@@ -13,33 +13,51 @@ download_env_data(
 )
 }
 \arguments{
-\item{path}{Character; local path where data will be saved.}
+\item{path}{a character string specifying the local folder path where data will be saved.}
 
-\item{data_name}{Character; dataset name or "all". Options:
+\item{data_name}{a character string with the name(s) of the desired data set. Suitable options are:
 \itemize{
-\item{"cru",}
-\item{"era5-land",}
-\item{"mswx-past",}
-\item{"fluxcom",}
-\item{"terraclimate",}
-\item{"all".}
+\item{"all" for all supported datasets (default),}
+\item{"cru" for CRU,}
+\item{"era5" for ERA5,}
+\item{"era5-land" for ERA5-Land,}
+\item{"mswx-past" for MSWX (historical),}
+\item{"fluxcom" for FluxCom,}
+\item{"terraclimate" for TerraClimate.}
 }}
 
-\item{domain}{Character; spatial domain. Options: "raw", "land".}
+\item{variable}{a character string specifying the variable to download (default = "all").
+See \code{@details} for the list of available variables.}
 
-\item{time_res}{Character; time resolution. Currently only "monthly" supported.}
+\item{domain}{a character string indicating the spatial domain. Suitable options are:
+\itemize{
+\item{"raw" for default spatial coverage,}
+\item{"land" for land-only coverage (default).}
+}}
+
+\item{time_res}{a character string indicating the desired time resolution. Currently, only:
+\itemize{
+\item{"monthly"} is supported.
+}}
 }
 \value{
-Invisible; downloads selected data to the specified path.
+No return value. The function downloads the requested files to the specified folder.
 }
 \description{
-Downloads radiation, temperature, dew point, humidity, albedo, surface pressure,
-wind speed, and related data from CRU, ERA5-Land, MSWX, FluxCom, and TerraClimate.
+The function \code{download_env_data} downloads radiation, temperature, dew point, humidity,
+albedo, surface pressure, wind speed, and related variables from CRU, ERA5, ERA5-Land, MSWX,
+FluxCom, and TerraClimate.
+}
+\details{
+Available variables (depending on dataset): t2m, tmin, tmax, ssrd, nr, tdew, r, fal, sp, u10.
+These correspond to 2-meter air temperature, minimum/maximum temperature, shortwave radiation,
+net radiation, dew point temperature, relative humidity, surface albedo, atmospheric pressure,
+and wind speed at 10 meters.
 }
 \examples{
 \donttest{
-download_env_data(path = tempdir(), data_name = "mswx-past", variable = "all")
 download_env_data(path = tempdir(), data_name = "cru", variable = "t2m")
 download_env_data(path = tempdir(), data_name = "all", variable = "all")
+download_env_data(path = tempdir(), data_name = "mswx-past", variable = "r")
 }
 }

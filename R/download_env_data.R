@@ -1,42 +1,52 @@
 #' Download environmental data products
 #'
-#' Downloads radiation, temperature, dew point, humidity, albedo, surface pressure,
-#' wind speed, and related data from CRU, ERA5-Land, MSWX, FluxCom, and TerraClimate.
+#' The function \code{download_env_data} downloads radiation, temperature, dew point, humidity,
+#' albedo, surface pressure, wind speed, and related variables from CRU, ERA5, ERA5-Land, MSWX,
+#' FluxCom, and TerraClimate.
 #'
 #' @importFrom utils download.file
-#' @param path Character; local path where data will be saved.
-#' @param data_name Character; dataset name or "all". Options:
+#'
+#' @param data_name a character string with the name(s) of the desired data set. Suitable options are:
 #' \itemize{
-#' \item{"cru",}
-#' \item{"era5-land",}
-#' \item{"mswx-past",}
-#' \item{"fluxcom",}
-#' \item{"terraclimate",}
-#' \item{"all".}
+#' \item{"all" for all supported datasets (default),}
+#' \item{"cru" for CRU,}
+#' \item{"era5" for ERA5,}
+#' \item{"era5-land" for ERA5-Land,}
+#' \item{"mswx-past" for MSWX (historical),}
+#' \item{"fluxcom" for FluxCom,}
+#' \item{"terraclimate" for TerraClimate.}
 #' }
-#' @param variable Character; variable name or "all". options are:
+#'
+#' @param path a character string specifying the local folder path where data will be saved.
+#'
+#' @param domain a character string indicating the spatial domain. Suitable options are:
 #' \itemize{
-#' \item{t2m}{2-meter air temperature (°C)}
-#' \item{tmin}{minimum daily temperature (°C)}
-#' \item{tmax}{maximum daily temperature (°C)}
-#' \item{ssrd}{surface shortwave downward radiation (MJ/m²)}
-#' \item{nr}{net radiation (MJ/m²)}
-#' \item{tdew}{dew point temperature (°C)}
-#' \item{r}{relative humidity (%)}
-#' \item{fal}{surface albedo (fraction)}
-#' \item{sp}{surface pressure (kPa)}
-#' \item{u10}{10-meter wind speed (m/s)}
+#' \item{"raw" for default spatial coverage,}
+#' \item{"land" for land-only coverage (default).}
 #' }
-#' Note: Available variables depend on the selected dataset.
-#' @param domain Character; spatial domain. Options: "raw", "land".
-#' @param time_res Character; time resolution. Currently only "monthly" supported.
-#' @return Invisible; downloads selected data to the specified path.
+#'
+#' @param time_res a character string indicating the desired time resolution. Currently, only:
+#' \itemize{
+#' \item{"monthly"} is supported.
+#' }
+#'
+#' @param variable a character string specifying the variable to download (default = "all").
+#' See \code{@details} for the list of available variables.
+#'
+#' @details
+#' Available variables (depending on dataset): t2m, tmin, tmax, ssrd, nr, tdew, r, fal, sp, u10.
+#' These correspond to 2-meter air temperature, minimum/maximum temperature, shortwave radiation,
+#' net radiation, dew point temperature, relative humidity, surface albedo, atmospheric pressure,
+#' and wind speed at 10 meters.
+#'
+#' @return No return value. The function downloads the requested files to the specified folder.
 #' @export
+#'
 #' @examples
 #' \donttest{
-#' download_env_data(path = tempdir(), data_name = "mswx-past", variable = "all")
 #' download_env_data(path = tempdir(), data_name = "cru", variable = "t2m")
 #' download_env_data(path = tempdir(), data_name = "all", variable = "all")
+#' download_env_data(path = tempdir(), data_name = "mswx-past", variable = "r")
 #' }
 
 download_env_data <- function(path = "",
@@ -57,6 +67,7 @@ download_env_data <- function(path = "",
   dataset_vars <- list(
     "cru" = c("t2m", "tmin", "tmax"),
     "era5-land" = c("fal", "tdew"),
+    "era5" = c("ssrd"),
     "mswx-past" = c("r", "sp", "ssrd", "t2m", "tmin", "tmax", "u10"),
     "fluxcom" = c("nr"),
     "terraclimate" = c("t2m", "tmin", "tmax")
@@ -85,7 +96,7 @@ download_env_data <- function(path = "",
     datasets <- if (data_name == "all") available_in else data_name
   }
   
-  zenodo_base <- "https://zenodo.org/records/15351154/files/"
+  zenodo_base <- "https://zenodo.org/records/15422652/files/"
   zenodo_end <- "?download=1"
   
   for (ds in datasets) {
@@ -94,9 +105,25 @@ download_env_data <- function(path = "",
     for (var in vars) {
       file_name <- switch(ds,
                           "cru" = paste0("cru_", var, "_degC_land_190101_202212_025_", time_res, ".nc"),
-                          "era5-land" = paste0("era5-land_", var, "_land_195001_2023_12_025_", time_res, ".nc"),
-                          "fluxcom" = paste0("fluxcom_", var, "_land_200101_201312_025_", time_res, ".nc"),
+                          
+                          "era5-land" = switch(var,
+                                               "fal" = "era5-land_fal_01_land_195001_202312_025_monthly.nc",
+                                               "tdew" = "era5-land_tdew_degC_land_195001_202312_025_monthly.nc",
+                                               stop("Unsupported variable for era5-land.")
+                          ),
+                          
+                          "era5" = switch(var,
+                                          "ssrd" = "era5_ssrd_mjm-2_land_195901_202112_025_monthly.nc",
+                                          stop("Unsupported variable for era5.")
+                          ),
+                          
+                          "fluxcom" = switch(var,
+                                             "nr" = "fluxcom_nr_mjm-2d-1_land_200101_201312_025_monthly.nc",
+                                             stop("Unsupported variable for fluxcom.")
+                          ),
+                          
                           "terraclimate" = paste0("terraclimate_", var, "_degC_land_195801_202212_025_", time_res, ".nc"),
+                          
                           "mswx-past" = switch(var,
                                                "r" = "mswx-past_r_pct_land_197901_202308_025_monthly.nc",
                                                "sp" = "mswx-past_sp_kpa_land_197901_202412_025_monthly.nc",
@@ -107,6 +134,7 @@ download_env_data <- function(path = "",
                                                "u10" = "mswx-past_u10_ms-1_land_197901_202412_025_monthly.nc",
                                                stop("Unsupported variable for mswx-past.")
                           ),
+                          
                           stop("No filename pattern defined for dataset.")
       )
       
