@@ -4,33 +4,23 @@
 \alias{calc_esi}
 \title{Calculate Evaporative Stress Index (ESI)}
 \usage{
-calc_esi(x)
+calc_esi(x, scale = 1)
 }
 \arguments{
 \item{x}{A `data.table` with columns: "lon", "lat", "date", "aet", "pet"}
+
+\item{scale}{Integer. Number of months to aggregate over (e.g., 1 = monthly, 3 = 3-month ESI)}
 }
 \value{
 A `data.table` with columns: "lon", "lat", "date", "value" (ESI)
 }
 \description{
-Computes the standardized anomaly of the ET/PET ratio, indicating vegetation water stress.
+Computes the standardized anomaly of the ET/PET ratio over a defined time scale.
 }
 \details{
-This function calculates ESI on a monthly time scale using actual and potential evapotranspiration.
-The ET/PET ratio is calculated for each grid cell and calendar month, and then standardized
-(z-score) to highlight deviations from normal moisture conditions.
-}
-\examples{
-\donttest{
-library(data.table)
-dt <- data.table(
-  lon = c(10, 10), lat = c(45, 45),
-  date = as.Date(c("2001-01-01", "2001-02-01")),
-  aet = c(30, 25), pet = c(40, 35)
-)
-calc_esi(x = dt)
-}
-
+ESI is computed by aggregating the ET/PET ratio over a moving window of `scale` months
+and standardizing it per calendar month and grid cell. Rolling aggregation uses `frollmean()`
+from the `data.table` package.
 }
 \references{
 Anderson, M. C., et al. (2011). Evaluation of drought indices based on thermal remote sensing

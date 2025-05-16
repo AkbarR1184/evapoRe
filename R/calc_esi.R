@@ -1,16 +1,17 @@
 #' Calculate Evaporative Stress Index (ESI)
 #'
-#' Computes the standardized anomaly of the ET/PET ratio, indicating vegetation water stress.
+#' Computes the standardized anomaly of the ET/PET ratio over a defined time scale.
 #'
 #' @details
-#' This function calculates ESI on a monthly time scale using actual and potential evapotranspiration.
-#' The ET/PET ratio is calculated for each grid cell and calendar month, and then standardized
-#' (z-score) to highlight deviations from normal moisture conditions.
+#' ESI is computed by aggregating the ET/PET ratio over a moving window of `scale` months
+#' and standardizing it per calendar month and grid cell. Rolling aggregation uses `frollmean()`
+#' from the `data.table` package.
 #'
 #' @rawNamespace import(data.table, except = c("month", "yday", "year"))
 #' @importFrom lubridate month
 #'
 #' @param x A `data.table` with columns: "lon", "lat", "date", "aet", "pet"
+#' @param scale Integer. Number of months to aggregate over (e.g., 1 = monthly, 3 = 3-month ESI)
 #'
 #' @return A `data.table` with columns: "lon", "lat", "date", "value" (ESI)
 #'
@@ -19,33 +20,20 @@
 #' of evapotranspiration over the continental United States. Journal of Climate, 24(8), 2025–2044.
 #' https://doi.org/10.1175/2010JCLI3812.1
 #'
-#' @examples
-#' \donttest{
-#' library(data.table)
-#' dt <- data.table(
-#'   lon = c(10, 10), lat = c(45, 45),
-#'   date = as.Date(c("2001-01-01", "2001-02-01")),
-#'   aet = c(30, 25), pet = c(40, 35)
-#' )
-#' calc_esi(x = dt)
-#' }
-#'
 #' @export
-calc_esi <- function(x) {
+calc_esi <- function(x, scale = 1) {
   stopifnot(all(c("lon", "lat", "date", "aet", "pet") %in% names(x)))
   
   x <- copy(x)
-  x[, `:=`(
-    et_pet = aet / pet,
-    month = month(date),
-    id = .GRP
-  ), by = .(lon, lat)]
+  x[, id := .GRP, by = .(lon, lat)]
+  x <- x[order(id, date)]
+  x[, et_pet := aet / pet]
   
-  x[, mean_ratio := mean(et_pet, na.rm = TRUE), by = .(id, month)]
-  x[, anomaly := et_pet - mean_ratio]
+  x[, roll_ratio := frollmean(et_pet, n = scale, align = "right", fill = NA), by = id]
+  x[, month := month(date)]
   
-  x[!is.na(anomaly),
-    value := (anomaly - mean(anomaly, na.rm = TRUE)) / sd(anomaly, na.rm = TRUE),
+  x[!is.na(roll_ratio),
+    value := (roll_ratio - mean(roll_ratio, na.rm = TRUE)) / sd(roll_ratio, na.rm = TRUE),
     by = .(id, month)]
   
   return(x[, .(lon, lat, date, value)])
