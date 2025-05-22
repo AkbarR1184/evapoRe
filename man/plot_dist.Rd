@@ -22,9 +22,9 @@ plot_dist(
 )
 }
 \arguments{
-\item{x}{A data.table with at least date (Date) and value (numeric) columns.}
+\item{x}{A `data.table` with at least date (Date) and value (numeric) columns.}
 
-\item{colors}{Optional named vector of colors for each group. If NULL, a default palette is used.}
+\item{colors}{Optional named vector of colors for each group. If NULL, a scico palette is used.}
 
 \item{bins}{Integer. Number of bins for histogram. Default is 30.}
 
