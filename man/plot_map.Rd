@@ -6,8 +6,9 @@
 \usage{
 plot_map(
   x,
-  value_limits = c(-5, 5),
+  value_limits = NULL,
   palette = "vik",
+  midpoint = 0,
   legend_title = "Slope (mm/year)",
   font_family = "Lato",
   use_google_font = TRUE,
@@ -27,9 +28,11 @@ plot_map(
 \arguments{
 \item{x}{A data.table with columns: lon, lat, value.}
 
-\item{value_limits}{Numeric vector of length 2. Color scale limits. Default is c(-5, 5).}
+\item{value_limits}{NULL or numeric vector of length 2. Color scale limits. If NULL, uses min and max of `value`.}
 
-\item{palette}{Character (palette name) or character vector (custom colors). Default is "vik" from `scico`.}
+\item{palette}{Character (named palette) or character vector (custom colors). Default is "vik".}
+
+\item{midpoint}{Numeric. Midpoint for 3-color gradients. Default is 0.}
 
 \item{legend_title}{Character. Title for the legend. Default is "Slope (mm/year)".}
 
@@ -37,23 +40,23 @@ plot_map(
 
 \item{use_google_font}{Logical. If TRUE, loads font from Google Fonts. Default is TRUE.}
 
-\item{x_label}{Character. Label for x-axis. Default is "Longitude".}
+\item{x_label}{Character. X-axis label. Default is "Longitude".}
 
-\item{y_label}{Character. Label for y-axis. Default is "Latitude".}
+\item{y_label}{Character. Y-axis label. Default is "Latitude".}
 
-\item{x_breaks}{Numeric vector. Breaks for x-axis.}
+\item{x_breaks}{Numeric. X-axis breaks.}
 
-\item{y_breaks}{Numeric vector. Breaks for y-axis.}
+\item{y_breaks}{Numeric. Y-axis breaks.}
 
-\item{legend_position}{Character. Position of legend ("right", "bottom", "top", "left"). Default is "right".}
+\item{legend_position}{Character. "right", "bottom", etc. Default is "right".}
 
-\item{show_legend}{Logical. Whether to display the legend. Default is TRUE.}
+\item{show_legend}{Logical. Whether to show the legend. Default is TRUE.}
 
 \item{na_color}{Character. Color for NA values. Default is "white".}
 
-\item{reverse_palette}{Logical. If TRUE, reverses the color palette. Default is FALSE.}
+\item{reverse_palette}{Logical. If TRUE, reverses palette. Default is FALSE.}
 
-\item{add_borders}{Logical. Whether to add country borders. Default is TRUE.}
+\item{add_borders}{Logical. Add country borders? Default is TRUE.}
 
 \item{border_color}{Character. Border color. Default is "gray10".}
 

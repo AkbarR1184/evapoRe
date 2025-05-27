@@ -25,7 +25,7 @@
 #'
 #' @return A `ggplot` object.
 #'
-#' @import data.table
+#' @rawNamespace import(data.table, except = c("month", "yday", "year"))
 #' @import ggplot2
 #' @importFrom scico scico
 #' @importFrom scales percent_format

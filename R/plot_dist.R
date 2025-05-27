@@ -129,7 +129,7 @@ plot_dist <- function(x,
     theme_minimal(base_family = font_family) +
     theme(
       axis.text = element_text(size = 12, color = "black"),
-      axis.title = element_text(size = 13, face = "bold"),
+      axis.title = element_text(size = 16, face = "bold"),
       axis.ticks = element_line(size = 0.6),
       axis.ticks.length = unit(0.22, "cm"),
       axis.line = element_line(size = 0.8, color = "black"),
