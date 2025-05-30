@@ -9,8 +9,8 @@ plot_taylor(
   type = "default",
   group = "dataset",
   palette = "roma",
-  shapes = NULL,
-  normalise = FALSE,
+  shapes = 20,
+  normalise = TRUE,
   lon_range = NULL,
   lat_range = NULL,
   ...
@@ -25,9 +25,9 @@ plot_taylor(
 
 \item{palette}{Character. A scico palette name or color vector. Default is "roma".}
 
-\item{shapes}{Integer vector of point shapes. Default is NULL (auto).}
+\item{shapes}{Integer vector of point shapes. Default is 20 (auto).}
 
-\item{normalise}{Logical. If TRUE, normalize SD and RMSD. Default is FALSE.}
+\item{normalise}{Logical. If TRUE, normalize SD and RMSD. Default is TRUE.}
 
 \item{lon_range}{Numeric vector of length 2 for filtering by longitude. Default is NULL.}
 

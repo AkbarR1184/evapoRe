@@ -19,8 +19,8 @@
 #' @param type Character or character vector for faceting, e.g. "season", "site". Default is "default".
 #' @param group Character or character vector for grouping. Default is "dataset".
 #' @param palette Character. A scico palette name or color vector. Default is "roma".
-#' @param shapes Integer vector of point shapes. Default is NULL (auto).
-#' @param normalise Logical. If TRUE, normalize SD and RMSD. Default is FALSE.
+#' @param shapes Integer vector of point shapes. Default is 20 (auto).
+#' @param normalise Logical. If TRUE, normalize SD and RMSD. Default is TRUE.
 #' @param lon_range Numeric vector of length 2 for filtering by longitude. Default is NULL.
 #' @param lat_range Numeric vector of length 2 for filtering by latitude. Default is NULL.
 #' @param ... Additional arguments passed to `TaylorDiagram()`.
@@ -32,14 +32,16 @@
 #' @importFrom scico scico
 #' @export
 plot_taylor <- function(x,
-                        type = "default",
-                        group = "dataset",
-                        palette = "roma",
-                        shapes = NULL,
-                        normalise = FALSE,
-                        lon_range = NULL,
-                        lat_range = NULL,
+                        type       = "default",
+                        group      = "dataset",
+                        palette    = "roma",
+                        shapes     = 20,
+                        normalise  = TRUE,
+                        lon_range  = NULL,
+                        lat_range  = NULL,
                         ...) {
+  
+  x <- data.table::copy(x)
   
   stopifnot(is.data.table(x))
   
@@ -67,10 +69,10 @@ plot_taylor <- function(x,
   
   if (!"season" %in% names(x)) {
     x[, season := factor(
-      fifelse(month(date) %in% c(12, 1, 2), "DJF",
-              fifelse(month(date) %in% c(3, 4, 5), "MAM",
-                      fifelse(month(date) %in% c(6, 7, 8), "JJA", "SON"))),
-      levels = c("DJF", "MAM", "JJA", "SON")
+      fifelse(month(date) %in% c(3, 4, 5), "Spring (MAM)",
+              fifelse(month(date) %in% c(6, 7, 8), "Summer (JJA)",
+                      fifelse(month(date) %in% c(9,10,11), "Autumn (SON)", "Winter (DJF)"))),
+      levels = c("Spring (MAM)", "Summer (JJA)", "Autumn (SON)", "Winter (DJF)")
     )]
   }
   
@@ -78,23 +80,37 @@ plot_taylor <- function(x,
     x[, month := factor(month(date), levels = 1:12, labels = month.abb)]
   }
   
-  wide_dt <- dcast(x, lon + lat + date + site + id + season + month ~ dataset, value.var = "value")
+  wide_dt <- dcast(x, lon + lat + date + site + id + season + month ~ dataset,
+                   value.var = "value")
+  wide_dt <- as.data.table(wide_dt)
   
   if (!"observation" %in% names(wide_dt)) {
     stop("Observation data with dataset == 'observation' must be present.")
   }
   
-  model_cols <- setdiff(names(wide_dt), c("lon", "lat", "date", "site", "id", "season", "month", "observation"))
+  model_cols <- setdiff(names(wide_dt),
+                        c("lon","lat","date","site","id","season","month","observation"))
   
   dt_list <- lapply(model_cols, function(mod_name) {
-    temp <- wide_dt[!is.na(get(mod_name)) & !is.na(observation)]
-    temp[, .(lon, lat, date, obs = observation, mod = get(mod_name), dataset = mod_name, site, id, season, month)]
+    temp <- wide_dt[!is.na(wide_dt[[mod_name]]) & !is.na(observation)]
+    data.table(
+      lon     = temp$lon,
+      lat     = temp$lat,
+      date    = temp$date,
+      obs     = temp$observation,
+      mod     = temp[[mod_name]],
+      dataset = mod_name,
+      site    = temp$site,
+      id      = temp$id,
+      season  = temp$season,
+      month   = temp$month
+    )
   })
   
   combined <- rbindlist(dt_list, use.names = TRUE)
   
   group_col <- if (length(group) == 1) combined[[group]] else interaction(combined[, ..group])
-  n_groups <- length(unique(group_col))
+  n_groups  <- length(unique(group_col))
   
   if (length(palette) == 1 && is.character(palette)) {
     colors <- scico(n_groups, palette = palette)
@@ -104,21 +120,16 @@ plot_taylor <- function(x,
     stop("Palette must be a scico name or a vector of at least `n_groups` colors.")
   }
   
-  if (is.null(shapes)) {
-    shapes <- rep(1:25, length.out = n_groups)
-  } else if (length(shapes) < n_groups) {
-    stop("Not enough shapes provided for the number of groups.")
-  }
-  
   TaylorDiagram(
-    mydata = combined,
-    obs = "obs",
-    mod = "mod",
-    group = group,
-    type = type,
-    cols = colors,
-    pch = shapes,
-    normalise = normalise,
+    mydata     = combined,
+    obs        = "obs",
+    mod        = "mod",
+    group      = group,
+    type       = type,
+    cols       = colors,
+    pch        = shapes,
+    normalise  = normalise,
+    ylab       = "Standard Deviation (Normalized)",
     ...
   )
 }
