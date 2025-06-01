@@ -41,9 +41,9 @@ detect_exeve <- function(x, EXTREMES_THRES = 0.95, LOW_THRES = 0.80) {
   )]
   pentads[, std_value := (value - mean(value)) / sd(value),
           by = .(pentad, grid_id)]
-  pentads[, pentad_std_q95 := quantile(std_value, EXTREMES_THRES),
+  pentads[, pentad_std_q95 := quantile(std_value, EXTREMES_THRES, na.rm=TRUE),
           by = grid_id]
-  pentads[, pentad_std_q80 := quantile(std_value, LOW_THRES),
+  pentads[, pentad_std_q80 := quantile(std_value, LOW_THRES, na.rm=TRUE),
           by = grid_id]
   pentads[, value := NULL]
   
