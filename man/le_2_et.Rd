@@ -2,58 +2,29 @@
 % Please edit documentation in R/le_to_et.R
 \name{le_2_et}
 \alias{le_2_et}
-\alias{le_2_et,missing,missing-method}
-\alias{le_2_et,Raster,ANY-method}
-\alias{le_2_et,character,ANY-method}
 \title{Convert latent heat flux (LE) to evapotranspiration (ET)}
 \usage{
-le_2_et(le, tavg = NULL, x = NULL)
-
-\S4method{le_2_et}{missing,missing}(x)
-
-\S4method{le_2_et}{Raster,ANY}(le, tavg = NULL, x = NULL)
-
-\S4method{le_2_et}{character,ANY}(le, tavg = NULL, x = NULL)
+le_2_et(x)
 }
 \arguments{
-\item{le}{Raster* object or file path; latent heat flux (MJ m-2 day-1)}
-
-\item{tavg}{Optional Raster* object or file path; mean air temperature (°C)}
-
-\item{x}{A \code{data.table} with columns "lon", "lat", "date", "le",
+\item{x}{`data.table` with columns "lon", "lat", "date", "le",
 and optionally "tavg".}
 }
 \value{
-RasterBrick or data.table of ET values (mm/day)
+A `data.table` with columns: `"lon"`, `"lat"`, `"date"`, `"value"`
+  (ET in mm/day).
 }
 \description{
 The function \code{le_2_et} computes ET from latent heat flux.
 }
 \details{
-Provide inputs in the following formats:
-* For \code{Raster*} objects supply raster objects or file paths for
-  `le` (MJ m-2 day-1) and, optionally, `tavg` (°C) when a temperature‑
-  dependent latent heat of vaporization is desired.
-* For a \code{data.table} pass a single table with the columns:
-  "lon", "lat", "date", "le" and, optionally, "tavg".
+Provide inputs in the following format:
+* A \code{data.table} with the columns:
+  "lon", "lat", "date", "le" (MJ m-2 day-1) and, optionally, "tavg" (°C)
+  when a temperature-dependent latent heat of vaporization is desired.
 }
 \examples{
 \donttest{
-# Raster input
-if (requireNamespace("raster", quietly = TRUE)) {
-  le_r <- raster::raster(nrows = 10, ncols = 10)
-  raster::values(le_r) <- runif(raster::ncell(le_r), 10, 15)  
-  tavg_r <- le_r + 5                                         
-  et_raster <- le_2_et(le = le_r, tavg = tavg_r)
-}
-
-# File path input
-le_path <- file.path(tempdir(), "le_flux.nc")
-if (file.exists(le_path)) {
-  et_file <- le_2_et(le_path)
-}
-
-# data.table input
 if (requireNamespace("data.table", quietly = TRUE)) {
   dt <- data.table::data.table(
     lon = c(10.0, 10.5),
@@ -65,5 +36,4 @@ if (requireNamespace("data.table", quietly = TRUE)) {
   et_dt <- le_2_et(x = dt)
 }
 }
-
 }
